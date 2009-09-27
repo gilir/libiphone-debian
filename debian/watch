@@ -1,0 +1,3 @@
+version=3
+http://github.com/MattColyer/libiphone/downloads \
+    http://cloud.github.com/downloads/MattColyer/libiphone/libiphone-([\d\.]+)\.tar\.bz2

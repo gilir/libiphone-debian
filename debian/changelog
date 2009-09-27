@@ -1,0 +1,47 @@
+libiphone (0.9.1-4) unstable; urgency=low
+
+  * Orphan package.
+
+ -- Bradley Smith <bradsmith@debian.org>  Sun, 27 Sep 2009 14:58:54 +0100
+
+libiphone (0.9.1-3) unstable; urgency=low
+
+  * Fix udev rule installation path. Closes: #529650.
+
+ -- Bradley Smith <bradsmith@debian.org>  Wed, 20 May 2009 22:29:26 +0100
+
+libiphone (0.9.1-2) unstable; urgency=low
+
+  * Add missing Depends on libplist-dev.
+
+ -- Bradley Smith <bradsmith@debian.org>  Sun, 17 May 2009 14:08:18 +0100
+
+libiphone (0.9.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control:
+    - Remove unneeded Build-Depends, and add libplist-dev.
+    - Correct -dbg section.
+    - Drop libiphone-utils package, binaries no longer present.
+    - Add python-libiphone package.
+  * Drop quilt patch system:
+    - Drop fix-gnutls-depend.diff - Gone upstream.
+  * Add watch file.
+
+ -- Bradley Smith <bradsmith@debian.org>  Tue, 12 May 2009 18:30:54 +0100
+
+libiphone (0.1.0~git+20090323-1) experimental; urgency=low
+
+  * New upstream snapshot.
+  * Add quilt patch system.
+    - fix-gnutls-depend.diff - Remove versioned depends on gnutls. Since it
+      is not needed. Closes: #520871, #520859.
+  * Update Standards-Version to 3.8.1. (No changes).
+
+ -- Bradley Smith <bradsmith@debian.org>  Mon, 23 Mar 2009 20:33:14 +0000
+
+libiphone (0.1.0~git+20090210-1) experimental; urgency=low
+
+  * Initial release. Closes: #501727.
+
+ -- Bradley Smith <bradsmith@debian.org>  Tue, 10 Feb 2009 12:34:49 +0000
