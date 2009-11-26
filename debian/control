@@ -1,13 +1,24 @@
 Source: libiphone
 Section: libs
 Priority: optional
-Maintainer: Debian QA Group <packages@qa.debian.org>
+Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
 Standards-Version: 3.8.1
-Build-Depends: debhelper (>= 7), libgnutls-dev (>= 1.6.3), libusb-dev (>= 0.1.12), libglib2.0-dev (>= 2.14.1), libplist-dev (>= 0.12), python2.5-dev, python-central (>= 0.5.6), swig
+Build-Depends: debhelper (>= 7),
+	quilt,
+	libgnutls-dev (>= 1.6.3), 
+	libusb-1.0-0-dev (>= 1.0.3), 
+	libglib2.0-dev (>= 2.14.1), 
+	libplist-dev (>= 0.15), 
+	libplist++-dev (>= 0.15),
+	python-all-dev, 
+	python-support (>= 0.6.0), 
+	swig (>= 1.3.36),
+	libusbmuxd-dev (>= 1.0.0~rc2),
+	libtasn1-3-dev (>= 1.1),
+	libreadline-dev,
+	python-plist
 XS-Python-Version: current
 Homepage: http://matt.colyer.name/projects/iphone-linux/
-Vcs-Git: http://git.brad-smith.co.uk/git/debian/pkg-libiphone.git
-Vcs-Browser: http://git.brad-smith.co.uk/?p=debian/pkg-libiphone.git
 
 Package: libiphone0
 Architecture: any
@@ -21,7 +32,7 @@ Description: Library for communicating with the iPhone and iPod Touch
 Package: libiphone-dev
 Architecture: any
 Section: libdevel
-Depends: libiphone0 (= ${binary:Version}), libusb-dev, libglib2.0-dev, libgnutls-dev, libplist-dev, ${misc:Depends}
+Depends: libiphone0 (= ${binary:Version}), libusb-1.0-0-dev, libglib2.0-dev, libgnutls-dev, libplist-dev, libusbmuxd-dev,libtasn1-3-dev, ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
  libiphone is a library that talks the native Apple USB protocols that the
  iPhone and iPod Touch use. Unlike other projects, libiphone does not
@@ -41,15 +52,28 @@ Description: Library for communicating with iPhone and iPod Touch devices
  .
  This package contains the debugging symbols.
 
-Package: python-libiphone
+Package: python-iphone
 Section: python
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
+Conflicts: python-libiphone
+Replaces: python-libiphone
 Description: Library for communicating with iPhone and iPod Touch devices
  libiphone is a library that talks the native Apple USB protocols that the
  iPhone and iPod Touch use. Unlike other projects, libiphone does not
  depend on using any existing libraries from Apple.
  .
  This package contains the Python bindings
+
+Package: libiphone-utils
+Architecture: any
+Section: utils
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Library for communicating with iPhone and iPod Touch devices
+ libiphone is a library that talks the native Apple USB protocols that the
+ iPhone and iPod Touch use. Unlike other projects, libiphone does not
+ depend on using any existing libraries from Apple.
+ .
+ This package contains the debugging symbols.
