@@ -2,30 +2,32 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(libiphone, 0.9.1, nospam@nowhere.com)
+AC_INIT(libiphone, 0.9.5, nospam@nowhere.com)
 AM_INIT_AUTOMAKE([dist-bzip2 no-dist-gzip])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-AC_PROG_LIBTOOL
-
 AM_PATH_PYTHON(2.3)
 AC_PROG_SWIG(1.3.21)
+AX_SWIG_ENABLE_CXX
 SWIG_PYTHON
-
 
 # Checks for programs.
 AC_PROG_CC
 AM_PROG_CC_C_O
+AC_PROG_LIBTOOL
 
 # Checks for libraries.
-PKG_CHECK_MODULES(libusb, libusb >= 0.1.12)
+PKG_CHECK_MODULES(libusbmuxd, libusbmuxd >= 0.1.4)
 PKG_CHECK_MODULES(libglib2, glib-2.0 >= 2.14.1)
 PKG_CHECK_MODULES(libgthread2, gthread-2.0 >= 2.14.1)
 PKG_CHECK_MODULES(libgnutls, gnutls >= 1.6.3 )
 PKG_CHECK_MODULES(libtasn1, libtasn1 >= 1.1)
-PKG_CHECK_MODULES(libplist, libplist >= 0.12)
+PKG_CHECK_MODULES(libplist, libplist >= 0.15)
+PKG_CHECK_MODULES(libplistmm, libplist++ >= 0.15)
+AC_CHECK_LIB(gcrypt, gcry_control, [AC_SUBST(libgcrypt_LIBS,[-lgcrypt])], ["libgcrypt is required to build libiphone"])
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -51,9 +53,16 @@ AC_ARG_ENABLE([dev-tools],
             [build_dev_tools=false])
 if test "$build_dev_tools" = true; then
             DEV_SUB=dev
+            AC_CHECK_HEADERS([readline/readline.h],
+			     [],
+			     [AC_MSG_ERROR([Please install readline development headers])]
+	    )
 else
             DEV_SUB=
 fi
+
+AM_CONDITIONAL([ENABLE_DEVTOOLS],[test "x$DEV_SUB" = "xdev"])
+
 AC_SUBST([DEV_SUB])
 
 AC_ARG_ENABLE([debug-code],
@@ -95,4 +104,6 @@ if test "$enable_largefile" != no; then
 fi
 AC_SUBST(LFS_CFLAGS)
 
-AC_OUTPUT(Makefile src/Makefile include/Makefile fdi/Makefile dev/Makefile swig/Makefile udev/Makefile libiphone-1.0.pc)
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
+
+AC_OUTPUT(Makefile src/Makefile include/Makefile fdi/Makefile dev/Makefile tools/Makefile swig/Makefile libiphone-1.0.pc)

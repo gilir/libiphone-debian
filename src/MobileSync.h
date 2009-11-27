@@ -21,19 +21,10 @@
 #ifndef MOBILESYNC_H
 #define MOBILESYNC_H
 
-#include "usbmux.h"
-#include "iphone.h"
-#include "utils.h"
+#include "libiphone/mobilesync.h"
 
-#include <plist/plist.h>
-
-
-
-struct iphone_msync_client_int {
-	iphone_umux_client_t connection;
+struct mobilesync_client_int {
+	iphone_connection_t connection;
 };
-
-
-iphone_error_t iphone_msync_get_all_contacts(iphone_msync_client_t client);
 
 #endif
