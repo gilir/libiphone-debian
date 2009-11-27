@@ -1,11 +1,12 @@
 INCLUDES = -I$(top_srcdir)/include
 
-AM_CFLAGS = $(GLOBAL_CFLAGS) $(libusb_CFLAGS) $(libglib2_CFLAGS) $(libgnutls_CFLAGS) $(libtasn1_CFLAGS) $(libgthread2_CFLAGS) $(LFS_CFLAGS)
-AM_LDFLAGS = $(libusb_LIBS) $(libglib2_LIBS) $(libgnutls_LIBS) $(libtasn1_LIBS) $(libgthread2_LIBS)
+AM_CFLAGS = $(GLOBAL_CFLAGS) $(libglib2_CFLAGS) $(libgnutls_CFLAGS) $(libtasn1_CFLAGS) $(libgthread2_CFLAGS) $(LFS_CFLAGS)
+AM_LDFLAGS = $(libglib2_LIBS) $(libgnutls_LIBS) $(libtasn1_LIBS) $(libgthread2_LIBS)
 
-bin_PROGRAMS = iphoneclient lckd-client afccheck msyncclient iphoneinfo iphonesyslog
+if ENABLE_DEVTOOLS
+noinst_PROGRAMS = iphoneclient lckd-client afccheck msyncclient iphoneenterrecovery
 
-iphoneclient_SOURCES = main.c
+iphoneclient_SOURCES = iphoneclient.c
 iphoneclient_LDADD = ../src/libiphone.la
 
 lckd_client_SOURCES = lckdclient.c
@@ -23,12 +24,11 @@ msyncclient_CFLAGS = $(AM_CFLAGS)
 msyncclient_LDFLAGS = $(AM_LDFLAGS)
 msyncclient_LDADD = ../src/libiphone.la
 
-iphoneinfo_SOURCES = iphoneinfo.c
-iphoneinfo_CFLAGS = $(AM_CFLAGS)
-iphoneinfo_LDFLAGS = $(AM_LDFLAGS)
-iphoneinfo_LDADD = ../src/libiphone.la
+iphoneenterrecovery_SOURCES = iphoneenterrecovery.c
+iphoneenterrecovery_CFLAGS = $(AM_CFLAGS)
+iphoneenterrecovery_LDFLAGS = $(AM_LDFLAGS)
+iphoneenterrecovery_LDADD = ../src/libiphone.la
 
-iphonesyslog_SOURCES = syslog_relay.c
-iphonesyslog_CFLAGS = $(AM_CFLAGS)
-iphonesyslog_LDFLAGS = $(AM_LDFLAGS)
-iphonesyslog_LDADD = ../src/libiphone.la
+endif # ENABLE_DEVTOOLS
+
+EXTRA_DIST = iphoneclient.c lckdclient.c afccheck.c msyncclient.c iphoneenterrecovery.c

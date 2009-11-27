@@ -19,41 +19,56 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
 
-#include "MobileSync.h"
 #include <plist/plist.h>
 #include <string.h>
+#include <stdlib.h>
 #include <arpa/inet.h>
 
+#include "MobileSync.h"
+#include "iphone.h"
+#include "utils.h"
 
 #define MSYNC_VERSION_INT1 100
 #define MSYNC_VERSION_INT2 100
 
-iphone_error_t iphone_msync_new_client(iphone_device_t device, int src_port, int dst_port,
-									   iphone_msync_client_t * client)
+mobilesync_error_t mobilesync_client_new(iphone_device_t device, int dst_port,
+						   mobilesync_client_t * client)
 {
-	if (!device || src_port == 0 || dst_port == 0 || !client || *client)
-		return IPHONE_E_INVALID_ARG;
+	if (!device || dst_port == 0 || !client || *client)
+		return MOBILESYNC_E_INVALID_ARG;
 
-	iphone_error_t ret = IPHONE_E_UNKNOWN_ERROR;
+	mobilesync_error_t ret = MOBILESYNC_E_UNKNOWN_ERROR;
 
-	iphone_msync_client_t client_loc = (iphone_msync_client_t) malloc(sizeof(struct iphone_msync_client_int));
-
-	// Attempt connection
-	client_loc->connection = NULL;
-	ret = iphone_mux_new_client(device, src_port, dst_port, &client_loc->connection);
-	if (IPHONE_E_SUCCESS != ret || !client_loc->connection) {
-		free(client_loc);
+	/* Attempt connection */
+	iphone_connection_t connection = NULL;
+	if (iphone_device_connect(device, dst_port, &connection) != IPHONE_E_SUCCESS) {
 		return ret;
 	}
-	//perform handshake
+
+	mobilesync_client_t client_loc = (mobilesync_client_t) malloc(sizeof(struct mobilesync_client_int));
+	client_loc->connection = connection;
+
+	/* perform handshake */
 	plist_t array = NULL;
 
-	//first receive version
-	ret = iphone_msync_recv(client_loc, &array);
+	/* first receive version */
+	ret = mobilesync_recv(client_loc, &array);
 
-	plist_t msg_node = plist_find_node_by_string(array, "DLMessageVersionExchange");
-	plist_t ver_1 = plist_get_next_sibling(msg_node);
-	plist_t ver_2 = plist_get_next_sibling(ver_1);
+	plist_t msg_node = plist_array_get_item(array, 0);
+
+	char* msg = NULL;
+	plist_type type = plist_get_node_type(msg_node);
+	if (PLIST_STRING == type) {
+		plist_get_string_val(msg_node, &msg);
+	}
+	if (PLIST_STRING != type || strcmp(msg, "DLMessageVersionExchange") || plist_array_get_size(array) < 3) {
+		log_debug_msg("%s: ERROR: MobileSync client expected a version exchange !\n", __func__);
+	}
+	free(msg);
+	msg = NULL;
+
+	plist_t ver_1 = plist_array_get_item(array, 1);
+	plist_t ver_2 = plist_array_get_item(array, 2);
 
 	plist_type ver_1_type = plist_get_node_type(ver_1);
 	plist_type ver_2_type = plist_get_node_type(ver_2);
@@ -73,54 +88,65 @@ iphone_error_t iphone_msync_new_client(iphone_device_t device, int src_port, int
 			&& ver_2_val == MSYNC_VERSION_INT2) {
 
 			array = plist_new_array();
-			plist_add_sub_string_el(array, "DLMessageVersionExchange");
-			plist_add_sub_string_el(array, "DLVersionsOk");
+			plist_array_append_item(array, plist_new_string("DLMessageVersionExchange"));
+			plist_array_append_item(array, plist_new_string("DLVersionsOk"));
 
-			ret = iphone_msync_send(client_loc, array);
+			ret = mobilesync_send(client_loc, array);
 
 			plist_free(array);
 			array = NULL;
 
-			ret = iphone_msync_recv(client_loc, &array);
-			plist_t rep_node = plist_find_node_by_string(array, "DLMessageDeviceReady");
+			ret = mobilesync_recv(client_loc, &array);
+			plist_t rep_node = plist_array_get_item(array, 0);
 
-			if (rep_node) {
-				ret = IPHONE_E_SUCCESS;
+			type = plist_get_node_type(rep_node);
+			if (PLIST_STRING == type) {
+				plist_get_string_val(rep_node, &msg);
+			}
+			if (PLIST_STRING != type || strcmp(msg, "DLMessageDeviceReady")) {
+				log_debug_msg("%s: ERROR: MobileSync client failed to start session !\n", __func__);
+				ret = MOBILESYNC_E_BAD_VERSION;
+			}
+			else
+			{
+				ret = MOBILESYNC_E_SUCCESS;
 				*client = client_loc;
 			}
+			free(msg);
+			msg = NULL;
+
 			plist_free(array);
 			array = NULL;
-
 		}
 	}
 
-	if (IPHONE_E_SUCCESS != ret)
-		iphone_msync_free_client(client_loc);
+	if (MOBILESYNC_E_SUCCESS != ret)
+		mobilesync_client_free(client_loc);
 
 	return ret;
 }
 
-static void iphone_msync_stop_session(iphone_msync_client_t client)
+static void mobilesync_disconnect(mobilesync_client_t client)
 {
 	if (!client)
 		return;
 
 	plist_t array = plist_new_array();
-	plist_add_sub_string_el(array, "DLMessageDisconnect");
-	plist_add_sub_string_el(array, "All done, thanks for the memories");
+	plist_array_append_item(array, plist_new_string("DLMessageDisconnect"));
+	plist_array_append_item(array, plist_new_string("All done, thanks for the memories"));
 
-	iphone_msync_send(client, array);
+	mobilesync_send(client, array);
 	plist_free(array);
 	array = NULL;
 }
 
-iphone_error_t iphone_msync_free_client(iphone_msync_client_t client)
+mobilesync_error_t mobilesync_client_free(mobilesync_client_t client)
 {
 	if (!client)
 		return IPHONE_E_INVALID_ARG;
 
-	iphone_msync_stop_session(client);
-	return iphone_mux_free_client(client->connection);
+	mobilesync_disconnect(client);
+	return (iphone_device_disconnect(client->connection) == 0 ? MOBILESYNC_E_SUCCESS: MOBILESYNC_E_MUX_ERROR);
 }
 
 /** Polls the iPhone for MobileSync data.
@@ -130,36 +156,28 @@ iphone_error_t iphone_msync_free_client(iphone_msync_client_t client)
  *
  * @return an error code
  */
-iphone_error_t iphone_msync_recv(iphone_msync_client_t client, plist_t * plist)
+mobilesync_error_t mobilesync_recv(mobilesync_client_t client, plist_t * plist)
 {
 	if (!client || !plist || (plist && *plist))
-		return IPHONE_E_INVALID_ARG;
-	iphone_error_t ret = IPHONE_E_UNKNOWN_ERROR;
+		return MOBILESYNC_E_INVALID_ARG;
+	mobilesync_error_t ret = MOBILESYNC_E_UNKNOWN_ERROR;
 	char *receive = NULL;
 	uint32_t datalen = 0, bytes = 0, received_bytes = 0;
 
-	ret = iphone_mux_recv(client->connection, (char *) &datalen, sizeof(datalen), &bytes);
+	ret = iphone_device_recv(client->connection, (char *) &datalen, sizeof(datalen), &bytes);
 	datalen = ntohl(datalen);
 
 	receive = (char *) malloc(sizeof(char) * datalen);
 
 	/* fill buffer and request more packets if needed */
-	while ((received_bytes < datalen) && (ret == IPHONE_E_SUCCESS)) {
-		ret = iphone_mux_recv(client->connection, receive + received_bytes, datalen - received_bytes, &bytes);
+	while ((received_bytes < datalen) && (ret == MOBILESYNC_E_SUCCESS)) {
+		ret = iphone_device_recv(client->connection, receive + received_bytes, datalen - received_bytes, &bytes);
 		received_bytes += bytes;
-		if (received_bytes == 131068){
-			char *real_query;
-			int length = received_bytes;
-			real_query = (char *) malloc(sizeof(char) * (length + 4));
-			length = htonl(length);
-			memcpy(real_query, &length, sizeof(length));
-			iphone_mux_send(client->connection, real_query, sizeof(length), &bytes);
-		}
 	}
 
-	if (ret != IPHONE_E_SUCCESS) {
+	if (ret != MOBILESYNC_E_SUCCESS) {
 		free(receive);
-		return ret;
+		return MOBILESYNC_E_MUX_ERROR;
 	}
 
 	plist_from_bin(receive, received_bytes, plist);
@@ -168,7 +186,7 @@ iphone_error_t iphone_msync_recv(iphone_msync_client_t client, plist_t * plist)
 	char *XMLContent = NULL;
 	uint32_t length = 0;
 	plist_to_xml(*plist, &XMLContent, &length);
-	log_dbg_msg(DBGMASK_MOBILESYNC, "Recv msg :\nsize : %i\nbuffer :\n%s\n", length, XMLContent);
+	log_dbg_msg(DBGMASK_MOBILESYNC, "%s: plist size: %i\nbuffer :\n%s\n", __func__, length, XMLContent);
 	free(XMLContent);
 
 	return ret;
@@ -184,15 +202,15 @@ iphone_error_t iphone_msync_recv(iphone_msync_client_t client, plist_t * plist)
  *
  * @return an error code
  */
-iphone_error_t iphone_msync_send(iphone_msync_client_t client, plist_t plist)
+mobilesync_error_t mobilesync_send(mobilesync_client_t client, plist_t plist)
 {
 	if (!client || !plist)
-		return IPHONE_E_INVALID_ARG;
+		return MOBILESYNC_E_INVALID_ARG;
 
 	char *XMLContent = NULL;
 	uint32_t length = 0;
 	plist_to_xml(plist, &XMLContent, &length);
-	log_dbg_msg(DBGMASK_MOBILESYNC, "Send msg :\nsize : %i\nbuffer :\n%s\n", length, XMLContent);
+	log_dbg_msg(DBGMASK_MOBILESYNC, "%s: plist size: %i\nbuffer :\n%s\n", __func__, length, XMLContent);
 	free(XMLContent);
 
 	char *content = NULL;
@@ -202,114 +220,15 @@ iphone_error_t iphone_msync_send(iphone_msync_client_t client, plist_t plist)
 
 	char *real_query;
 	int bytes;
-	iphone_error_t ret = IPHONE_E_UNKNOWN_ERROR;
+	mobilesync_error_t ret = MOBILESYNC_E_UNKNOWN_ERROR;
 
 	real_query = (char *) malloc(sizeof(char) * (length + 4));
 	length = htonl(length);
 	memcpy(real_query, &length, sizeof(length));
 	memcpy(real_query + 4, content, ntohl(length));
 
-	ret = iphone_mux_send(client->connection, real_query, ntohl(length) + sizeof(length), &bytes);
+	ret = iphone_device_send(client->connection, real_query, ntohl(length) + sizeof(length), (uint32_t*)&bytes);
 	free(real_query);
-	return ret;
+	return (ret == 0 ? MOBILESYNC_E_SUCCESS: MOBILESYNC_E_MUX_ERROR);
 }
 
-iphone_error_t iphone_msync_get_all_contacts(iphone_msync_client_t client)
-{
-	if (!client)
-		return IPHONE_E_INVALID_ARG;
-
-	iphone_error_t ret = IPHONE_E_UNKNOWN_ERROR;
-	plist_t array = NULL;
-
-	array = plist_new_array();
-	plist_add_sub_string_el(array, "SDMessageSyncDataClassWithDevice");
-	plist_add_sub_string_el(array, "com.apple.Contacts");
-	plist_add_sub_string_el(array, "---");
-	plist_add_sub_string_el(array, "2009-01-09 18:03:58 +0100");
-	plist_add_sub_uint_el(array, 106);
-	plist_add_sub_string_el(array, "___EmptyParameterString___");
-
-	ret = iphone_msync_send(client, array);
-	plist_free(array);
-	array = NULL;
-
-	ret = iphone_msync_recv(client, &array);
-
-	plist_t rep_node = plist_find_node_by_string(array, "SDSyncTypeSlow");
-
-	if (!rep_node)
-		return ret;
-
-	plist_free(array);
-	array = NULL;
-
-	array = plist_new_array();
-	plist_add_sub_string_el(array, "SDMessageGetAllRecordsFromDevice");
-	plist_add_sub_string_el(array, "com.apple.Contacts");
-
-
-	ret = iphone_msync_send(client, array);
-	plist_free(array);
-	array = NULL;
-
-	ret = iphone_msync_recv(client, &array);
-
-	plist_t contact_node;
-	plist_t switch_node;
-
-	contact_node = plist_find_node_by_string(array, "com.apple.Contacts");
-	switch_node = plist_find_node_by_string(array, "SDMessageDeviceReadyToReceiveChanges");
-
-	while (NULL == switch_node) {
-
-		plist_free(array);
-		array = NULL;
-
-		array = plist_new_array();
-		plist_add_sub_string_el(array, "SDMessageAcknowledgeChangesFromDevice");
-		plist_add_sub_string_el(array, "com.apple.Contacts");
-
-		ret = iphone_msync_send(client, array);
-		plist_free(array);
-		array = NULL;
-
-		ret = iphone_msync_recv(client, &array);
-
-		contact_node = plist_find_node_by_string(array, "com.apple.Contacts");
-		switch_node = plist_find_node_by_string(array, "SDMessageDeviceReadyToReceiveChanges");
-	}
-
-	array = plist_new_array();
-	plist_add_sub_string_el(array, "DLMessagePing");
-	plist_add_sub_string_el(array, "Preparing to get changes for device");
-
-	ret = iphone_msync_send(client, array);
-	plist_free(array);
-	array = NULL;
-
-	array = plist_new_array();
-	plist_add_sub_string_el(array, "SDMessageProcessChanges");
-	plist_add_sub_string_el(array, "com.apple.Contacts");
-	plist_add_sub_node(array, plist_new_dict());
-	plist_add_sub_bool_el(array, 0);
-	plist_t dict = plist_new_dict();
-	plist_add_sub_node(array, dict);
-	plist_add_sub_key_el(dict, "SyncDeviceLinkEntityNamesKey");
-	plist_t array2 = plist_new_array();
-	plist_add_sub_string_el(array2, "com.apple.contacts.Contact");
-	plist_add_sub_string_el(array2, "com.apple.contacts.Group");
-	plist_add_sub_key_el(dict, "SyncDeviceLinkAllRecordsOfPulledEntityTypeSentKey");
-	plist_add_sub_bool_el(dict, 0);
-
-	ret = iphone_msync_send(client, array);
-	plist_free(array);
-	array = NULL;
-
-	ret = iphone_msync_recv(client, &array);
-	plist_free(array);
-	array = NULL;
-
-
-	return ret;
-}

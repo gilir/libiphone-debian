@@ -1,6 +1,7 @@
-/*
- * libiphone.h
- * Main include of libiphone
+/**
+ * @file libiphone/libiphone.h
+ * @brief Common code and device handling
+ * \internal
  *
  * Copyright (c) 2008 Jonathan Beck All Rights Reserved.
  *
@@ -31,154 +32,71 @@ extern "C" {
 #include <sys/stat.h>
 #include <plist/plist.h>
 
-//general errors
+/* Error Codes */
 #define IPHONE_E_SUCCESS                0
 #define IPHONE_E_INVALID_ARG           -1
 #define IPHONE_E_UNKNOWN_ERROR         -2
 #define IPHONE_E_NO_DEVICE             -3
-#define IPHONE_E_TIMEOUT               -4
-#define IPHONE_E_NOT_ENOUGH_DATA       -5
-#define IPHONE_E_BAD_HEADER            -6
-
-//lockdownd specific error
-#define IPHONE_E_INVALID_CONF          -7
-#define IPHONE_E_PAIRING_FAILED        -8
-#define IPHONE_E_SSL_ERROR             -9
-#define IPHONE_E_PLIST_ERROR          -10
-#define IPHONE_E_DICT_ERROR           -11
-#define IPHONE_E_START_SERVICE_FAILED -12
-
-//afc specific error
-#define IPHONE_E_AFC_ERROR            -13
+#define IPHONE_E_NOT_ENOUGH_DATA       -4
+#define IPHONE_E_BAD_HEADER            -5
 
 typedef int16_t iphone_error_t;
-
-typedef enum {
-	AFC_FOPEN_RDONLY   = 0x00000001, // r   O_RDONLY
-	AFC_FOPEN_RW       = 0x00000002, // r+  O_RDWR   | O_CREAT
-	AFC_FOPEN_WRONLY   = 0x00000003, // w   O_WRONLY | O_CREAT  | O_TRUNC
-	AFC_FOPEN_WR       = 0x00000004, // w+  O_RDWR   | O_CREAT  | O_TRUNC
-	AFC_FOPEN_APPEND   = 0x00000005, // a   O_WRONLY | O_APPEND | O_CREAT
-	AFC_FOPEN_RDAPPEND = 0x00000006  // a+  O_RDWR   | O_APPEND | O_CREAT
-} iphone_afc_file_mode_t;
 
 struct iphone_device_int;
 typedef struct iphone_device_int *iphone_device_t;
 
-struct iphone_lckd_client_int;
-typedef struct iphone_lckd_client_int *iphone_lckd_client_t;
+struct iphone_connection_int;
+typedef struct iphone_connection_int *iphone_connection_t;
 
-struct iphone_umux_client_int;
-typedef struct iphone_umux_client_int *iphone_umux_client_t;
-
-struct iphone_afc_client_int;
-typedef struct iphone_afc_client_int *iphone_afc_client_t;
-
-struct iphone_afc_file_int;
-typedef struct iphone_afc_file_int *iphone_afc_file_t;
-
-struct iphone_msync_client_int;
-typedef struct iphone_msync_client_int *iphone_msync_client_t;
-
-struct iphone_np_client_int;
-typedef struct iphone_np_client_int *iphone_np_client_t;
-
-//debug related functions
+/* Debugging */
 #define DBGMASK_ALL        0xFFFF
 #define DBGMASK_NONE       0x0000
-#define DBGMASK_USBMUX     (1 << 1)
-#define DBGMASK_LOCKDOWND  (1 << 2)
-#define DBGMASK_MOBILESYNC (1 << 3)
+#define DBGMASK_LOCKDOWND  (1 << 1)
+#define DBGMASK_MOBILESYNC (1 << 2)
 
+/* generic */
 void iphone_set_debug_mask(uint16_t mask);
-void iphone_set_debug(int level);
+void iphone_set_debug_level(int level);
 
-//device related functions
-iphone_error_t iphone_get_device ( iphone_device_t *device );
-iphone_error_t iphone_get_specific_device( unsigned int bus_n, int dev_n, iphone_device_t * device );
-iphone_error_t iphone_free_device ( iphone_device_t device );
+/* discovery (events/asynchronous) */
+// event type
+enum iphone_event_type {
+	IPHONE_DEVICE_ADD = 1,
+	IPHONE_DEVICE_REMOVE
+};
 
+// event data structure
+typedef struct {
+	enum iphone_event_type event;
+	const char *uuid;
+	int conn_type;
+} iphone_event_t;
 
-//lockdownd related functions
-iphone_error_t lockdownd_get_device_uid(iphone_lckd_client_t control, char **uid);
-iphone_error_t lockdownd_get_device_name ( iphone_lckd_client_t client, char **device_name );
-iphone_error_t iphone_lckd_new_client ( iphone_device_t device, iphone_lckd_client_t *client );
-iphone_error_t iphone_lckd_free_client( iphone_lckd_client_t client );
+// event callback function prototype
+typedef void (*iphone_event_cb_t) (const iphone_event_t *event, void *user_data);
 
-iphone_error_t iphone_lckd_start_service ( iphone_lckd_client_t client, const char *service, int *port );
-iphone_error_t iphone_lckd_recv ( iphone_lckd_client_t client, plist_t* plist);
-iphone_error_t iphone_lckd_send ( iphone_lckd_client_t client, plist_t plist);
+// functions
+iphone_error_t iphone_event_subscribe(iphone_event_cb_t callback, void *user_data);
+iphone_error_t iphone_event_unsubscribe();
 
+/* discovery (synchronous) */
+iphone_error_t iphone_get_device_list(char ***devices, int *count);
+iphone_error_t iphone_device_list_free(char **devices);
 
-//usbmux related functions
-iphone_error_t iphone_mux_new_client ( iphone_device_t device, uint16_t src_port, uint16_t dst_port, iphone_umux_client_t *client );
-iphone_error_t iphone_mux_free_client ( iphone_umux_client_t client );
+/* device structure creation and destruction */
+iphone_error_t iphone_device_new(iphone_device_t *device, const char *uuid);
+iphone_error_t iphone_device_free(iphone_device_t device);
 
-iphone_error_t iphone_mux_send ( iphone_umux_client_t client, const char *data, uint32_t datalen, uint32_t *sent_bytes );
-iphone_error_t iphone_mux_recv ( iphone_umux_client_t client, char *data, uint32_t datalen, uint32_t *recv_bytes  );
-iphone_error_t iphone_mux_recv_timeout ( iphone_umux_client_t client, char *data, uint32_t datalen, uint32_t *recv_bytes, int timeout);
+/* connection/disconnection and communication */
+iphone_error_t iphone_device_connect(iphone_device_t device, uint16_t dst_port, iphone_connection_t *connection);
+iphone_error_t iphone_device_disconnect(iphone_connection_t connection);
+iphone_error_t iphone_device_send(iphone_connection_t connection, const char *data, uint32_t len, uint32_t *sent_bytes);
+iphone_error_t iphone_device_recv_timeout(iphone_connection_t connection, char *data, uint32_t len, uint32_t *recv_bytes, unsigned int timeout);
+iphone_error_t iphone_device_recv(iphone_connection_t connection, char *data, uint32_t len, uint32_t *recv_bytes);
 
-
-//afc related functions
-iphone_error_t iphone_afc_new_client ( iphone_device_t device, int src_port, int dst_port, iphone_afc_client_t *client );
-iphone_error_t iphone_afc_free_client ( iphone_afc_client_t client );
-int iphone_afc_get_afcerror ( iphone_afc_client_t client );
-int iphone_afc_get_errno ( iphone_afc_client_t client );
-
-iphone_error_t iphone_afc_get_devinfo ( iphone_afc_client_t client, char ***infos );
-iphone_error_t iphone_afc_get_dir_list ( iphone_afc_client_t client, const char *dir, char ***list);
-
-iphone_error_t iphone_afc_get_file_attr ( iphone_afc_client_t client, const char *filename, struct stat *stbuf );
-iphone_error_t iphone_afc_open_file ( iphone_afc_client_t client, const char *filename, iphone_afc_file_mode_t file_mode, iphone_afc_file_t *file );
-iphone_error_t iphone_afc_close_file ( iphone_afc_client_t client, iphone_afc_file_t file);
-iphone_error_t iphone_afc_lock_file ( iphone_afc_client_t client, iphone_afc_file_t file, int operation);
-iphone_error_t iphone_afc_read_file ( iphone_afc_client_t client, iphone_afc_file_t file, char *data, int length, uint32_t *bytes);
-iphone_error_t iphone_afc_write_file ( iphone_afc_client_t client, iphone_afc_file_t file, const char *data, int length, uint32_t *bytes);
-iphone_error_t iphone_afc_seek_file ( iphone_afc_client_t client, iphone_afc_file_t file, int seekpos);
-iphone_error_t iphone_afc_truncate_file ( iphone_afc_client_t client, iphone_afc_file_t file, uint32_t newsize);
-iphone_error_t iphone_afc_delete_file ( iphone_afc_client_t client, const char *path);
-iphone_error_t iphone_afc_rename_file ( iphone_afc_client_t client, const char *from, const char *to);
-iphone_error_t iphone_afc_mkdir ( iphone_afc_client_t client, const char *dir);
-iphone_error_t iphone_afc_truncate(iphone_afc_client_t client, const char *path, off_t newsize);
-
-
-
-iphone_error_t iphone_msync_new_client(iphone_device_t device, int src_port, int dst_port,
-									   iphone_msync_client_t * client);
-iphone_error_t iphone_msync_free_client(iphone_msync_client_t client);
-
-iphone_error_t iphone_msync_recv(iphone_msync_client_t client, plist_t * plist);
-iphone_error_t iphone_msync_send(iphone_msync_client_t client, plist_t plist);
-
-// NotificationProxy related
-// notifications for use with post_notification (client --> device)
-#define NP_SYNC_WILL_START      "com.apple.itunes-mobdev.syncWillStart"
-#define NP_SYNC_DID_START       "com.apple.itunes-mobdev.syncDidStart"
-#define NP_SYNC_DID_FINISH      "com.apple.itunes-mobdev.syncDidFinish"
-
-// notifications for use with observe_notification (device --> client)
-#define NP_SYNC_CANCEL_REQUEST  "com.apple.itunes-client.syncCancelRequest"
-#define NP_SYNC_SUSPEND_REQUEST "com.apple.itunes-client.syncSuspendRequest"
-#define NP_SYNC_RESUME_REQUEST  "com.apple.itunes-client.syncResumeRequest"
-#define NP_PHONE_NUMBER_CHANGED "com.apple.mobile.lockdown.phone_number_changed"
-#define NP_DEVICE_NAME_CHANGED  "com.apple.mobile.lockdown.device_name_changed"
-#define NP_ATTEMPTACTIVATION    "com.apple.springboard.attemptactivation"
-#define NP_DS_DOMAIN_CHANGED    "com.apple.mobile.data_sync.domain_changed"
-#define NP_APP_INSTALLED        "com.apple.mobile.application_installed"
-#define NP_APP_UNINSTALLED      "com.apple.mobile.application_uninstalled"
-
-iphone_error_t iphone_np_new_client ( iphone_device_t device, int src_port, int dst_port, iphone_np_client_t *client );
-iphone_error_t iphone_np_free_client ( iphone_np_client_t client );
-
-iphone_error_t iphone_np_post_notification ( iphone_np_client_t client, const char *notification );
-
-iphone_error_t iphone_np_observe_notification ( iphone_np_client_t client, const char *notification );
-iphone_error_t iphone_np_observe_notifications ( iphone_np_client_t client, const char **notification_spec );
-iphone_error_t iphone_np_get_notification ( iphone_np_client_t client, char **notification );
-
-typedef void (*iphone_np_notify_cb_t) ( const char *notification );
-
-iphone_error_t iphone_np_set_notify_callback ( iphone_np_client_t client, iphone_np_notify_cb_t notify_cb );
+/* misc */
+iphone_error_t iphone_device_get_handle(iphone_device_t device, uint32_t *handle);
+iphone_error_t iphone_device_get_uuid(iphone_device_t device, char **uuid);
 
 #ifdef __cplusplus
 }

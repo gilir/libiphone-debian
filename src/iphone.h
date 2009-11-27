@@ -1,7 +1,7 @@
 /*
  * iphone.h
- * iPhone struct
- * 
+ * Device discovery and communication interface -- header file.
+ *
  * Copyright (c) 2008 Zach C. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -18,28 +18,24 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-
 #ifndef IPHONE_H
 #define IPHONE_H
 
-#ifndef USBMUX_H
-#include "usbmux.h"
-#warning usbmux not included?
-#endif
+#include "libiphone/libiphone.h"
 
-#include <usb.h>
-#include <libiphone/libiphone.h>
-
-#define BULKIN 0x85
-#define BULKOUT 0x04
-
-struct iphone_device_int {
-	char *buffer;
-	struct usb_dev_handle *device;
-	struct usb_device *__device;
+enum connection_type {
+	CONNECTION_USBMUXD = 1
 };
 
-// Function definitions
-int send_to_phone(iphone_device_t phone, char *data, int datalen);
-int recv_from_phone(iphone_device_t phone, char *data, int datalen, int timeout);
+struct iphone_connection_int {
+	enum connection_type type;
+	void *data;
+};
+
+struct iphone_device_int {
+	char *uuid;
+	enum connection_type conn_type;
+	void *conn_data;
+};
+
 #endif
