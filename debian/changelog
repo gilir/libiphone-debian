@@ -6,7 +6,7 @@ libiphone (0.9.5-1) unstable; urgency=low
   * debian/control :
    - Change python-libiphone to python-iphone binary, to reflect the change of
      the module.
-   - Build against libusb-1.0-0-dev (>= 1.0.3), libusbmuxd-dev (>= 1.0.0~rc2),
+   - Build against libusb-1.0-0-dev (>= 1.0.3), libusbmuxd-dev (>= 1.0.0),
      libtasn1-3-dev (>= 1.1), libplist++-dev (>= 0.15), python-all-dev,
      libreadline-dev and python-plist.
    - Build depends on quilt and python-support.
