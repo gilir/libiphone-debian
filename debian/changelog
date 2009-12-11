@@ -19,6 +19,7 @@ libiphone (0.9.5-1) unstable; urgency=low
    - Only install 0 library number. 
   * debian/python-iphone: Update installation location for python 2.6.
   * debian/rules & debian/python-iphone.preinst: Switch to python-support.
+  * debian/libiphone-utils.manpages: Add man pages.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Thu, 26 Nov 2009 05:19:36 +0100
 
