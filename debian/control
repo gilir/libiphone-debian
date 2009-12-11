@@ -2,7 +2,7 @@ Source: libiphone
 Section: libs
 Priority: optional
 Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
-Standards-Version: 3.8.1
+Standards-Version: 3.8.3
 Build-Depends: debhelper (>= 7),
 	quilt,
 	libgnutls-dev (>= 1.6.3), 
