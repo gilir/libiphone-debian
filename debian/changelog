@@ -1,6 +1,8 @@
-libiphone (0.9.5-1) unstable; urgency=low
+libiphone (0.9.5-1) unstable; urgency=medium
 
-  * New upstream release.
+  * New maintainer, thanks Bradley Smith for his work (Closes: #548595).
+  * New upstream release (Closes: #557642)
+   - Build with new libplist (Closes: #560619)
   * debian/control & debian/libiphone-utils:
    - Put executable binaries in a separate package.
   * debian/control :
@@ -21,7 +23,7 @@ libiphone (0.9.5-1) unstable; urgency=low
   * debian/rules & debian/python-iphone.preinst: Switch to python-support.
   * debian/libiphone-utils.manpages: Add man pages.
 
- -- Julien Lavergne <gilir@ubuntu.com>  Thu, 26 Nov 2009 05:19:36 +0100
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Thu, 26 Nov 2009 05:19:36 +0100
 
 libiphone (0.9.1-3) unstable; urgency=low
 
