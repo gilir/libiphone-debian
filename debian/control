@@ -23,7 +23,7 @@ Homepage: http://matt.colyer.name/projects/iphone-linux/
 Package: libiphone0
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, usbmuxd
 Description: Library for communicating with the iPhone and iPod Touch
  libiphone is a library that talks the native Apple USB protocols that the
  iPhone and iPod Touch use. Unlike other projects, libiphone does not
