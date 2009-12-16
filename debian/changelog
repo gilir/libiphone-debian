@@ -1,3 +1,9 @@
+libiphone (0.9.5-2) UNRELEASED; urgency=low
+
+  * debian/copyright: Update copyright holders.
+
+ -- Julien Lavergne <gilir@ubuntu.com>  Wed, 16 Dec 2009 23:03:55 +0100
+
 libiphone (0.9.5-1) unstable; urgency=medium
 
   * New maintainer, thanks Bradley Smith for his work (Closes: #548595).
