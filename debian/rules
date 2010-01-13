@@ -38,6 +38,8 @@ install: build
 	dh_testroot
 	dh_prep
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
+	#Remove .la files.
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/*.la
 
 binary-indep: build install
 

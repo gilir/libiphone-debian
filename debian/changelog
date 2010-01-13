@@ -1,7 +1,7 @@
 libiphone (0.9.5-2) UNRELEASED; urgency=low
 
   * debian/copyright: Update copyright holders.
-  * debian/libiphone-dev: Remove *.la.
+  * debian/libiphone-dev & debian/rules: Remove *.la files.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Wed, 16 Dec 2009 23:03:55 +0100
 
