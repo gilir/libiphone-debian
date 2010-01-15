@@ -12,55 +12,21 @@ else
     CFLAGS += -O2
 endif
 
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	LDFLAGS="$(LDFLAGS)" CFLAGS="$(CFLAGS)" ./configure --prefix=/usr \
+configure_flags += \
+		--prefix=/usr \
 		--sysconfdir=/etc --host=$(DEB_HOST_GNU_TYPE) \
 		--build=$(DEB_BUILD_GNU_TYPE)
-	touch $@
 
-build: build-stamp
-build-stamp: configure
-	dh_testdir
-	$(MAKE)
-	touch $@
+%:
+	dh --with quilt $@
 
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp configure-stamp
-	[ ! -f Makefile ] || $(MAKE) distclean
-	dh_clean
+override_dh_auto_configure:
+	dh_auto_configure -- 	$(configure_flags)
 
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
+override_dh_install:
 	#Remove .la files.
 	rm -rf $(CURDIR)/debian/tmp/usr/lib/*.la
-
-binary-indep: build install
-
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs
-	dh_installdocs
-	dh_installman
 	dh_install --fail-missing
-	dh_link
-	dh_strip --dbg-package=libiphone0-dbg
-	dh_compress
-	dh_pysupport
-	dh_fixperms
-	dh_makeshlibs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
 
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+override_dh_strip:
+	dh_strip --dbg-package=libiphone0-dbg

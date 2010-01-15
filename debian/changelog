@@ -2,6 +2,8 @@ libiphone (0.9.5-2) UNRELEASED; urgency=low
 
   * debian/copyright: Update copyright holders.
   * debian/libiphone-dev & debian/rules: Remove *.la files.
+  * debian/rules:
+   - Rewrite to use dh7 and quilt.
   * debian/libiphone0.symbols: Add.
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
