@@ -5,6 +5,7 @@ libiphone (0.9.5-2) UNRELEASED; urgency=low
   * debian/libiphone0.symbols: Add.
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
+  * debian/README.source: Add for quilt support.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Wed, 16 Dec 2009 23:03:55 +0100
 
