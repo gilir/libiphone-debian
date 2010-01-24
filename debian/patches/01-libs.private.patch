@@ -1,7 +1,7 @@
 Index: libiphone/libiphone-1.0.pc.in
 ===================================================================
---- libiphone.orig/libiphone-1.0.pc.in	2010-01-15 14:29:37.000000000 +0100
-+++ libiphone/libiphone-1.0.pc.in	2010-01-15 16:00:57.000000000 +0100
+--- libiphone.orig/libiphone-1.0.pc.in	2010-01-15 16:01:52.000000000 +0100
++++ libiphone/libiphone-1.0.pc.in	2010-01-15 17:30:06.000000000 +0100
 @@ -6,7 +6,6 @@
  Name: libiphone
  Description: A library to communicate with the Lockdown server on the iPhone
