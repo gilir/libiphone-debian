@@ -1,5 +1,6 @@
-libiphone (0.9.5-2) UNRELEASED; urgency=low
+libiphone (0.9.6-1) UNRELEASED; urgency=low
 
+  * New upstream release.
   * debian/copyright: Update copyright holders.
   * debian/libiphone-dev & debian/rules: Remove *.la files.
   * debian/rules:
