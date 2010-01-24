@@ -38,7 +38,6 @@ int main(int argc, char **argv)
 	/* parse cmdline args */
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--debug")) {
-			iphone_set_debug_mask(DBGMASK_ALL);
 			iphone_set_debug_level(1);
 			continue;
 		}
@@ -70,7 +69,7 @@ int main(int argc, char **argv)
 			return -2;
 		}
 
-		if (LOCKDOWN_E_SUCCESS != lockdownd_client_new(phone, &client)) {
+		if (LOCKDOWN_E_SUCCESS != lockdownd_client_new(phone, &client, "iphone_id")) {
 			iphone_device_free(phone);
 			fprintf(stderr, "ERROR: Connecting to device failed!\n");
 			return -2;

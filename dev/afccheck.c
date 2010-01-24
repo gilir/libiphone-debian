@@ -93,15 +93,13 @@ int main(int argc, char *argv[])
 	lockdownd_client_t client = NULL;
 	iphone_device_t phone = NULL;
 	GError *err;
-	int port = 0;
+	uint16_t port = 0;
 	afc_client_t afc = NULL;
 
 	if (argc > 1 && !strcasecmp(argv[1], "--debug")) {
 		iphone_set_debug_level(1);
-		iphone_set_debug_mask(DBGMASK_ALL);
 	} else {
 		iphone_set_debug_level(0);
-		iphone_set_debug_mask(DBGMASK_NONE);
 	}
 
 	if (IPHONE_E_SUCCESS != iphone_device_new(&phone, NULL)) {
@@ -109,7 +107,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new(phone, &client)) {
+	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new_with_handshake(phone, &client, "afccheck")) {
 		iphone_device_free(phone);
 		return 1;
 	}

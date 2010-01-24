@@ -36,8 +36,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = swig
-DIST_COMMON = $(iphone_PYTHON) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(swiginclude_HEADERS)
+DIST_COMMON = $(am__iphone_PYTHON_DIST) \
+	$(am__swiginclude_HEADERS_DIST) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_pkg_swig.m4 \
 	$(top_srcdir)/m4/ac_python_devel.m4 \
@@ -78,10 +79,12 @@ am__installdirs = "$(DESTDIR)$(iphonedir)" "$(DESTDIR)$(iphonedir)" \
 	"$(DESTDIR)$(iphonedir)" "$(DESTDIR)$(swigincludedir)"
 LTLIBRARIES = $(iphone_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-_iphone_la_DEPENDENCIES = $(top_builddir)/src/libiphone.la \
-	$(am__DEPENDENCIES_1)
+@HAVE_SWIG_TRUE@_iphone_la_DEPENDENCIES =  \
+@HAVE_SWIG_TRUE@	$(top_builddir)/src/libiphone.la \
+@HAVE_SWIG_TRUE@	$(am__DEPENDENCIES_1)
 am__objects_1 =
-nodist__iphone_la_OBJECTS = iphone_wrap.lo $(am__objects_1)
+@HAVE_SWIG_TRUE@nodist__iphone_la_OBJECTS = iphone_wrap.lo \
+@HAVE_SWIG_TRUE@	$(am__objects_1)
 _iphone_la_OBJECTS = $(nodist__iphone_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -89,6 +92,7 @@ am__v_lt_0 = --silent
 _iphone_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(_iphone_la_LDFLAGS) $(LDFLAGS) -o $@
+@HAVE_SWIG_TRUE@am__iphone_la_rpath = -rpath $(iphonedir)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -117,7 +121,9 @@ am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(nodist__iphone_la_SOURCES)
 DIST_SOURCES =
+am__iphone_PYTHON_DIST = __init__.py
 py_compile = $(top_srcdir)/py-compile
+am__swiginclude_HEADERS_DIST = iphone.i
 HEADERS = $(swiginclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -277,29 +283,29 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir)/include  $(libplist_CFLAGS) $(SWIG_PYTHON_CPPFLAGS) -I$(oldincludedir)
-BUILT_SOURCES = iphone_wrap.cxx
-SWIG_SOURCES = iphone.i
-CLEANFILES = \
-        *.pyc               \
-        *.pyo               \
-        _iphone.so          \
-        iphone.py           \
-        iphone_wrap.cxx
+@HAVE_SWIG_TRUE@BUILT_SOURCES = iphone_wrap.cxx
+@HAVE_SWIG_TRUE@SWIG_SOURCES = iphone.i
+@HAVE_SWIG_TRUE@CLEANFILES = \
+@HAVE_SWIG_TRUE@        *.pyc               \
+@HAVE_SWIG_TRUE@        *.pyo               \
+@HAVE_SWIG_TRUE@        _iphone.so          \
+@HAVE_SWIG_TRUE@        iphone.py           \
+@HAVE_SWIG_TRUE@        iphone_wrap.cxx
 
-EXTRA_DIST = \
-        __init__.py         \
-        iphone.i
+@HAVE_SWIG_TRUE@EXTRA_DIST = \
+@HAVE_SWIG_TRUE@        __init__.py         \
+@HAVE_SWIG_TRUE@        iphone.i
 
-swigincludedir = $(includedir)/libiphone/swig
-swiginclude_HEADERS = $(SWIG_SOURCES)
-iphonedir = $(pyexecdir)/iphone
-iphone_PYTHON = __init__.py
-nodist_iphone_PYTHON = iphone.py
-iphone_LTLIBRARIES = _iphone.la
-nodist__iphone_la_SOURCES = iphone_wrap.cxx $(SWIG_SOURCES)
-_iphone_la_CFLAGS = $(PYTHON_CPPFLAGS) -I$(top_srcdir)/src
-_iphone_la_LDFLAGS = -module -avoid-version $(PYTHON_LDFLAGS)
-_iphone_la_LIBADD = $(top_builddir)/src/libiphone.la $(libplistmm_LIBS)
+@HAVE_SWIG_TRUE@swigincludedir = $(includedir)/libiphone/swig
+@HAVE_SWIG_TRUE@swiginclude_HEADERS = $(SWIG_SOURCES)
+@HAVE_SWIG_TRUE@iphonedir = $(pyexecdir)/iphone
+@HAVE_SWIG_TRUE@iphone_PYTHON = __init__.py
+@HAVE_SWIG_TRUE@nodist_iphone_PYTHON = iphone.py
+@HAVE_SWIG_TRUE@iphone_LTLIBRARIES = _iphone.la
+@HAVE_SWIG_TRUE@nodist__iphone_la_SOURCES = iphone_wrap.cxx $(SWIG_SOURCES)
+@HAVE_SWIG_TRUE@_iphone_la_CFLAGS = $(PYTHON_CPPFLAGS) -I$(top_srcdir)/src
+@HAVE_SWIG_TRUE@_iphone_la_LDFLAGS = -module -avoid-version $(PYTHON_LDFLAGS)
+@HAVE_SWIG_TRUE@_iphone_la_LIBADD = $(top_builddir)/src/libiphone.la $(libplistmm_LIBS)
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -367,7 +373,7 @@ clean-iphoneLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 _iphone.la: $(_iphone_la_OBJECTS) $(_iphone_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(_iphone_la_LINK) -rpath $(iphonedir) $(_iphone_la_OBJECTS) $(_iphone_la_LIBADD) $(LIBS)
+	$(AM_V_CXXLD)$(_iphone_la_LINK) $(am__iphone_la_rpath) $(_iphone_la_OBJECTS) $(_iphone_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -715,8 +721,8 @@ uninstall-am: uninstall-iphoneLTLIBRARIES uninstall-iphonePYTHON \
 	uninstall-swigincludeHEADERS
 
 
-iphone_wrap.cxx : $(SWIG_SOURCES)
-	$(SWIG) $(SWIG_PYTHON_OPT) $(INCLUDES) -I$(top_srcdir)/src -o $@ $<
+@HAVE_SWIG_TRUE@iphone_wrap.cxx : $(SWIG_SOURCES)
+@HAVE_SWIG_TRUE@	$(SWIG) $(SWIG_PYTHON_OPT) $(INCLUDES) -I$(top_srcdir)/src -o $@ $<
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

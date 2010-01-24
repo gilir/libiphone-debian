@@ -28,9 +28,10 @@
 #include <gnutls/x509.h>
 #include <plist/plist.h>
 
+#include "property_list_service.h"
 #include "lockdown.h"
 #include "iphone.h"
-#include "utils.h"
+#include "debug.h"
 #include "userpref.h"
 
 #define RESULT_SUCCESS 0
@@ -98,7 +99,7 @@ static int lockdown_check_result(plist_t dict, const char *query_match)
 			} else if (!strcmp(result_value, "Failure")) {
 				ret = RESULT_FAILURE;
 			} else {
-				log_dbg_msg(DBGMASK_LOCKDOWND, "%s: ERROR: unknown result value '%s'\n", __func__, result_value);
+				debug_info("ERROR: unknown result value '%s'", result_value);
 			}
 		}
 		if (result_value)
@@ -108,10 +109,28 @@ static int lockdown_check_result(plist_t dict, const char *query_match)
 }
 
 /**
- * Closes the lockdownd communication session, by sending
- * the StopSession Request to the device.
+ * Adds a label key with the passed value to a plist dict node.
+ *
+ * @param plist The plist to add the key to
+ * @param label The value for the label key
+ *
+ */
+static void plist_dict_add_label(plist_t plist, const char *label)
+{
+	if (plist && label) {
+		if (plist_get_node_type(plist) == PLIST_DICT)
+			plist_dict_insert_item(plist, "Label", plist_new_string(label));
+	}
+}
+
+/**
+ * Closes the lockdownd communication session, by sending the StopSession
+ * Request to the device.
+ *
+ * @see lockdownd_start_session
  *
  * @param control The lockdown client
+ * @param session_id The id of a running session
  *
  * @return an error code (LOCKDOWN_E_SUCCESS on success)
  */
@@ -120,68 +139,42 @@ lockdownd_error_t lockdownd_stop_session(lockdownd_client_t client, const char *
 	if (!client)
 		return LOCKDOWN_E_INVALID_ARG;
 
+	if (!session_id) {
+		debug_info("no session_id given, cannot stop session");
+		return LOCKDOWN_E_INVALID_ARG;
+	}
+
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
 	plist_t dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	plist_dict_insert_item(dict,"Request", plist_new_string("StopSession"));
 	plist_dict_insert_item(dict,"SessionID", plist_new_string(session_id));
 
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: called\n", __func__);
+	debug_info("stopping session %s", session_id);
 
 	ret = lockdownd_send(client, dict);
 
 	plist_free(dict);
 	dict = NULL;
 
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 
 	if (!dict) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: LOCKDOWN_E_PLIST_ERROR\n", __func__);
+		debug_info("LOCKDOWN_E_PLIST_ERROR");
 		return LOCKDOWN_E_PLIST_ERROR;
 	}
 
 	ret = LOCKDOWN_E_UNKNOWN_ERROR;
 	if (lockdown_check_result(dict, "StopSession") == RESULT_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: success\n", __func__);
+		debug_info("success");
 		ret = LOCKDOWN_E_SUCCESS;
 	}
 	plist_free(dict);
 	dict = NULL;
-
-	return ret;
-}
-
-/**
- * Shuts down the SSL session by first calling iphone_lckd_stop_session
- * to cleanly close the lockdownd communication session, and then
- * performing a close notify, which is done by "gnutls_bye".
- *
- * @param client The lockdown client
- *
- * @return an error code (LOCKDOWN_E_SUCCESS on success)
- */
-static lockdownd_error_t lockdownd_stop_ssl_session(lockdownd_client_t client)
-{
-	if (!client) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: invalid argument!\n", __func__);
-		return LOCKDOWN_E_INVALID_ARG;
+	if (client->ssl_enabled) {
+		property_list_service_disable_ssl(client->parent);
 	}
-	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
-
-	if (client->in_SSL) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: stopping SSL session\n", __func__);
-		ret = lockdownd_stop_session(client, client->session_id);
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: sending SSL close notify\n", __func__);
-		gnutls_bye(client->ssl_session, GNUTLS_SHUT_RDWR);
-	}
-	if (client->ssl_session) {
-		gnutls_deinit(client->ssl_session);
-        }
-        if (client->ssl_certificate) {
-		gnutls_certificate_free_credentials(client->ssl_certificate);
-        }
-	client->in_SSL = 0;
-
 	return ret;
 }
 
@@ -197,20 +190,43 @@ lockdownd_error_t lockdownd_client_free(lockdownd_client_t client)
 		return LOCKDOWN_E_INVALID_ARG;
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
-	lockdownd_stop_ssl_session(client);
+	if (client->session_id)
+		lockdownd_stop_session(client, client->session_id);
 
-	if (client->connection) {
+	if (client->parent) {
 		lockdownd_goodbye(client);
 
-		// IMO, read of final "sessionUpcall connection closed" packet
-		//  should come here instead of in iphone_free_device
-		if ((ret = iphone_device_disconnect(client->connection)) != IPHONE_E_SUCCESS) {
-			ret = LOCKDOWN_E_UNKNOWN_ERROR;
+		if (property_list_service_client_free(client->parent) == PROPERTY_LIST_SERVICE_E_SUCCESS) {
+			ret = LOCKDOWN_E_SUCCESS;
 		}
+	}
+
+	if (client->uuid) {
+		free(client->uuid);
+	}
+	if (client->label) {
+		free(client->label);
 	}
 
 	free(client);
 	return ret;
+}
+
+/**
+ * Sets the label to send for requests to lockdownd.
+ *
+ * @param client The lockdown client
+ * @param label The label to set or NULL to disable sending a label
+ *
+ */
+void lockdownd_client_set_label(lockdownd_client_t client, const char *label)
+{
+	if (client) {
+		if (client->label)
+			free(client->label);
+
+		client->label = (label != NULL) ? strdup(label): NULL;
+	}
 }
 
 /** Polls the iPhone for lockdownd data.
@@ -220,64 +236,17 @@ lockdownd_error_t lockdownd_client_free(lockdownd_client_t client)
  *
  * @return an error code (LOCKDOWN_E_SUCCESS on success)
  */
-lockdownd_error_t lockdownd_recv(lockdownd_client_t client, plist_t *plist)
+lockdownd_error_t lockdownd_receive(lockdownd_client_t client, plist_t *plist)
 {
 	if (!client || !plist || (plist && *plist))
 		return LOCKDOWN_E_INVALID_ARG;
-	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
-	char *receive = NULL;
-	uint32_t datalen = 0, bytes = 0, received_bytes = 0;
+	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
+	property_list_service_error_t err;
 
-	if (!client->in_SSL)
-		ret = iphone_device_recv(client->connection, (char *) &datalen, sizeof(datalen), &bytes);
-	else {
-		ssize_t res = gnutls_record_recv(client->ssl_session, &datalen, sizeof(datalen));
-		if (res < 0) {
-			log_dbg_msg(DBGMASK_LOCKDOWND, "gnutls_record_recv: Error occured: %s\n", gnutls_strerror(res));
-			return LOCKDOWN_E_SSL_ERROR;
-		} else {
-			bytes = res;
-			ret = LOCKDOWN_E_SUCCESS;
-		}
+	err = property_list_service_receive_plist(client->parent, plist);
+	if (err != PROPERTY_LIST_SERVICE_E_SUCCESS) {
+		ret = LOCKDOWN_E_UNKNOWN_ERROR;
 	}
-	datalen = ntohl(datalen);
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: datalen = %d\n", __func__, datalen);
-
-	receive = (char *) malloc(sizeof(char) * datalen);
-
-	/* fill buffer and request more packets if needed */
-	if (!client->in_SSL) {
-		while ((received_bytes < datalen) && (ret == LOCKDOWN_E_SUCCESS)) {
-			ret = iphone_device_recv(client->connection, receive + received_bytes, datalen - received_bytes, &bytes);
-			received_bytes += bytes;
-		}
-	} else {
-		ssize_t res = 0;
-		while ((received_bytes < datalen) && (ret == LOCKDOWN_E_SUCCESS)) {
-			res = gnutls_record_recv(client->ssl_session, receive + received_bytes, datalen - received_bytes);
-			if (res < 0) {
-				log_dbg_msg(DBGMASK_LOCKDOWND, "gnutls_record_recv: Error occured: %s\n", gnutls_strerror(res));
-				ret = LOCKDOWN_E_SSL_ERROR;
-			} else {
-				received_bytes += res;
-				ret = LOCKDOWN_E_SUCCESS;
-			}
-		}
-	}
-
-	if (ret != LOCKDOWN_E_SUCCESS) {
-		free(receive);
-		return ret;
-	}
-
-	if ((ssize_t)received_bytes <= 0) {
-		free(receive);
-		return LOCKDOWN_E_NOT_ENOUGH_DATA;
-	}
-
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: received msg size: %i, buffer follows:\n%s", __func__, received_bytes, receive);
-	plist_from_xml(receive, received_bytes, plist);
-	free(receive);
 
 	if (!*plist)
 		ret = LOCKDOWN_E_PLIST_ERROR;
@@ -299,51 +268,26 @@ lockdownd_error_t lockdownd_send(lockdownd_client_t client, plist_t plist)
 {
 	if (!client || !plist)
 		return LOCKDOWN_E_INVALID_ARG;
-	char *real_query;
-	int bytes;
-	char *XMLContent = NULL;
-	uint32_t length = 0;
-	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
-	plist_to_xml(plist, &XMLContent, &length);
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: sending msg size %i, buffer follows:\n%s", __func__, length, XMLContent);
+	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
+	iphone_error_t err;
 
-	real_query = (char *) malloc(sizeof(char) * (length + 4));
-	length = htonl(length);
-	memcpy(real_query, &length, sizeof(length));
-	memcpy(real_query + 4, XMLContent, ntohl(length));
-	free(XMLContent);
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: made the query, sending it along\n", __func__);
-
-	if (!client->in_SSL)
-		ret = iphone_device_send(client->connection, real_query, ntohl(length) + sizeof(length), (uint32_t*)&bytes);
-	else {
-		ssize_t res = gnutls_record_send(client->ssl_session, real_query, ntohl(length) + sizeof(length));
-		if (res < 0) {
-			log_dbg_msg(DBGMASK_LOCKDOWND, "gnutls_record_send: Error occured: %s\n", gnutls_strerror(res));
-			ret = LOCKDOWN_E_SSL_ERROR;
-		} else {
-			bytes = res;
-			ret = LOCKDOWN_E_SUCCESS;
-		}
+	err = property_list_service_send_xml_plist(client->parent, plist);
+	if (err != PROPERTY_LIST_SERVICE_E_SUCCESS) {
+		ret = LOCKDOWN_E_UNKNOWN_ERROR;
 	}
-	if (ret == LOCKDOWN_E_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: sent it!\n", __func__);
-	} else {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: sending failed!\n", __func__);
-	}
-	free(real_query);
-
 	return ret;
 }
 
-/** Initiates the handshake for the lockdown session. Part of the lockdownd handshake.
+/** Query the type of the service daemon. Depending on whether the device is
+ * queried in normal mode or restore mode, different types will be returned.
  *
  * @param client The lockdownd client
+ * @param type The type returned by the service daemon. Can be NULL to ignore.
  *
  * @return an error code (LOCKDOWN_E_SUCCESS on success)
  */
-lockdownd_error_t lockdownd_query_type(lockdownd_client_t client)
+lockdownd_error_t lockdownd_query_type(lockdownd_client_t client, char **type)
 {
 	if (!client)
 		return LOCKDOWN_E_INVALID_ARG;
@@ -351,22 +295,28 @@ lockdownd_error_t lockdownd_query_type(lockdownd_client_t client)
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
 	plist_t dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	plist_dict_insert_item(dict,"Request", plist_new_string("QueryType"));
 
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: called\n", __func__);
+	debug_info("called");
 	ret = lockdownd_send(client, dict);
 
 	plist_free(dict);
 	dict = NULL;
 
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 
 	if (LOCKDOWN_E_SUCCESS != ret)
 		return ret;
 
 	ret = LOCKDOWN_E_UNKNOWN_ERROR;
 	if (lockdown_check_result(dict, "QueryType") == RESULT_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: success\n", __func__);
+		/* return the type if requested */
+		if (type != NULL) {
+			plist_t type_node = plist_dict_get_item(dict, "Type");
+			plist_get_string_val(type_node, type);
+		}
+		debug_info("success with type %s", *type);
 		ret = LOCKDOWN_E_SUCCESS;
 	}
 	plist_free(dict);
@@ -394,6 +344,7 @@ lockdownd_error_t lockdownd_get_value(lockdownd_client_t client, const char *dom
 
 	/* setup request plist */
 	dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	if (domain) {
 		plist_dict_insert_item(dict,"Domain", plist_new_string(domain));
 	}
@@ -412,12 +363,12 @@ lockdownd_error_t lockdownd_get_value(lockdownd_client_t client, const char *dom
 		return ret;
 
 	/* Now get device's answer */
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 	if (ret != LOCKDOWN_E_SUCCESS)
 		return ret;
 
 	if (lockdown_check_result(dict, "GetValue") == RESULT_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: success\n", __func__);
+		debug_info("success");
 		ret = LOCKDOWN_E_SUCCESS;
 	}
 	if (ret != LOCKDOWN_E_SUCCESS) {
@@ -428,7 +379,7 @@ lockdownd_error_t lockdownd_get_value(lockdownd_client_t client, const char *dom
 	plist_t value_node = plist_dict_get_item(dict, "Value");
 
 	if (value_node) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: has a value\n", __func__);
+		debug_info("has a value");
 		*value = plist_copy(value_node);
 	}
 
@@ -455,6 +406,7 @@ lockdownd_error_t lockdownd_set_value(lockdownd_client_t client, const char *dom
 
 	/* setup request plist */
 	dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	if (domain) {
 		plist_dict_insert_item(dict,"Domain", plist_new_string(domain));
 	}
@@ -474,12 +426,12 @@ lockdownd_error_t lockdownd_set_value(lockdownd_client_t client, const char *dom
 		return ret;
 
 	/* Now get device's answer */
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 	if (ret != LOCKDOWN_E_SUCCESS)
 		return ret;
 
 	if (lockdown_check_result(dict, "SetValue") == RESULT_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: success\n", __func__);
+		debug_info("success");
 		ret = LOCKDOWN_E_SUCCESS;
 	}
 
@@ -512,6 +464,7 @@ lockdownd_error_t lockdownd_remove_value(lockdownd_client_t client, const char *
 
 	/* setup request plist */
 	dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	if (domain) {
 		plist_dict_insert_item(dict,"Domain", plist_new_string(domain));
 	}
@@ -530,12 +483,12 @@ lockdownd_error_t lockdownd_remove_value(lockdownd_client_t client, const char *
 		return ret;
 
 	/* Now get device's answer */
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 	if (ret != LOCKDOWN_E_SUCCESS)
 		return ret;
 
 	if (lockdown_check_result(dict, "RemoveValue") == RESULT_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: success\n", __func__);
+		debug_info("success");
 		ret = LOCKDOWN_E_SUCCESS;
 	}
 
@@ -617,116 +570,222 @@ lockdownd_error_t lockdownd_get_device_name(lockdownd_client_t client, char **de
 	return ret;
 }
 
-/** Creates a lockdownd client for the give iPhone
+/** Creates a lockdownd client for the device.
  *
- * @param phone The iPhone to create a lockdownd client for
+ * @param phone The device to create a lockdownd client for
  * @param client The pointer to the location of the new lockdownd_client
+ * @param label The label to use for communication. Usually the program name
  *
  * @return an error code (LOCKDOWN_E_SUCCESS on success)
  */
-lockdownd_error_t lockdownd_client_new(iphone_device_t device, lockdownd_client_t *client)
+lockdownd_error_t lockdownd_client_new(iphone_device_t device, lockdownd_client_t *client, const char *label)
 {
 	if (!client)
 		return LOCKDOWN_E_INVALID_ARG;
-	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
-	char *host_id = NULL;
 
-	iphone_connection_t connection;
-	if (iphone_device_connect(device, 0xf27e, &connection) != IPHONE_E_SUCCESS) {
-		log_debug_msg("%s: could not connect to lockdownd (device %s)\n", __func__, device->uuid);
+	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
+
+	property_list_service_client_t plistclient = NULL;
+	if (property_list_service_client_new(device, 0xf27e, &plistclient) != PROPERTY_LIST_SERVICE_E_SUCCESS) {
+		debug_info("could not connect to lockdownd (device %s)", device->uuid);
 		return LOCKDOWN_E_MUX_ERROR;
 	}
 
 	lockdownd_client_t client_loc = (lockdownd_client_t) malloc(sizeof(struct lockdownd_client_int));
-	client_loc->connection = connection;
-	client_loc->ssl_session = NULL;
-	client_loc->ssl_certificate = NULL;
-	client_loc->in_SSL = 0;
+	client_loc->parent = plistclient;
+	client_loc->ssl_enabled = 0;
+	client_loc->session_id = NULL;
+	client_loc->uuid = NULL;
+	client_loc->label = NULL;
+	if (label != NULL)
+		strdup(label);
 
-	if (LOCKDOWN_E_SUCCESS != lockdownd_query_type(client_loc)) {
-		log_debug_msg("%s: QueryType failed in the lockdownd client.\n", __func__);
+	if (LOCKDOWN_E_SUCCESS == ret) {
+		*client = client_loc;
+	} else {
+		lockdownd_client_free(client_loc);
+	}
+
+	return ret;
+}
+
+/** Creates a lockdownd client for the device and starts initial handshake.
+ * The handshake consists of query_type, validate_pair, pair and
+ * start_session calls.
+ *
+ * @param phone The device to create a lockdownd client for
+ * @param client The pointer to the location of the new lockdownd_client
+ * @param label The label to use for communication. Usually the program name
+ *
+ * @return an error code (LOCKDOWN_E_SUCCESS on success)
+ */
+lockdownd_error_t lockdownd_client_new_with_handshake(iphone_device_t device, lockdownd_client_t *client, const char *label)
+{
+	if (!client)
+		return LOCKDOWN_E_INVALID_ARG;
+
+	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
+	lockdownd_client_t client_loc = NULL;
+	char *host_id = NULL;
+	char *type = NULL;
+
+
+	ret = lockdownd_client_new(device, &client_loc, label);
+
+	/* perform handshake */
+	if (LOCKDOWN_E_SUCCESS != lockdownd_query_type(client_loc, &type)) {
+		debug_info("QueryType failed in the lockdownd client.");
 		ret = LOCKDOWN_E_NOT_ENOUGH_DATA;
+	} else {
+		if (strcmp("com.apple.mobile.lockdown", type)) {
+			debug_info("Warning QueryType request returned \"%s\".", type);
+		}
+		if (type)
+			free(type);
 	}
 
-	char *uuid = NULL;
-	ret = iphone_device_get_uuid(device, &uuid);
+	ret = iphone_device_get_uuid(device, &client_loc->uuid);
 	if (LOCKDOWN_E_SUCCESS != ret) {
-		log_debug_msg("%s: failed to get device uuid.\n", __func__);
+		debug_info("failed to get device uuid.");
 	}
-	log_debug_msg("%s: device uuid: %s\n", __func__, uuid);
+	debug_info("device uuid: %s", client_loc->uuid);
 
 	userpref_get_host_id(&host_id);
 	if (LOCKDOWN_E_SUCCESS == ret && !host_id) {
 		ret = LOCKDOWN_E_INVALID_CONF;
 	}
 
-	if (LOCKDOWN_E_SUCCESS == ret && !userpref_has_device_public_key(uuid))
-		ret = lockdownd_pair(client_loc, uuid, host_id);
+	if (LOCKDOWN_E_SUCCESS == ret && !userpref_has_device_public_key(client_loc->uuid))
+		ret = lockdownd_pair(client_loc, NULL);
 
-	if (uuid) {
-		free(uuid);
-		uuid = NULL;
-	}
+	/* in any case, we need to validate pairing to receive trusted host status */
+	ret = lockdownd_validate_pair(client_loc, NULL);
 
 	if (LOCKDOWN_E_SUCCESS == ret) {
-		ret = lockdownd_start_ssl_session(client_loc, host_id);
+		ret = lockdownd_start_session(client_loc, host_id, NULL, NULL);
 		if (LOCKDOWN_E_SUCCESS != ret) {
-			ret = LOCKDOWN_E_SSL_ERROR;
-			log_debug_msg("%s: SSL Session opening failed.\n", __func__);
+			debug_info("Session opening failed.");
 		}
 
 		if (host_id) {
 			free(host_id);
 			host_id = NULL;
 		}
-
-		if (LOCKDOWN_E_SUCCESS == ret)
-			*client = client_loc;
+	}
+	
+	if (LOCKDOWN_E_SUCCESS == ret) {
+		*client = client_loc;
+	} else {
+		lockdownd_client_free(client_loc);
 	}
 
 	return ret;
 }
 
-/** Generates the appropriate keys and pairs the device. It's part of the
- *  lockdownd handshake.
- *
- * @return an error code (LOCKDOWN_E_SUCCESS on success)
- */
-lockdownd_error_t lockdownd_pair(lockdownd_client_t client, char *uuid, char *host_id)
+static plist_t lockdownd_pair_record_to_plist(lockdownd_pair_record_t pair_record)
+{
+	if (!pair_record)
+		return NULL;
+
+	char *host_id_loc = pair_record->host_id;
+
+	/* setup request plist */
+	plist_t dict = plist_new_dict();
+	plist_dict_insert_item(dict, "DeviceCertificate", plist_new_data(pair_record->device_certificate, strlen(pair_record->device_certificate)));
+	plist_dict_insert_item(dict, "HostCertificate", plist_new_data(pair_record->host_certificate, strlen(pair_record->host_certificate)));
+	if (!pair_record->host_id)
+		userpref_get_host_id(&host_id_loc);
+	plist_dict_insert_item(dict, "HostID", plist_new_string(host_id_loc));
+	plist_dict_insert_item(dict, "RootCertificate", plist_new_data(pair_record->root_certificate, strlen(pair_record->root_certificate)));
+
+	if (!pair_record->host_id)
+		free(host_id_loc);
+
+	return dict;
+}
+
+static lockdownd_error_t generate_pair_record_plist(gnutls_datum_t public_key, char *host_id, plist_t *pair_record_plist)
 {
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
-	plist_t dict = NULL;
-	plist_t dict_record = NULL;
 
 	gnutls_datum_t device_cert = { NULL, 0 };
 	gnutls_datum_t host_cert = { NULL, 0 };
 	gnutls_datum_t root_cert = { NULL, 0 };
-	gnutls_datum_t public_key = { NULL, 0 };
-
-	ret = lockdownd_get_device_public_key(client, &public_key);
-	if (ret != LOCKDOWN_E_SUCCESS) {
-		log_debug_msg("%s: device refused to send public key.\n", __func__);
-		return ret;
-	}
-	log_debug_msg("%s: device public key follows:\n%s\n", __func__, public_key.data);
 
 	ret = lockdownd_gen_pair_cert(public_key, &device_cert, &host_cert, &root_cert);
 	if (ret != LOCKDOWN_E_SUCCESS) {
-		free(public_key.data);
 		return ret;
+	}
+
+	char *host_id_loc = host_id;
+
+	if (!host_id)
+		userpref_get_host_id(&host_id_loc);
+
+	/* setup request plist */
+	*pair_record_plist = plist_new_dict();
+	plist_dict_insert_item(*pair_record_plist, "DeviceCertificate", plist_new_data((const char*)device_cert.data, device_cert.size));
+	plist_dict_insert_item(*pair_record_plist, "HostCertificate", plist_new_data((const char*)host_cert.data, host_cert.size));
+	plist_dict_insert_item(*pair_record_plist, "HostID", plist_new_string(host_id_loc));
+	plist_dict_insert_item(*pair_record_plist, "RootCertificate", plist_new_data((const char*)root_cert.data, root_cert.size));
+
+	if (!host_id)
+		free(host_id_loc);
+
+	return ret;
+}
+
+/** Function used internally by lockdownd_pair() and lockdownd_validate_pair()
+ *
+ * @param client The lockdown client to pair with.
+ * @param pair_record The pair record to use for pairing. If NULL is passed, then
+ *    the pair records from the current machine are used. New records will be
+ *    generated automatically when pairing is done for the first time.
+ * @param verb This is either "Pair", "ValidatePair" or "Unpair".
+ *
+ * @return an error code (LOCKDOWN_E_SUCCESS on success)
+ */
+static lockdownd_error_t lockdownd_do_pair(lockdownd_client_t client, lockdownd_pair_record_t pair_record, const char *verb)
+{
+	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
+	plist_t dict = NULL;
+	plist_t dict_record = NULL;
+	gnutls_datum_t public_key = { NULL, 0 };
+	int pairing_mode = 0; /* 0 = libiphone, 1 = external */
+
+	if (pair_record && pair_record->host_id) {
+		/* valid pair_record passed? */
+		if (!pair_record->device_certificate || !pair_record->host_certificate || !pair_record->root_certificate) {
+			return LOCKDOWN_E_PLIST_ERROR;
+		}
+
+		/* use passed pair_record */
+		dict_record = lockdownd_pair_record_to_plist(pair_record);
+
+		pairing_mode = 1;
+	} else {
+		ret = lockdownd_get_device_public_key(client, &public_key);
+		if (ret != LOCKDOWN_E_SUCCESS) {
+			if (public_key.data)
+				free(public_key.data);
+			debug_info("device refused to send public key.");
+			return ret;
+		}
+		debug_info("device public key follows:\n%s", public_key.data);
+		/* get libiphone pair_record */
+		ret = generate_pair_record_plist(public_key, NULL, &dict_record);
+		if (ret != LOCKDOWN_E_SUCCESS) {
+			if (dict_record)
+				plist_free(dict_record);
+			return ret;
+		}
 	}
 
 	/* Setup Pair request plist */
 	dict = plist_new_dict();
-	dict_record = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	plist_dict_insert_item(dict,"PairRecord", dict_record);
-
-	plist_dict_insert_item(dict_record, "DeviceCertificate", plist_new_data((const char*)device_cert.data, device_cert.size));
-	plist_dict_insert_item(dict_record, "HostCertificate", plist_new_data((const char*)host_cert.data, host_cert.size));
-	plist_dict_insert_item(dict_record, "HostID", plist_new_string(host_id));
-	plist_dict_insert_item(dict_record, "RootCertificate", plist_new_data((const char*)root_cert.data, root_cert.size));
-
-	plist_dict_insert_item(dict, "Request", plist_new_string("Pair"));
+	plist_dict_insert_item(dict, "Request", plist_new_string(verb));
 
 	/* send to iPhone */
 	ret = lockdownd_send(client, dict);
@@ -737,27 +796,98 @@ lockdownd_error_t lockdownd_pair(lockdownd_client_t client, char *uuid, char *ho
 		return ret;
 
 	/* Now get iPhone's answer */
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 
 	if (ret != LOCKDOWN_E_SUCCESS)
 		return ret;
 
-	if (lockdown_check_result(dict, "Pair") == RESULT_SUCCESS) {
-		ret = LOCKDOWN_E_SUCCESS;
+	if (lockdown_check_result(dict, verb) != RESULT_SUCCESS) {
+		ret = LOCKDOWN_E_PAIRING_FAILED;
+	}
+
+	/* if pairing succeeded */
+	if (ret == LOCKDOWN_E_SUCCESS) {
+		debug_info("%s success", verb);
+		if (!pairing_mode) {
+			if (!strcmp("Unpair", verb)) {
+				/* remove public key from config */
+				userpref_remove_device_public_key(client->uuid);
+			} else {
+				/* store public key in config */
+				userpref_set_device_public_key(client->uuid, public_key);
+			}
+		}
+	} else {
+		debug_info("%s failure", verb);
+		plist_t error_node = NULL;
+		/* verify error condition */
+		error_node = plist_dict_get_item(dict, "Error");
+		if (error_node) {
+			char *value = NULL;
+			plist_get_string_val(error_node, &value);
+			/* the first pairing fails if the device is password protected */
+			if (value && !strcmp(value, "PasswordProtected")) {
+				ret = LOCKDOWN_E_PASSWORD_PROTECTED;
+				free(value);
+			}
+			plist_free(error_node);
+			error_node = NULL;
+		}
 	}
 	plist_free(dict);
 	dict = NULL;
-
-	/* store public key in config if pairing succeeded */
-	if (ret == LOCKDOWN_E_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: pair success\n", __func__);
-		userpref_set_device_public_key(uuid, public_key);
-	} else {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: pair failure\n", __func__);
-		ret = LOCKDOWN_E_PAIRING_FAILED;
-	}
-	free(public_key.data);
+	if (public_key.data)
+		free(public_key.data);
 	return ret;
+}
+
+/** 
+ * Pairs the device with the given HostID.
+ * It's part of the lockdownd handshake.
+ *
+ * @param client The lockdown client to pair with.
+ * @param pair_record The pair record to use for pairing. If NULL is passed, then
+ *    the pair records from the current machine are used. New records will be
+ *    generated automatically when pairing is done for the first time.
+ *
+ * @return an error code (LOCKDOWN_E_SUCCESS on success)
+ */
+lockdownd_error_t lockdownd_pair(lockdownd_client_t client, lockdownd_pair_record_t pair_record)
+{
+	return lockdownd_do_pair(client, pair_record, "Pair");
+}
+
+/** 
+ * Pairs the device with the given HostID. The difference to lockdownd_pair()
+ * is that the specified host will become trusted host of the device.
+ * It's part of the lockdownd handshake.
+ *
+ * @param client The lockdown client to pair with.
+ * @param pair_record The pair record to validate pairing with. If NULL is
+ *    passed, then the pair records from the current machine are used.
+ *    New records will be generated automatically when pairing is done
+ *    for the first time.
+ *
+ * @return an error code (LOCKDOWN_E_SUCCESS on success)
+ */
+lockdownd_error_t lockdownd_validate_pair(lockdownd_client_t client, lockdownd_pair_record_t pair_record)
+{
+	return lockdownd_do_pair(client, pair_record, "ValidatePair");
+}
+
+/** 
+ * Unpairs the device with the given HostID and removes the pairing records
+ * from the device and host.
+ *
+ * @param client The lockdown client to pair with.
+ * @param pair_record The pair record to use for unpair. If NULL is passed, then
+ *    the pair records from the current machine are used.
+ *
+ * @return an error code (LOCKDOWN_E_SUCCESS on success)
+ */
+lockdownd_error_t lockdownd_unpair(lockdownd_client_t client, lockdownd_pair_record_t pair_record)
+{
+	return lockdownd_do_pair(client, pair_record, "Unpair");
 }
 
 /**
@@ -775,18 +905,19 @@ lockdownd_error_t lockdownd_enter_recovery(lockdownd_client_t client)
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
 	plist_t dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	plist_dict_insert_item(dict,"Request", plist_new_string("EnterRecovery"));
 
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: telling device to enter recovery mode\n", __func__);
+	debug_info("telling device to enter recovery mode");
 
 	ret = lockdownd_send(client, dict);
 	plist_free(dict);
 	dict = NULL;
 
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 
 	if (lockdown_check_result(dict, "EnterRecovery") == RESULT_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: success\n", __func__);
+		debug_info("success");
 		ret = LOCKDOWN_E_SUCCESS;
 	}
 	plist_free(dict);
@@ -810,22 +941,23 @@ lockdownd_error_t lockdownd_goodbye(lockdownd_client_t client)
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
 	plist_t dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	plist_dict_insert_item(dict,"Request", plist_new_string("Goodbye"));
 
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: called\n", __func__);
+	debug_info("called");
 
 	ret = lockdownd_send(client, dict);
 	plist_free(dict);
 	dict = NULL;
 
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 	if (!dict) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: did not get goodbye response back\n", __func__);
+		debug_info("did not get goodbye response back");
 		return LOCKDOWN_E_PLIST_ERROR;
 	}
 
 	if (lockdown_check_result(dict, "Goodbye") == RESULT_SUCCESS) {
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: success\n", __func__);
+		debug_info("success");
 		ret = LOCKDOWN_E_SUCCESS;
 	}
 	plist_free(dict);
@@ -881,7 +1013,7 @@ lockdownd_error_t lockdownd_gen_pair_cert(gnutls_datum_t public_key, gnutls_datu
 			asn1_delete_structure(&pkcs1);
 	}
 
-	/* now generate certifcates */
+	/* now generate certificates */
 	if (LOCKDOWN_E_SUCCESS == ret && 0 != modulus.size && 0 != exponent.size) {
 
 		gnutls_global_init();
@@ -971,24 +1103,33 @@ lockdownd_error_t lockdownd_gen_pair_cert(gnutls_datum_t public_key, gnutls_datu
 	return ret;
 }
 
-/** Starts SSL communication with lockdownd after the iPhone has been paired.
+/** Starts communication with lockdownd after the iPhone has been paired,
+ *  and if the device requires it, switches to SSL mode.
  *
  * @param client The lockdownd client
- * @param HostID The HostID used with this phone
+ * @param host_id The HostID of the computer
+ * @param session_id The session_id of the created session
+ * @param ssl_enabled Whether SSL communication is used in the session
  *
  * @return an error code (LOCKDOWN_E_SUCCESS on success)
  */
-lockdownd_error_t lockdownd_start_ssl_session(lockdownd_client_t client, const char *HostID)
+lockdownd_error_t lockdownd_start_session(lockdownd_client_t client, const char *host_id, char **session_id, int *ssl_enabled)
 {
+	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
 	plist_t dict = NULL;
-	uint32_t return_me = 0;
 
-	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
-	client->session_id[0] = '\0';
+	if (!client || !host_id)
+		ret = LOCKDOWN_E_INVALID_ARG;
 
-	/* Setup DevicePublicKey request plist */
+	/* if we have a running session, stop current one first */
+	if (client->session_id) {
+		lockdownd_stop_session(client, client->session_id);
+	}
+
+	/* setup request plist */
 	dict = plist_new_dict();
-	plist_dict_insert_item(dict,"HostID", plist_new_string(HostID));
+	plist_dict_add_label(dict, client->label);
+	plist_dict_insert_item(dict,"HostID", plist_new_string(host_id));
 	plist_dict_insert_item(dict,"Request", plist_new_string("StartSession"));
 
 	ret = lockdownd_send(client, dict);
@@ -998,7 +1139,7 @@ lockdownd_error_t lockdownd_start_ssl_session(lockdownd_client_t client, const c
 	if (ret != LOCKDOWN_E_SUCCESS)
 		return ret;
 
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 
 	if (!dict)
 		return LOCKDOWN_E_PLIST_ERROR;
@@ -1008,183 +1149,54 @@ lockdownd_error_t lockdownd_start_ssl_session(lockdownd_client_t client, const c
 		if (error_node && PLIST_STRING == plist_get_node_type(error_node)) {
 			char *error = NULL;
 			plist_get_string_val(error_node, &error);
-
 			if (!strcmp(error, "InvalidHostID")) {
-				/* hostid is unknown. Pair and try again */
-				char *uuid = NULL;
-				char *host_id = NULL;
-				userpref_get_host_id(&host_id);
-
-				if (LOCKDOWN_E_SUCCESS == lockdownd_get_device_uuid(client, &uuid) ) {
-					if (LOCKDOWN_E_SUCCESS == lockdownd_pair(client, uuid, host_id) ) {
-						/* start session again */
-						plist_free(dict);
-						dict = plist_new_dict();
-						plist_dict_insert_item(dict,"HostID", plist_new_string(HostID));
-						plist_dict_insert_item(dict,"Request", plist_new_string("StartSession"));
-
-						ret = lockdownd_send(client, dict);
-						plist_free(dict);
-						dict = NULL;
-
-						ret = lockdownd_recv(client, &dict);
-					}
-				}
-				free(uuid);
-				free(host_id);
+				ret = LOCKDOWN_E_INVALID_HOST_ID;
 			}
 			free(error);
 		}
-	}
+	} else {
+		uint8_t use_ssl = 0;
 
-	ret = LOCKDOWN_E_SSL_ERROR;
-	if (lockdown_check_result(dict, "StartSession") == RESULT_SUCCESS) {
-		// Set up GnuTLS...
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: started the session OK, now trying GnuTLS\n", __func__);
-		errno = 0;
-		gnutls_global_init();
-		//gnutls_anon_allocate_client_credentials(&anoncred);
-		gnutls_certificate_allocate_credentials(&client->ssl_certificate);
-		gnutls_certificate_set_x509_trust_file(client->ssl_certificate, "hostcert.pem", GNUTLS_X509_FMT_PEM);
-		gnutls_init(&client->ssl_session, GNUTLS_CLIENT);
-		{
-			int protocol_priority[16] = { GNUTLS_SSL3, 0 };
-			int kx_priority[16] = { GNUTLS_KX_ANON_DH, GNUTLS_KX_RSA, 0 };
-			int cipher_priority[16] = { GNUTLS_CIPHER_AES_128_CBC, GNUTLS_CIPHER_AES_256_CBC, 0 };
-			int mac_priority[16] = { GNUTLS_MAC_SHA1, GNUTLS_MAC_MD5, 0 };
-			int comp_priority[16] = { GNUTLS_COMP_NULL, 0 };
-
-			gnutls_cipher_set_priority(client->ssl_session, cipher_priority);
-			gnutls_compression_set_priority(client->ssl_session, comp_priority);
-			gnutls_kx_set_priority(client->ssl_session, kx_priority);
-			gnutls_protocol_set_priority(client->ssl_session, protocol_priority);
-			gnutls_mac_set_priority(client->ssl_session, mac_priority);
+		plist_t enable_ssl = plist_dict_get_item(dict, "EnableSessionSSL");
+		if (enable_ssl && (plist_get_node_type(enable_ssl) == PLIST_BOOLEAN)) {
+			plist_get_bool_val(enable_ssl, &use_ssl);
 		}
-		gnutls_credentials_set(client->ssl_session, GNUTLS_CRD_CERTIFICATE, client->ssl_certificate);	// this part is killing me.
+		debug_info("Session startup OK");
 
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: GnuTLS step 1...\n", __func__);
-		gnutls_transport_set_ptr(client->ssl_session, (gnutls_transport_ptr_t) client);
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: GnuTLS step 2...\n", __func__);
-		gnutls_transport_set_push_function(client->ssl_session, (gnutls_push_func) & lockdownd_secuwrite);
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: GnuTLS step 3...\n", __func__);
-		gnutls_transport_set_pull_function(client->ssl_session, (gnutls_pull_func) & lockdownd_securead);
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: GnuTLS step 4 -- now handshaking...\n", __func__);
-		if (errno)
-			log_dbg_msg(DBGMASK_LOCKDOWND, "%s: WARN: errno says %s before handshake!\n", __func__, strerror(errno));
-		return_me = gnutls_handshake(client->ssl_session);
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: GnuTLS handshake done...\n", __func__);
+		if (ssl_enabled != NULL)
+			*ssl_enabled = use_ssl;
 
-		if (return_me != GNUTLS_E_SUCCESS) {
-			log_dbg_msg(DBGMASK_LOCKDOWND, "%s: GnuTLS reported something wrong.\n", __func__);
-			gnutls_perror(return_me);
-			log_dbg_msg(DBGMASK_LOCKDOWND, "%s: oh.. errno says %s\n", __func__, strerror(errno));
-			return LOCKDOWN_E_SSL_ERROR;
+		/* store session id, we need it for StopSession */
+		plist_t session_node = plist_dict_get_item(dict, "SessionID");
+		if (session_node && (plist_get_node_type(session_node) == PLIST_STRING)) {
+			plist_get_string_val(session_node, &client->session_id);
+		}
+		if (client->session_id) {
+			debug_info("SessionID: %s", client->session_id);
+			if (session_id != NULL)
+				*session_id = strdup(client->session_id);
 		} else {
-			client->in_SSL = 1;
+			debug_info("Failed to get SessionID!");
+		}
+		debug_info("Enable SSL Session: %s", (use_ssl?"true":"false"));
+		if (use_ssl) {
+			ret = property_list_service_enable_ssl(client->parent);
+			if (ret == PROPERTY_LIST_SERVICE_E_SUCCESS) {
+				client->ssl_enabled = 1;
+			} else {
+				ret = LOCKDOWN_E_SSL_ERROR;
+				client->ssl_enabled = 0;
+			}
+		} else {
+			client->ssl_enabled = 0;
 			ret = LOCKDOWN_E_SUCCESS;
 		}
 	}
-	/* store session id */
-	plist_t session_node = plist_dict_get_item(dict, "SessionID");
-	if (session_node) {
 
-		plist_type session_node_type = plist_get_node_type(session_node);
-
-		if (session_node_type == PLIST_STRING) {
-
-			char *session_id = NULL;
-			plist_get_string_val(session_node, &session_id);
-
-			if (session_node_type == PLIST_STRING && session_id) {
-				/* we need to store the session ID for StopSession */
-				strcpy(client->session_id, session_id);
-				log_dbg_msg(DBGMASK_LOCKDOWND, "%s: SessionID: %s\n", __func__, client->session_id);
-			}
-			if (session_id)
-				free(session_id);
-		}
-	} else
-		log_dbg_msg(DBGMASK_LOCKDOWND, "%s: Failed to get SessionID!\n", __func__);
 	plist_free(dict);
 	dict = NULL;
 
-	if (ret == LOCKDOWN_E_SUCCESS)
-		return ret;
-
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: Apparently failed negotiating with lockdownd.\n", __func__);
-	return LOCKDOWN_E_SSL_ERROR;
-}
-
-/** gnutls callback for writing data to the iPhone.
- *
- * @param transport It's really the lockdownd client, but the method signature has to match
- * @param buffer The data to send
- * @param length The length of data to send in bytes
- *
- * @return The number of bytes sent
- */
-ssize_t lockdownd_secuwrite(gnutls_transport_ptr_t transport, char *buffer, size_t length)
-{
-	uint32_t bytes = 0;
-	lockdownd_client_t client;
-	client = (lockdownd_client_t) transport;
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: called\n", __func__);
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: pre-send length = %zi\n", __func__, length);
-	iphone_device_send(client->connection, buffer, length, &bytes);
-	log_dbg_msg(DBGMASK_LOCKDOWND, "%s: post-send sent %i bytes\n", __func__, bytes);
-	return bytes;
-}
-
-/** gnutls callback for reading data from the iPhone
- *
- * @param transport It's really the lockdownd client, but the method signature has to match
- * @param buffer The buffer to store data in
- * @param length The length of data to read in bytes
- *
- * @return The number of bytes read
- */
-ssize_t lockdownd_securead(gnutls_transport_ptr_t transport, char *buffer, size_t length)
-{
-	int bytes = 0, pos_start_fill = 0;
-	size_t tbytes = 0;
-	int this_len = length;
-	iphone_error_t res;
-	lockdownd_client_t client;
-	client = (lockdownd_client_t) transport;
-	char *recv_buffer;
-
-	log_debug_msg("%s: pre-read client wants %zi bytes\n", __func__, length);
-
-	recv_buffer = (char *) malloc(sizeof(char) * this_len);
-
-	// repeat until we have the full data or an error occurs.
-	do {
-		if ((res = iphone_device_recv(client->connection, recv_buffer, this_len, (uint32_t*)&bytes)) != LOCKDOWN_E_SUCCESS) {
-			log_debug_msg("%s: ERROR: usbmux_recv returned %d\n", __func__, res);
-			return res;
-		}
-		log_debug_msg("%s: post-read we got %i bytes\n", __func__, bytes);
-
-		// increase read count
-		tbytes += bytes;
-
-		// fill the buffer with what we got right now
-		memcpy(buffer + pos_start_fill, recv_buffer, bytes);
-		pos_start_fill += bytes;
-
-		if (tbytes >= length) {
-			break;
-		}
-
-		this_len = length - tbytes;
-		log_debug_msg("%s: re-read trying to read missing %i bytes\n", __func__, this_len);
-	} while (tbytes < length);
-
-	if (recv_buffer) {
-		free(recv_buffer);
-	}
-
-	return tbytes;
+	return ret;
 }
 
 /** Command to start the desired service
@@ -1195,7 +1207,7 @@ ssize_t lockdownd_securead(gnutls_transport_ptr_t transport, char *buffer, size_
  
  * @return an error code (LOCKDOWN_E_SUCCESS on success)
  */
-lockdownd_error_t lockdownd_start_service(lockdownd_client_t client, const char *service, int *port)
+lockdownd_error_t lockdownd_start_service(lockdownd_client_t client, const char *service, uint16_t *port)
 {
 	if (!client || !service || !port)
 		return LOCKDOWN_E_INVALID_ARG;
@@ -1204,17 +1216,18 @@ lockdownd_error_t lockdownd_start_service(lockdownd_client_t client, const char 
 	userpref_get_host_id(&host_id);
 	if (!host_id)
 		return LOCKDOWN_E_INVALID_CONF;
-	if (!client->in_SSL && !lockdownd_start_ssl_session(client, host_id))
-		return LOCKDOWN_E_SSL_ERROR;
+	if (!client->session_id)
+		return LOCKDOWN_E_NO_RUNNING_SESSION;
 
 	plist_t dict = NULL;
-	uint32_t port_loc = 0;
+	uint16_t port_loc = 0;
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
 	free(host_id);
 	host_id = NULL;
 
 	dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
 	plist_dict_insert_item(dict,"Request", plist_new_string("StartService"));
 	plist_dict_insert_item(dict,"Service", plist_new_string(service));
 
@@ -1226,7 +1239,7 @@ lockdownd_error_t lockdownd_start_service(lockdownd_client_t client, const char 
 	if (LOCKDOWN_E_SUCCESS != ret)
 		return ret;
 
-	ret = lockdownd_recv(client, &dict);
+	ret = lockdownd_receive(client, &dict);
 
 	if (LOCKDOWN_E_SUCCESS != ret)
 		return ret;
@@ -1249,12 +1262,115 @@ lockdownd_error_t lockdownd_start_service(lockdownd_client_t client, const char 
 			if (port && ret == LOCKDOWN_E_SUCCESS)
 				*port = port_loc;
 		}
-	}
-	else
+	} else {
 		ret = LOCKDOWN_E_START_SERVICE_FAILED;
+		plist_t error_node = plist_dict_get_item(dict, "Error");
+		if (error_node && PLIST_STRING == plist_get_node_type(error_node)) {
+			char *error = NULL;
+			plist_get_string_val(error_node, &error);
+			if (!strcmp(error, "InvalidService")) {
+				ret = LOCKDOWN_E_INVALID_SERVICE;
+			}
+			free(error);
+		}
+	}
 
 	plist_free(dict);
 	dict = NULL;
+	return ret;
+}
+
+/**
+ * Activates the device. Only works within an open session.
+ * The ActivationRecord plist dictionary must be obtained using the
+ * activation protocol requesting from Apple's https webservice.
+ *
+ * @see http://iphone-docs.org/doku.php?id=docs:protocols:activation
+ *
+ * @param control The lockdown client
+ * @param activation_record The activation record plist dictionary
+ *
+ * @return an error code (LOCKDOWN_E_SUCCESS on success)
+ */
+lockdownd_error_t lockdownd_activate(lockdownd_client_t client, plist_t activation_record) 
+{
+	if (!client)
+		return LOCKDOWN_E_INVALID_ARG;
+
+	if (!client->session_id)
+		return LOCKDOWN_E_NO_RUNNING_SESSION;
+
+	if (!activation_record)
+		return LOCKDOWN_E_INVALID_ARG;
+
+	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
+
+	plist_t dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
+	plist_dict_insert_item(dict,"Request", plist_new_string("Activate"));
+	plist_dict_insert_item(dict,"ActivationRecord", activation_record);
+
+	ret = lockdownd_send(client, dict);
+	plist_free(dict);
+	dict = NULL;
+
+	ret = lockdownd_receive(client, &dict);
+	if (!dict) {
+		debug_info("LOCKDOWN_E_PLIST_ERROR");
+		return LOCKDOWN_E_PLIST_ERROR;
+	}
+
+	ret = LOCKDOWN_E_ACTIVATION_FAILED;
+	if (lockdown_check_result(dict, "Activate") == RESULT_SUCCESS) {
+		debug_info("success");
+		ret = LOCKDOWN_E_SUCCESS;
+	}
+	plist_free(dict);
+	dict = NULL;
+
+	return ret;
+}
+
+/**
+ * Deactivates the device, returning it to the locked
+ * “Activate with iTunes” screen.
+ *
+ * @param control The lockdown client
+ *
+ * @return an error code (LOCKDOWN_E_SUCCESS on success)
+ */
+lockdownd_error_t lockdownd_deactivate(lockdownd_client_t client)
+{
+	if (!client)
+		return LOCKDOWN_E_INVALID_ARG;
+
+	if (!client->session_id)
+		return LOCKDOWN_E_NO_RUNNING_SESSION;
+
+	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
+
+	plist_t dict = plist_new_dict();
+	plist_dict_add_label(dict, client->label);
+	plist_dict_insert_item(dict,"Request", plist_new_string("Deactivate"));
+
+	ret = lockdownd_send(client, dict);
+	plist_free(dict);
+	dict = NULL;
+
+	ret = lockdownd_receive(client, &dict);
+	if (!dict) {
+		debug_info("LOCKDOWN_E_PLIST_ERROR");
+		return LOCKDOWN_E_PLIST_ERROR;
+	}
+
+	ret = LOCKDOWN_E_UNKNOWN_ERROR;
+	if (lockdown_check_result(dict, "Deactivate") == RESULT_SUCCESS) {
+		debug_info("success");
+		ret = LOCKDOWN_E_SUCCESS;
+	}
+	plist_free(dict);
+	dict = NULL;
+
 	return ret;
 }
 

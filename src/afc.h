@@ -1,5 +1,5 @@
 /* 
- * AFC.h
+ * afc.h
  * Defines and structs and the like for the built-in AFC client
  * 
  * Copyright (c) 2008 Zach C. All Rights Reserved.
@@ -35,6 +35,18 @@ typedef struct {
 	char magic[AFC_MAGIC_LEN];
 	uint64_t entire_length, this_length, packet_num, operation;
 } AFCPacket;
+
+#define AFCPacket_to_LE(x) \
+ 	(x)->entire_length = GUINT64_TO_LE((x)->entire_length); \
+	(x)->this_length   = GUINT64_TO_LE((x)->this_length); \
+	(x)->packet_num    = GUINT64_TO_LE((x)->packet_num); \
+	(x)->operation     = GUINT64_TO_LE((x)->operation);
+
+#define AFCPacket_from_LE(x) \
+	(x)->entire_length = GUINT64_FROM_LE((x)->entire_length); \
+	(x)->this_length   = GUINT64_FROM_LE((x)->this_length); \
+	(x)->packet_num    = GUINT64_FROM_LE((x)->packet_num); \
+	(x)->operation     = GUINT64_FROM_LE((x)->operation);
 
 typedef struct {
 	uint64_t filehandle, size;

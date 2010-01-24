@@ -29,7 +29,6 @@
 #include <libiphone/lockdown.h>
 #include <libiphone/afc.h>
 #include <libiphone/notification_proxy.h>
-#include "../src/utils.h"
 
 static void notifier(const char *notification)
 {
@@ -40,7 +39,7 @@ static void notifier(const char *notification)
 
 static void perform_notification(iphone_device_t phone, lockdownd_client_t client, const char *notification)
 {
-	int nport = 0;
+	uint16_t nport = 0;
 	np_client_t np;
 
 	lockdownd_start_service(client, "com.apple.mobile.notification_proxy", &nport);
@@ -60,8 +59,8 @@ static void perform_notification(iphone_device_t phone, lockdownd_client_t clien
 int main(int argc, char *argv[])
 {
 	unsigned int bytes = 0;
-	int port = 0, i = 0;
-	int npp;
+	uint16_t port = 0, i = 0;
+	uint16_t npp;
 	lockdownd_client_t client = NULL;
 	iphone_device_t phone = NULL;
 	uint64_t lockfile = 0;
@@ -69,10 +68,8 @@ int main(int argc, char *argv[])
 
 	if (argc > 1 && !strcasecmp(argv[1], "--debug")) {
 		iphone_set_debug_level(1);
-		iphone_set_debug_mask(DBGMASK_ALL);
 	} else {
 		iphone_set_debug_level(0);
-		iphone_set_debug_mask(DBGMASK_NONE);
 	}
 
 	if (IPHONE_E_SUCCESS != iphone_device_new(&phone, NULL)) {
@@ -87,7 +84,7 @@ int main(int argc, char *argv[])
 	if (uuid)
 		free(uuid);
 
-	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new(phone, &client)) {
+	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new_with_handshake(phone, &client, "iphoneclient")) {
 		iphone_device_free(phone);
 		printf("Exiting.\n");
 		return -1;

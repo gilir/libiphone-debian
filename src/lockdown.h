@@ -26,23 +26,18 @@
 #include <string.h>
 
 #include "libiphone/lockdown.h"
+#include "property_list_service.h"
 
 struct lockdownd_client_int {
-	iphone_connection_t connection;
-	gnutls_session_t ssl_session;
-	gnutls_certificate_credentials_t ssl_certificate;
-	int in_SSL;
-	char session_id[40];
+	property_list_service_client_t parent;
+	int ssl_enabled;
+	char *session_id;
+	char *uuid;
+	char *label;
 };
 
 lockdownd_error_t lockdownd_get_device_public_key(lockdownd_client_t client, gnutls_datum_t * public_key);
 lockdownd_error_t lockdownd_gen_pair_cert(gnutls_datum_t public_key, gnutls_datum_t * device_cert,
 									   gnutls_datum_t * host_cert, gnutls_datum_t * root_cert);
-
-/* SSL functions */
-lockdownd_error_t lockdownd_start_ssl_session(lockdownd_client_t client, const char *HostID);
-ssize_t lockdownd_securead(gnutls_transport_ptr_t transport, char *buffer, size_t length);
-ssize_t lockdownd_secuwrite(gnutls_transport_ptr_t transport, char *buffer, size_t length);
-
 
 #endif
