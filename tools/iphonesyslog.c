@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	iphone_error_t ret = IPHONE_E_UNKNOWN_ERROR;
 	int i;
 	char uuid[41];
-	int port = 0;
+	uint16_t port = 0;
 	uuid[0] = 0;
 
 	signal(SIGINT, clean_exit);
@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
 	/* parse cmdline args */
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--debug")) {
-			iphone_set_debug_mask(DBGMASK_ALL);
 			iphone_set_debug_level(1);
 			continue;
 		}
@@ -99,7 +98,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new(phone, &client)) {
+	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new_with_handshake(phone, &client, "iphonesyslog")) {
 		iphone_device_free(phone);
 		return -1;
 	}
@@ -118,7 +117,7 @@ int main(int argc, char *argv[])
 				char *receive = NULL;
 				uint32_t datalen = 0, bytes = 0, recv_bytes = 0;
 
-				ret = iphone_device_recv(conn, (char *) &datalen, sizeof(datalen), &bytes);
+				ret = iphone_connection_receive(conn, (char *) &datalen, sizeof(datalen), &bytes);
 				datalen = ntohl(datalen);
 
 				if (datalen == 0)
@@ -128,7 +127,7 @@ int main(int argc, char *argv[])
 				receive = (char *) malloc(sizeof(char) * datalen);
 
 				while (!quit_flag && (recv_bytes <= datalen)) {
-					ret = iphone_device_recv(conn, receive, datalen, &bytes);
+					ret = iphone_connection_receive(conn, receive, datalen, &bytes);
 
 					if (bytes == 0)
 						break;

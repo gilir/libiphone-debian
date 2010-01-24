@@ -8,7 +8,7 @@
  #include <libiphone/mobilesync.h>
  #include <plist/plist.h>
  #include <plist/plist++.h>
- #include "../src/utils.h"
+ #include "../src/debug.h"
  typedef struct {
 	iphone_device_t dev;
  } iPhone;
@@ -35,11 +35,6 @@ PList::Node* new_node_from_plist(plist_t node);
 %include "stdint.i"
 %include "cstring.i"
 %include "plist/swig/plist.i"
-
-#define DBGMASK_ALL        0xFFFF
-#define DBGMASK_NONE       0x0000
-#define DBGMASK_LOCKDOWND  (1 << 1)
-#define DBGMASK_MOBILESYNC (1 << 2)
 
 typedef struct {
 	iphone_device_t dev;
@@ -71,7 +66,7 @@ Lockdownd* my_new_Lockdownd(iPhone* phone) {
 	Lockdownd* client = (Lockdownd*) malloc(sizeof(Lockdownd));
 	client->dev = phone;
 	client->client = NULL;
-	if (LOCKDOWN_E_SUCCESS == lockdownd_client_new(phone->dev , &(client->client))) {
+	if (LOCKDOWN_E_SUCCESS == lockdownd_client_new_with_handshake(phone->dev , &(client->client), NULL)) {
 		return client;
 	}
 	else {
@@ -90,7 +85,7 @@ void my_delete_Lockdownd(Lockdownd* lckd) {
 MobileSync* my_new_MobileSync(Lockdownd* lckd) {
 	if (!lckd || !lckd->dev) return NULL;
 	MobileSync* client = NULL;
-	int port = 0;
+	uint16_t port = 0;
 	if (LOCKDOWN_E_SUCCESS == lockdownd_start_service(lckd->client, "com.apple.mobilesync", &port)) {
 		client = (MobileSync*) malloc(sizeof(MobileSync));
 		client->dev = lckd->dev;
@@ -149,10 +144,6 @@ PList::Node* new_node_from_plist(plist_t node)
 		my_delete_iPhone($self);
 	}
 
-	void set_debug_mask(uint16_t mask) {
-		iphone_set_debug_mask(mask);
-	}
-
 	void set_debug_level(int level) {
 		iphone_set_debug_level(level);
 	}
@@ -197,7 +188,7 @@ PList::Node* new_node_from_plist(plist_t node)
 
 	PList::Node* receive() {
 		plist_t node = NULL;
-		lockdownd_recv($self->client, &node);
+		lockdownd_receive($self->client, &node);
 		return new_node_from_plist(node);
 	}
 
@@ -222,7 +213,7 @@ PList::Node* new_node_from_plist(plist_t node)
 
 	PList::Node* receive() {
 		plist_t node = NULL;
-		mobilesync_recv($self->client, &node);
+		mobilesync_receive($self->client, &node);
 		return new_node_from_plist(node);
 	}
 };

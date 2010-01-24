@@ -39,6 +39,7 @@ extern "C" {
 #define IPHONE_E_NO_DEVICE             -3
 #define IPHONE_E_NOT_ENOUGH_DATA       -4
 #define IPHONE_E_BAD_HEADER            -5
+#define IPHONE_E_SSL_ERROR             -6
 
 typedef int16_t iphone_error_t;
 
@@ -48,14 +49,7 @@ typedef struct iphone_device_int *iphone_device_t;
 struct iphone_connection_int;
 typedef struct iphone_connection_int *iphone_connection_t;
 
-/* Debugging */
-#define DBGMASK_ALL        0xFFFF
-#define DBGMASK_NONE       0x0000
-#define DBGMASK_LOCKDOWND  (1 << 1)
-#define DBGMASK_MOBILESYNC (1 << 2)
-
 /* generic */
-void iphone_set_debug_mask(uint16_t mask);
 void iphone_set_debug_level(int level);
 
 /* discovery (events/asynchronous) */
@@ -87,12 +81,14 @@ iphone_error_t iphone_device_list_free(char **devices);
 iphone_error_t iphone_device_new(iphone_device_t *device, const char *uuid);
 iphone_error_t iphone_device_free(iphone_device_t device);
 
-/* connection/disconnection and communication */
-iphone_error_t iphone_device_connect(iphone_device_t device, uint16_t dst_port, iphone_connection_t *connection);
+/* connection/disconnection */
+iphone_error_t iphone_device_connect(iphone_device_t device, uint16_t port, iphone_connection_t *connection);
 iphone_error_t iphone_device_disconnect(iphone_connection_t connection);
-iphone_error_t iphone_device_send(iphone_connection_t connection, const char *data, uint32_t len, uint32_t *sent_bytes);
-iphone_error_t iphone_device_recv_timeout(iphone_connection_t connection, char *data, uint32_t len, uint32_t *recv_bytes, unsigned int timeout);
-iphone_error_t iphone_device_recv(iphone_connection_t connection, char *data, uint32_t len, uint32_t *recv_bytes);
+
+/* communication */
+iphone_error_t iphone_connection_send(iphone_connection_t connection, const char *data, uint32_t len, uint32_t *sent_bytes);
+iphone_error_t iphone_connection_receive_timeout(iphone_connection_t connection, char *data, uint32_t len, uint32_t *recv_bytes, unsigned int timeout);
+iphone_error_t iphone_connection_receive(iphone_connection_t connection, char *data, uint32_t len, uint32_t *recv_bytes);
 
 /* misc */
 iphone_error_t iphone_device_get_handle(iphone_device_t device, uint32_t *handle);

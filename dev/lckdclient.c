@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 	if (uuid)
 		free(uuid);
 
-	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new(phone, &client)) {
+	if (LOCKDOWN_E_SUCCESS != lockdownd_client_new_with_handshake(phone, &client, "lckdclient")) {
 		iphone_device_free(phone);
 		return -1;
 	}
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 				}
 
 				if (!strcmp(*args, "start") && len == 2) {
-					int port = 0;
+					uint16_t port = 0;
 					if(LOCKDOWN_E_SUCCESS == lockdownd_start_service(client, *(args + 1), &port)) {
 						printf("started service %s on port %i\n", *(args + 1), port);
 					}

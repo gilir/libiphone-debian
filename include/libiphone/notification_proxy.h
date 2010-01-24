@@ -33,27 +33,39 @@ extern "C" {
 #define NP_E_SUCCESS                0
 #define NP_E_INVALID_ARG           -1
 #define NP_E_PLIST_ERROR           -2
+#define NP_E_CONN_FAILED           -3
 
 #define NP_E_UNKNOWN_ERROR       -256
 
 typedef int16_t np_error_t;
 
 /* Notification IDs for use with post_notification (client --> device) */
-#define NP_SYNC_WILL_START      "com.apple.itunes-mobdev.syncWillStart"
-#define NP_SYNC_DID_START       "com.apple.itunes-mobdev.syncDidStart"
-#define NP_SYNC_DID_FINISH      "com.apple.itunes-mobdev.syncDidFinish"
+#define NP_SYNC_WILL_START           "com.apple.itunes-mobdev.syncWillStart"
+#define NP_SYNC_DID_START            "com.apple.itunes-mobdev.syncDidStart"
+#define NP_SYNC_DID_FINISH           "com.apple.itunes-mobdev.syncDidFinish"
 
 /* Notification IDs for use with observe_notification (device --> client) */
-#define NP_SYNC_CANCEL_REQUEST  "com.apple.itunes-client.syncCancelRequest"
-#define NP_SYNC_SUSPEND_REQUEST "com.apple.itunes-client.syncSuspendRequest"
-#define NP_SYNC_RESUME_REQUEST  "com.apple.itunes-client.syncResumeRequest"
-#define NP_PHONE_NUMBER_CHANGED "com.apple.mobile.lockdown.phone_number_changed"
-#define NP_DEVICE_NAME_CHANGED  "com.apple.mobile.lockdown.device_name_changed"
-#define NP_ATTEMPTACTIVATION    "com.apple.springboard.attemptactivation"
-#define NP_DS_DOMAIN_CHANGED    "com.apple.mobile.data_sync.domain_changed"
-#define NP_APP_INSTALLED        "com.apple.mobile.application_installed"
-#define NP_APP_UNINSTALLED      "com.apple.mobile.application_uninstalled"
-#define NP_ITDBPREP_DID_END     "com.apple.itdbprep.notification.didEnd"
+#define NP_SYNC_CANCEL_REQUEST       "com.apple.itunes-client.syncCancelRequest"
+#define NP_SYNC_SUSPEND_REQUEST      "com.apple.itunes-client.syncSuspendRequest"
+#define NP_SYNC_RESUME_REQUEST       "com.apple.itunes-client.syncResumeRequest"
+#define NP_PHONE_NUMBER_CHANGED      "com.apple.mobile.lockdown.phone_number_changed"
+#define NP_DEVICE_NAME_CHANGED       "com.apple.mobile.lockdown.device_name_changed"
+#define NP_TIMEZONE_CHANGED          "com.apple.mobile.lockdown.timezone_changed"
+#define NP_TRUSTED_HOST_ATTACHED     "com.apple.mobile.lockdown.trusted_host_attached"
+#define NP_HOST_DETACHED             "com.apple.mobile.lockdown.host_detached"
+#define NP_HOST_ATTACHED             "com.apple.mobile.lockdown.host_attached"
+#define NP_REGISTRATION_FAILED       "com.apple.mobile.lockdown.registration_failed"
+#define NP_ACTIVATION_STATE          "com.apple.mobile.lockdown.activation_state"
+#define NP_BRICK_STATE               "com.apple.mobile.lockdown.brick_state"
+#define NP_DS_DOMAIN_CHANGED         "com.apple.mobile.data_sync.domain_changed"
+#define NP_BACKUP_DOMAIN_CHANGED     "com.apple.mobile.backup.domain_changed"
+#define NP_APP_INSTALLED             "com.apple.mobile.application_installed"
+#define NP_APP_UNINSTALLED           "com.apple.mobile.application_uninstalled"
+#define NP_DEV_IMAGE_MOUNTED         "com.apple.mobile.developer_image_mounted"
+#define NP_ATTEMPTACTIVATION         "com.apple.springboard.attemptactivation"
+#define NP_ITDBPREP_DID_END          "com.apple.itdbprep.notification.didEnd"
+#define NP_LANGUAGE_CHANGED          "com.apple.language.changed"
+#define NP_ADDRESS_BOOK_PREF_CHANGED "com.apple.AddressBook.PreferenceChanged"
 
 struct np_client_int;
 typedef struct np_client_int *np_client_t;
@@ -61,7 +73,7 @@ typedef struct np_client_int *np_client_t;
 typedef void (*np_notify_cb_t) (const char *notification);
 
 /* Interface */
-np_error_t np_client_new(iphone_device_t device, int dst_port, np_client_t *client);
+np_error_t np_client_new(iphone_device_t device, uint16_t port, np_client_t *client);
 np_error_t np_client_free(np_client_t client);
 np_error_t np_post_notification(np_client_t client, const char *notification);
 np_error_t np_observe_notification(np_client_t client, const char *notification);

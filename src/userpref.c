@@ -20,6 +20,7 @@
  */
 
 #include <glib.h>
+#include <glib/gstdio.h>
 #include <glib/gprintf.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -30,7 +31,7 @@
 #include <gcrypt.h>
 
 #include "userpref.h"
-#include "utils.h"
+#include "debug.h"
 
 #define LIBIPHONE_CONF_DIR  "libiphone"
 #define LIBIPHONE_CONF_FILE "libiphonerc"
@@ -105,7 +106,7 @@ static int userpref_set_host_id(const char *host_id)
 	key_file = g_key_file_new();
 
 	/* Store in config file */
-	log_debug_msg("%s: setting hostID to %s\n", __func__, host_id);
+	debug_info("setting hostID to %s", host_id);
 	g_key_file_set_value(key_file, "Global", "HostID", host_id);
 
 	/* Write config file on disk */
@@ -154,7 +155,7 @@ void userpref_get_host_id(char **host_id)
 		userpref_set_host_id(*host_id);
 	}
 
-	log_debug_msg("%s: Using %s as HostID\n", __func__, *host_id);
+	debug_info("Using %s as HostID", *host_id);
 }
 
 /** Determines whether this iPhone has been connected to this system before.
@@ -206,6 +207,30 @@ userpref_error_t userpref_set_device_public_key(const char *uuid, gnutls_datum_t
 	FILE *pFile = fopen(pem, "wb");
 	fwrite(public_key.data, 1, public_key.size, pFile);
 	fclose(pFile);
+	g_free(pem);
+	g_free(device_file);
+
+	return USERPREF_E_SUCCESS;
+}
+
+/** Remove the public key stored for the device with uuid from this host.
+ *
+ * @param uuid The uuid of the device
+ *
+ * @return USERPREF_E_SUCCESS on success.
+ */
+userpref_error_t userpref_remove_device_public_key(const char *uuid)
+{
+	if (!userpref_has_device_public_key(uuid))
+		return USERPREF_E_SUCCESS;
+
+	/* build file path */
+	gchar *device_file = g_strconcat(uuid, ".pem", NULL);
+	gchar *pem = g_build_path(G_DIR_SEPARATOR_S, g_get_user_config_dir(), LIBIPHONE_CONF_DIR, device_file, NULL);
+
+	/* remove file */
+	g_remove(pem);
+
 	g_free(pem);
 	g_free(device_file);
 

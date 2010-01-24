@@ -44,6 +44,11 @@ extern "C" {
 #define LOCKDOWN_E_GET_VALUE_PROHIBITED     -10
 #define LOCKDOWN_E_REMOVE_VALUE_PROHIBITED  -11
 #define LOCKDOWN_E_MUX_ERROR                -12
+#define LOCKDOWN_E_ACTIVATION_FAILED        -13
+#define LOCKDOWN_E_PASSWORD_PROTECTED       -14
+#define LOCKDOWN_E_NO_RUNNING_SESSION       -15
+#define LOCKDOWN_E_INVALID_HOST_ID          -16
+#define LOCKDOWN_E_INVALID_SERVICE          -17
 
 #define LOCKDOWN_E_UNKNOWN_ERROR           -256
 
@@ -52,22 +57,40 @@ typedef int16_t lockdownd_error_t;
 struct lockdownd_client_int;
 typedef struct lockdownd_client_int *lockdownd_client_t;
 
+struct lockdownd_pair_record {
+	char *device_certificate;
+	char *host_certificate;
+	char *host_id;
+	char *root_certificate;
+};
+typedef struct lockdownd_pair_record *lockdownd_pair_record_t;
+
 /* Interface */
-lockdownd_error_t lockdownd_client_new(iphone_device_t device, lockdownd_client_t *client);
+lockdownd_error_t lockdownd_client_new(iphone_device_t device, lockdownd_client_t *client, const char *label);
+lockdownd_error_t lockdownd_client_new_with_handshake(iphone_device_t device, lockdownd_client_t *client, const char *label);
 lockdownd_error_t lockdownd_client_free(lockdownd_client_t client);
-lockdownd_error_t lockdownd_query_type(lockdownd_client_t client);
+
+lockdownd_error_t lockdownd_query_type(lockdownd_client_t client, char **type);
 lockdownd_error_t lockdownd_get_value(lockdownd_client_t client, const char *domain, const char *key, plist_t *value);
 lockdownd_error_t lockdownd_set_value(lockdownd_client_t client, const char *domain, const char *key, plist_t value);
 lockdownd_error_t lockdownd_remove_value(lockdownd_client_t client, const char *domain, const char *key);
-lockdownd_error_t lockdownd_start_service(lockdownd_client_t client, const char *service, int *port);
+lockdownd_error_t lockdownd_start_service(lockdownd_client_t client, const char *service, uint16_t *port);
+lockdownd_error_t lockdownd_start_session(lockdownd_client_t client, const char *host_id, char **session_id, int *ssl_enabled);
 lockdownd_error_t lockdownd_stop_session(lockdownd_client_t client, const char *session_id);
 lockdownd_error_t lockdownd_send(lockdownd_client_t client, plist_t plist);
-lockdownd_error_t lockdownd_recv(lockdownd_client_t client, plist_t *plist);
-lockdownd_error_t lockdownd_pair(lockdownd_client_t client, char *uuid, char *host_id);
-lockdownd_error_t lockdownd_get_device_uuid(lockdownd_client_t control, char **uuid);
-lockdownd_error_t lockdownd_get_device_name(lockdownd_client_t client, char **device_name);
+lockdownd_error_t lockdownd_receive(lockdownd_client_t client, plist_t *plist);
+lockdownd_error_t lockdownd_pair(lockdownd_client_t client, lockdownd_pair_record_t pair_record);
+lockdownd_error_t lockdownd_validate_pair(lockdownd_client_t client, lockdownd_pair_record_t pair_record);
+lockdownd_error_t lockdownd_unpair(lockdownd_client_t client, lockdownd_pair_record_t pair_record);
+lockdownd_error_t lockdownd_activate(lockdownd_client_t client, plist_t activation_record);
+lockdownd_error_t lockdownd_deactivate(lockdownd_client_t client);
 lockdownd_error_t lockdownd_enter_recovery(lockdownd_client_t client);
 lockdownd_error_t lockdownd_goodbye(lockdownd_client_t client);
+
+/* Helper */
+void lockdownd_client_set_label(lockdownd_client_t client, const char *label);
+lockdownd_error_t lockdownd_get_device_uuid(lockdownd_client_t control, char **uuid);
+lockdownd_error_t lockdownd_get_device_name(lockdownd_client_t client, char **device_name);
 
 #ifdef __cplusplus
 }

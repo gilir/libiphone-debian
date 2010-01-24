@@ -1,8 +1,8 @@
 /*
- * utils.h
- * contains utilitary methos for logging and debugging
+ * notification_proxy.h
+ * Notification Proxy header file.
  *
- * Copyright (c) 2008 Jonathan Beck All Rights Reserved.
+ * Copyright (c) 2009 Nikias Bassen, All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,16 +18,20 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef INOTIFICATION_PROXY_H
+#define INOTIFICATION_PROXY_H
 
 #include <glib.h>
 
-G_GNUC_INTERNAL inline void log_debug_msg(const char *format, ...);
-G_GNUC_INTERNAL inline void log_dbg_msg(uint16_t id, const char *format, ...);
+#include "libiphone/notification_proxy.h"
+#include "property_list_service.h"
 
-G_GNUC_INTERNAL inline void log_debug_buffer(const char *data, const int length);
-G_GNUC_INTERNAL inline void dump_debug_buffer(const char *file, const char *data, const int length);
+struct np_client_int {
+	property_list_service_client_t parent;
+	GMutex *mutex;
+	GThread *notifier;
+};
+
+gpointer np_notifier(gpointer arg);
 
 #endif
