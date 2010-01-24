@@ -13,7 +13,7 @@ libiphone (0.9.6-1) UNRELEASED; urgency=low
     unecessary links.
   * Switch to dpkg-source 3.0 (quilt) format
 
- -- Julien Lavergne <gilir@ubuntu.com>  Wed, 16 Dec 2009 23:03:55 +0100
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 16 Dec 2009 23:03:55 +0100
 
 libiphone (0.9.5-1) unstable; urgency=medium
 
