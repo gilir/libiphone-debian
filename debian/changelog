@@ -4,14 +4,14 @@ libiphone (0.9.6-1) UNRELEASED; urgency=low
   * debian/copyright: Update copyright holders.
   * debian/libiphone-dev & debian/rules: Remove *.la files.
   * debian/rules:
-   - Rewrite to use dh7 and quilt.
+   - Rewrite to use dh7.
   * debian/control:
-   - Build-depends on debhelper (>= 7.0.50~) and quilt (>= 0.46-7).
+   - Build-depends on debhelper (>= 7.0.50~).
    - Add VCS-* fields.
   * debian/libiphone0.symbols: Add.
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
-  * debian/README.source: Add for quilt support.
+  * Switch to dpkg-source 3.0 (quilt) format
 
  -- Julien Lavergne <gilir@ubuntu.com>  Wed, 16 Dec 2009 23:03:55 +0100
 
