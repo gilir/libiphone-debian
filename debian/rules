@@ -15,7 +15,8 @@ endif
 configure_flags += \
 		--prefix=/usr \
 		--sysconfdir=/etc --host=$(DEB_HOST_GNU_TYPE) \
-		--build=$(DEB_BUILD_GNU_TYPE)
+		--build=$(DEB_BUILD_GNU_TYPE) \
+		--enable-dev-tools
 
 %:
 	dh $@

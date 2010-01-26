@@ -5,6 +5,7 @@ libiphone (0.9.6-1) UNRELEASED; urgency=low
   * debian/libiphone-dev & debian/rules: Remove *.la files.
   * debian/rules:
    - Rewrite to use dh7.
+   - Pass --enable-dev-tools.
   * debian/control:
    - Build-depends on debhelper (>= 7.0.50~).
    - Add VCS-* fields.
