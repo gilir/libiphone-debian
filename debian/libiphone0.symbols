@@ -42,6 +42,9 @@ libiphone.so.0 libiphone0 #MINVER#
  instproxy_upgrade@Base 0.9.6
  iphone_connection_disable_ssl@Base 0.9.6
  iphone_connection_enable_ssl@Base 0.9.6
+ iphone_connection_receive@Base 0.9.6
+ iphone_connection_receive_timeout@Base 0.9.6
+ iphone_connection_send@Base 0.9.6
 #MISSING: 0.9.6# iphone_device_recv@Base 0.9.5
 #MISSING: 0.9.6# iphone_device_recv_timeout@Base 0.9.5
 #MISSING: 0.9.6# iphone_device_send@Base 0.9.5
