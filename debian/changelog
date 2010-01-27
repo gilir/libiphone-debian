@@ -13,6 +13,7 @@ libiphone (0.9.6-1) UNRELEASED; urgency=low
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
   * Switch to dpkg-source 3.0 (quilt) format
+  * debian/libiphone-doc.*: Add the documentation to it's own package.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 16 Dec 2009 23:03:55 +0100
 
