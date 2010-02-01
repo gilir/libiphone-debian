@@ -74,15 +74,20 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libiphone_la_LIBADD =
-am_libiphone_la_OBJECTS = iphone.lo debug.lo userpref.lo \
+libimobiledevice_la_LIBADD =
+am_libimobiledevice_la_OBJECTS = idevice.lo debug.lo userpref.lo \
 	property_list_service.lo device_link_service.lo lockdown.lo \
-	afc.lo notification_proxy.lo installation_proxy.lo \
-	sbservices.lo mobilesync.lo
-libiphone_la_OBJECTS = $(am_libiphone_la_OBJECTS)
+	afc.lo file_relay.lo notification_proxy.lo \
+	installation_proxy.lo sbservices.lo mobilesync.lo \
+	mobilebackup.lo
+libimobiledevice_la_OBJECTS = $(am_libimobiledevice_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
+libimobiledevice_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) $(libimobiledevice_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -109,8 +114,8 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(libiphone_la_SOURCES)
-DIST_SOURCES = $(libiphone_la_SOURCES)
+SOURCES = $(libimobiledevice_la_SOURCES)
+DIST_SOURCES = $(libimobiledevice_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -153,6 +158,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LFS_CFLAGS = @LFS_CFLAGS@
+LIBIMOBILEDEVICE_SO_VERSION = @LIBIMOBILEDEVICE_SO_VERSION@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -271,18 +277,21 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir)/include
 AM_CFLAGS = $(GLOBAL_CFLAGS) $(libusbmuxd_CFLAGS) $(libglib2_CFLAGS) $(libgnutls_CFLAGS) $(libtasn1_CFLAGS) $(libgthread2_CFLAGS) $(libplist_CFLAGS) $(LFS_CFLAGS)
 AM_LDFLAGS = $(libglib2_LIBS) $(libgnutls_LIBS) $(libtasn1_LIBS) $(libgthread2_LIBS) $(libplist_LIBS) $(libusbmuxd_LIBS) $(libgcrypt_LIBS)
-lib_LTLIBRARIES = libiphone.la
-libiphone_la_SOURCES = iphone.c iphone.h \
+lib_LTLIBRARIES = libimobiledevice.la
+libimobiledevice_la_LDFLAGS = $(AM_LDFLAGS) -version-info $(LIBIMOBILEDEVICE_SO_VERSION) -no-undefined
+libimobiledevice_la_SOURCES = idevice.c idevice.h \
 		       debug.c debug.h\
 		       userpref.c userpref.h\
 		       property_list_service.c property_list_service.h\
 		       device_link_service.c device_link_service.h\
 		       lockdown.c lockdown.h\
 		       afc.c afc.h\
+		       file_relay.c file_relay.h\
 		       notification_proxy.c notification_proxy.h\
 		       installation_proxy.c installation_proxy.h\
 		       sbservices.c sbservices.h\
-		       mobilesync.c mobilesync.h
+		       mobilesync.c mobilesync.h\
+		       mobilebackup.c mobilebackup.h
 
 all: all-am
 
@@ -349,8 +358,8 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libiphone.la: $(libiphone_la_OBJECTS) $(libiphone_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(libiphone_la_OBJECTS) $(libiphone_la_LIBADD) $(LIBS)
+libimobiledevice.la: $(libimobiledevice_la_OBJECTS) $(libimobiledevice_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libimobiledevice_la_LINK) -rpath $(libdir) $(libimobiledevice_la_OBJECTS) $(libimobiledevice_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -361,9 +370,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/afc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/device_link_service.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file_relay.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevice.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/installation_proxy.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iphone.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lockdown.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mobilebackup.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mobilesync.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/notification_proxy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/property_list_service.Plo@am__quote@

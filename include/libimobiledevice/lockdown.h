@@ -1,5 +1,5 @@
 /**
- * @file libiphone/lockdown.h
+ * @file libimobiledevice/lockdown.h
  * @brief Communcation with the lockdown device daemon
  * \internal
  *
@@ -28,29 +28,30 @@
 extern "C" {
 #endif
 
-#include <libiphone/libiphone.h>
+#include <libimobiledevice/libimobiledevice.h>
 
 /* Error Codes */
-#define LOCKDOWN_E_SUCCESS                    0
-#define LOCKDOWN_E_INVALID_ARG               -1
-#define LOCKDOWN_E_INVALID_CONF              -2
-#define LOCKDOWN_E_PLIST_ERROR               -3
-#define LOCKDOWN_E_PAIRING_FAILED            -4
-#define LOCKDOWN_E_SSL_ERROR                 -5
-#define LOCKDOWN_E_DICT_ERROR                -6
-#define LOCKDOWN_E_START_SERVICE_FAILED      -7
-#define LOCKDOWN_E_NOT_ENOUGH_DATA           -8
-#define LOCKDOWN_E_SET_VALUE_PROHIBITED      -9
-#define LOCKDOWN_E_GET_VALUE_PROHIBITED     -10
-#define LOCKDOWN_E_REMOVE_VALUE_PROHIBITED  -11
-#define LOCKDOWN_E_MUX_ERROR                -12
-#define LOCKDOWN_E_ACTIVATION_FAILED        -13
-#define LOCKDOWN_E_PASSWORD_PROTECTED       -14
-#define LOCKDOWN_E_NO_RUNNING_SESSION       -15
-#define LOCKDOWN_E_INVALID_HOST_ID          -16
-#define LOCKDOWN_E_INVALID_SERVICE          -17
+#define LOCKDOWN_E_SUCCESS                     0
+#define LOCKDOWN_E_INVALID_ARG                -1
+#define LOCKDOWN_E_INVALID_CONF               -2
+#define LOCKDOWN_E_PLIST_ERROR                -3
+#define LOCKDOWN_E_PAIRING_FAILED             -4
+#define LOCKDOWN_E_SSL_ERROR                  -5
+#define LOCKDOWN_E_DICT_ERROR                 -6
+#define LOCKDOWN_E_START_SERVICE_FAILED       -7
+#define LOCKDOWN_E_NOT_ENOUGH_DATA            -8
+#define LOCKDOWN_E_SET_VALUE_PROHIBITED       -9
+#define LOCKDOWN_E_GET_VALUE_PROHIBITED      -10
+#define LOCKDOWN_E_REMOVE_VALUE_PROHIBITED   -11
+#define LOCKDOWN_E_MUX_ERROR                 -12
+#define LOCKDOWN_E_ACTIVATION_FAILED         -13
+#define LOCKDOWN_E_PASSWORD_PROTECTED        -14
+#define LOCKDOWN_E_NO_RUNNING_SESSION        -15
+#define LOCKDOWN_E_INVALID_HOST_ID           -16
+#define LOCKDOWN_E_INVALID_SERVICE           -17
+#define LOCKDOWN_E_INVALID_ACTIVATION_RECORD -18
 
-#define LOCKDOWN_E_UNKNOWN_ERROR           -256
+#define LOCKDOWN_E_UNKNOWN_ERROR            -256
 
 typedef int16_t lockdownd_error_t;
 
@@ -66,8 +67,8 @@ struct lockdownd_pair_record {
 typedef struct lockdownd_pair_record *lockdownd_pair_record_t;
 
 /* Interface */
-lockdownd_error_t lockdownd_client_new(iphone_device_t device, lockdownd_client_t *client, const char *label);
-lockdownd_error_t lockdownd_client_new_with_handshake(iphone_device_t device, lockdownd_client_t *client, const char *label);
+lockdownd_error_t lockdownd_client_new(idevice_t device, lockdownd_client_t *client, const char *label);
+lockdownd_error_t lockdownd_client_new_with_handshake(idevice_t device, lockdownd_client_t *client, const char *label);
 lockdownd_error_t lockdownd_client_free(lockdownd_client_t client);
 
 lockdownd_error_t lockdownd_query_type(lockdownd_client_t client, char **type);

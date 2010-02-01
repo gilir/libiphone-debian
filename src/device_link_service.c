@@ -78,7 +78,7 @@ static char *device_link_service_get_message(plist_t dl_msg)
  *     DEVICE_LINK_SERVICE_E_INVALID_ARG when one of the parameters is invalid,
  *     or DEVICE_LINK_SERVICE_E_MUX_ERROR when the connection failed.
  */
-device_link_service_error_t device_link_service_client_new(iphone_device_t device, uint16_t port, device_link_service_client_t *client)
+device_link_service_error_t device_link_service_client_new(idevice_t device, uint16_t port, device_link_service_client_t *client)
 {
 	if (!device || port == 0 || !client || *client) {
 		return DEVICE_LINK_SERVICE_E_INVALID_ARG;
@@ -193,6 +193,7 @@ device_link_service_error_t device_link_service_version_exchange(device_link_ser
 	array = plist_new_array();
 	plist_array_append_item(array, plist_new_string("DLMessageVersionExchange"));
 	plist_array_append_item(array, plist_new_string("DLVersionsOk"));
+	plist_array_append_item(array, plist_new_uint(version_major));
 	if (property_list_service_send_binary_plist(client->parent, array) != PROPERTY_LIST_SERVICE_E_SUCCESS) {
 		debug_info("Error when sending DLVersionsOk");
 		err = DEVICE_LINK_SERVICE_E_MUX_ERROR;
@@ -243,6 +244,26 @@ device_link_service_error_t device_link_service_disconnect(device_link_service_c
 	plist_t array = plist_new_array();
 	plist_array_append_item(array, plist_new_string("DLMessageDisconnect"));
 	plist_array_append_item(array, plist_new_string("All done, thanks for the memories"));
+
+	device_link_service_error_t err = DEVICE_LINK_SERVICE_E_SUCCESS;
+	if (property_list_service_send_binary_plist(client->parent, array) != PROPERTY_LIST_SERVICE_E_SUCCESS) {
+		err = DEVICE_LINK_SERVICE_E_MUX_ERROR;
+	}
+	plist_free(array);
+	return err;
+}
+
+device_link_service_error_t device_link_service_process_message(device_link_service_client_t client, plist_t message)
+{
+	if (!client || !message)
+		return DEVICE_LINK_SERVICE_E_INVALID_ARG;
+
+	if (plist_get_node_type(message) != PLIST_DICT)
+		return DEVICE_LINK_SERVICE_E_INVALID_ARG;
+
+	plist_t array = plist_new_array();
+	plist_array_append_item(array, plist_new_string("DLMessageProcessMessage"));
+	plist_array_append_item(array, message);
 
 	device_link_service_error_t err = DEVICE_LINK_SERVICE_E_SUCCESS;
 	if (property_list_service_send_binary_plist(client->parent, array) != PROPERTY_LIST_SERVICE_E_SUCCESS) {

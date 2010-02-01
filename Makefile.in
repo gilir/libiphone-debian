@@ -37,9 +37,9 @@ host_triplet = @host@
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/libiphone-1.0.pc.in $(top_srcdir)/configure AUTHORS \
-	COPYING COPYING.LESSER NEWS compile config.guess config.sub \
-	depcomp install-sh ltmain.sh missing py-compile
+	$(srcdir)/libimobiledevice-1.0.pc.in $(top_srcdir)/configure \
+	AUTHORS COPYING COPYING.LESSER NEWS compile config.guess \
+	config.sub depcomp install-sh ltmain.sh missing py-compile
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_pkg_swig.m4 \
 	$(top_srcdir)/m4/ac_python_devel.m4 \
@@ -55,7 +55,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = libiphone-1.0.pc
+CONFIG_CLEAN_FILES = libimobiledevice-1.0.pc
 CONFIG_CLEAN_VPATH_FILES =
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
@@ -178,6 +178,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LFS_CFLAGS = @LFS_CFLAGS@
+LIBIMOBILEDEVICE_SO_VERSION = @LIBIMOBILEDEVICE_SO_VERSION@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -298,7 +299,7 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = src include fdi swig dev tools
 DISTCHECK_CONFIGURE_FLAGS = --enable-dev-tools
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libiphone-1.0.pc
+pkgconfig_DATA = libimobiledevice-1.0.pc
 EXTRA_DIST = docs
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -355,7 +356,7 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
-libiphone-1.0.pc: $(top_builddir)/config.status $(srcdir)/libiphone-1.0.pc.in
+libimobiledevice-1.0.pc: $(top_builddir)/config.status $(srcdir)/libimobiledevice-1.0.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:

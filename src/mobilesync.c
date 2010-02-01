@@ -59,7 +59,7 @@ static mobilesync_error_t mobilesync_error(device_link_service_error_t err)
 	return MOBILESYNC_E_UNKNOWN_ERROR;
 }
 
-mobilesync_error_t mobilesync_client_new(iphone_device_t device, uint16_t port,
+mobilesync_error_t mobilesync_client_new(idevice_t device, uint16_t port,
 						   mobilesync_client_t * client)
 {
 	if (!device || port == 0 || !client || *client)
@@ -97,7 +97,7 @@ mobilesync_error_t mobilesync_client_free(mobilesync_client_t client)
 	return err;
 }
 
-/** Polls the iPhone for MobileSync data.
+/** Polls the device for MobileSync data.
  *
  * @param client The MobileSync client
  * @param plist A pointer to the location where the plist should be stored
@@ -109,20 +109,10 @@ mobilesync_error_t mobilesync_receive(mobilesync_client_t client, plist_t * plis
 	if (!client)
 		return MOBILESYNC_E_INVALID_ARG;
 	mobilesync_error_t ret = mobilesync_error(device_link_service_receive(client->parent, plist));
-#ifndef STRIP_DEBUG_CODE
-	if (ret != MOBILESYNC_E_SUCCESS) {
-		return ret;
-	}
-	char *XMLContent = NULL;
-	uint32_t length = 0;
-	plist_to_xml(*plist, &XMLContent, &length);
-	debug_info("plist size: %i\nbuffer :\n%s", length, XMLContent);
-	free(XMLContent);
-#endif
 	return ret;
 }
 
-/** Sends MobileSync data to the iPhone
+/** Sends MobileSync data to the device
  * 
  * @note This function is low-level and should only be used if you need to send
  *        a new type of message.
@@ -136,13 +126,5 @@ mobilesync_error_t mobilesync_send(mobilesync_client_t client, plist_t plist)
 {
 	if (!client || !plist)
 		return MOBILESYNC_E_INVALID_ARG;
-
-#ifndef STRIP_DEBUG_CODE
-	char *XMLContent = NULL;
-	uint32_t length = 0;
-	plist_to_xml(plist, &XMLContent, &length);
-	debug_info("plist size: %i\nbuffer :\n%s", length, XMLContent);
-	free(XMLContent);
-#endif
 	return mobilesync_error(device_link_service_send(client->parent, plist));
 }
