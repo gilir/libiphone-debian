@@ -1,4 +1,4 @@
-Source: libiphone
+Source: libimobiledevice
 Section: libs
 Priority: optional
 Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
@@ -18,37 +18,37 @@ Build-Depends: debhelper (>= 7.0.50~),
 	python-plist
 XS-Python-Version: current
 Homepage: http://matt.colyer.name/projects/iphone-linux/
-Vcs-Git: git://github.com/gilir/libiphone-debian.git
-Vcs-Browser: http://github.com/gilir/libiphone-debian/tree
+Vcs-Git: git://github.com/gilir/libimobiledevice-debian.git
+Vcs-Browser: http://github.com/gilir/libimobiledevice-debian/tree
 
-Package: libiphone0
+Package: libimobiledevice0
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}, usbmuxd
 Description: Library for communicating with the iPhone and iPod Touch
- libiphone is a library that talks the native Apple USB protocols that the
- iPhone and iPod Touch use. Unlike other projects, libiphone does not
+ libimobiledevice is a library that talks the native Apple USB protocols that the
+ iPhone and iPod Touch use. Unlike other projects, libimobiledevice does not
  depends on using any existing libraries from Apple.
 
-Package: libiphone-dev
+Package: libimobiledevice-dev
 Architecture: any
 Section: libdevel
-Depends: libiphone0 (= ${binary:Version}), libusb-1.0-0-dev, libglib2.0-dev, libgnutls-dev, libplist-dev, libusbmuxd-dev,libtasn1-3-dev, ${misc:Depends}
+Depends: libimobiledevice0 (= ${binary:Version}), libusb-1.0-0-dev, libglib2.0-dev, libgnutls-dev, libplist-dev, libusbmuxd-dev,libtasn1-3-dev, ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
- libiphone is a library that talks the native Apple USB protocols that the
- iPhone and iPod Touch use. Unlike other projects, libiphone does not
+ libimobiledevice is a library that talks the native Apple USB protocols that the
+ iPhone and iPod Touch use. Unlike other projects, libimobiledevice does not
  depend on using any existing libraries from Apple.
  .
  This package contains the development files.
 
-Package: libiphone0-dbg
+Package: libimobiledevice0-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: libiphone0 (= ${binary:Version}), ${misc:Depends}
+Depends: libimobiledevice0 (= ${binary:Version}), ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
- libiphone is a library that talks the native Apple USB protocols that the
- iPhone and iPod Touch use. Unlike other projects, libiphone does not
+ libimobiledevice is a library that talks the native Apple USB protocols that the
+ iPhone and iPod Touch use. Unlike other projects, libimobiledevice does not
  depend on using any existing libraries from Apple.
  .
  This package contains the debugging symbols.
@@ -59,34 +59,34 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
-Conflicts: python-libiphone
-Replaces: python-libiphone
+Conflicts: python-libimobiledevice
+Replaces: python-libimobiledevice
 Description: Library for communicating with iPhone and iPod Touch devices
- libiphone is a library that talks the native Apple USB protocols that the
- iPhone and iPod Touch use. Unlike other projects, libiphone does not
+ libimobiledevice is a library that talks the native Apple USB protocols that the
+ iPhone and iPod Touch use. Unlike other projects, libimobiledevice does not
  depend on using any existing libraries from Apple.
  .
  This package contains the Python bindings
 
-Package: libiphone-utils
+Package: libimobiledevice-utils
 Architecture: any
 Section: utils
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
- libiphone is a library that talks the native Apple USB protocols that the
- iPhone and iPod Touch use. Unlike other projects, libiphone does not
+ libimobiledevice is a library that talks the native Apple USB protocols that the
+ iPhone and iPod Touch use. Unlike other projects, libimobiledevice does not
  depend on using any existing libraries from Apple.
  .
  This package contains the debugging symbols.
 
-Package: libiphone-doc
+Package: libimobiledevice-doc
 Architecture: all
 Section: doc
-Depends: libiphone0 (>= ${source:Version}),
+Depends: libimobiledevice0 (>= ${source:Version}),
          ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
- libiphone is a library that talks the native Apple USB protocols that the
- iPhone and iPod Touch use. Unlike other projects, libiphone does not
+ libimobiledevice is a library that talks the native Apple USB protocols that the
+ iPhone and iPod Touch use. Unlike other projects, libimobiledevice does not
  depend on using any existing libraries from Apple.
  .
  This package contains the documentation for the library.

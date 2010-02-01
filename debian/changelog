@@ -1,19 +1,21 @@
-libiphone (0.9.6-1) UNRELEASED; urgency=low
+libimobiledevice (0.9.7-1) UNRELEASED; urgency=low
 
-  * New upstream release.
+  * New upstream release, previously named libiphone.
+  * Replace all libiphone occurence to libimobiledevice.
+  * Remove python-iphone.preinst, not needed since the package was renamed.
   * debian/copyright: Update copyright holders.
-  * debian/libiphone-dev & debian/rules: Remove *.la files.
+  * debian/libimobiledevice-dev & debian/rules: Remove *.la files.
   * debian/rules:
    - Rewrite to use dh7.
    - Pass --enable-dev-tools.
   * debian/control:
    - Build-depends on debhelper (>= 7.0.50~).
    - Add VCS-* fields.
-  * debian/libiphone0.symbols: Add.
+  * debian/libimobiledevice0.symbols: Rewrite with only remaining symbols.
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
   * Switch to dpkg-source 3.0 (quilt) format
-  * debian/libiphone-doc.*: Add the documentation to it's own package.
+  * debian/libimobiledevice-doc.*: Add the documentation to it's own package.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 16 Dec 2009 23:03:55 +0100
 

@@ -28,9 +28,9 @@ override_dh_install:
 	#Remove .la files.
 	rm -rf $(CURDIR)/debian/tmp/usr/lib/*.la
 	#Move docs files to be installed
-	mkdir -p $(CURDIR)/debian/tmp/usr/share/doc/libiphone-doc/libiphone
-	cp $(CURDIR)/docs/html/* $(CURDIR)/debian/tmp/usr/share/doc/libiphone-doc/libiphone
+	mkdir -p $(CURDIR)/debian/tmp/usr/share/doc/libimobiledevice-doc/libimobiledevice
+	cp $(CURDIR)/docs/html/* $(CURDIR)/debian/tmp/usr/share/doc/libimobiledevice-doc/libimobiledevice
 	dh_install --fail-missing
 
 override_dh_strip:
-	dh_strip --dbg-package=libiphone0-dbg
+	dh_strip --dbg-package=libimobiledevice0-dbg
