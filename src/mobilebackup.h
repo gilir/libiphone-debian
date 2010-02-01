@@ -1,8 +1,8 @@
-/*
- * sbservices.h
- * SpringBoard Services header file.
- *
- * Copyright (c) 2009 Nikias Bassen, All Rights Reserved.
+ /* 
+ * mobilebackup.h
+ * Definitions for the mobilebackup service
+ * 
+ * Copyright (c) 2009 Martin Szulecki All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,17 +18,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-#ifndef ISBSERVICES_H
-#define ISBSERVICES_H
+#ifndef MOBILEBACKUP_H
+#define MOBILEBACKUP_H
 
-#include <glib.h>
+#include "libimobiledevice/mobilebackup.h"
+#include "device_link_service.h"
 
-#include "libimobiledevice/sbservices.h"
-#include "property_list_service.h"
-
-struct sbservices_client_int {
-	property_list_service_client_t parent;
-	GMutex *mutex;
+struct mobilebackup_client_int {
+	device_link_service_client_t parent;
 };
 
 #endif

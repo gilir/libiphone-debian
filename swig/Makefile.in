@@ -36,7 +36,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = swig
-DIST_COMMON = $(am__iphone_PYTHON_DIST) \
+DIST_COMMON = $(am__imobiledevice_PYTHON_DIST) \
 	$(am__swiginclude_HEADERS_DIST) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -75,24 +75,27 @@ am__nobase_list = $(am__nobase_strip_setup); \
 am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__installdirs = "$(DESTDIR)$(iphonedir)" "$(DESTDIR)$(iphonedir)" \
-	"$(DESTDIR)$(iphonedir)" "$(DESTDIR)$(swigincludedir)"
-LTLIBRARIES = $(iphone_LTLIBRARIES)
+am__installdirs = "$(DESTDIR)$(imobiledevicedir)" \
+	"$(DESTDIR)$(imobiledevicedir)" \
+	"$(DESTDIR)$(imobiledevicedir)" "$(DESTDIR)$(swigincludedir)"
+LTLIBRARIES = $(imobiledevice_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-@HAVE_SWIG_TRUE@_iphone_la_DEPENDENCIES =  \
-@HAVE_SWIG_TRUE@	$(top_builddir)/src/libiphone.la \
+@HAVE_SWIG_TRUE@_imobiledevice_la_DEPENDENCIES =  \
+@HAVE_SWIG_TRUE@	$(top_builddir)/src/libimobiledevice.la \
 @HAVE_SWIG_TRUE@	$(am__DEPENDENCIES_1)
 am__objects_1 =
-@HAVE_SWIG_TRUE@nodist__iphone_la_OBJECTS = iphone_wrap.lo \
-@HAVE_SWIG_TRUE@	$(am__objects_1)
-_iphone_la_OBJECTS = $(nodist__iphone_la_OBJECTS)
+@HAVE_SWIG_TRUE@nodist__imobiledevice_la_OBJECTS =  \
+@HAVE_SWIG_TRUE@	imobiledevice_wrap.lo $(am__objects_1)
+_imobiledevice_la_OBJECTS = $(nodist__imobiledevice_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
-_iphone_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(_iphone_la_LDFLAGS) $(LDFLAGS) -o $@
-@HAVE_SWIG_TRUE@am__iphone_la_rpath = -rpath $(iphonedir)
+_imobiledevice_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(_imobiledevice_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@HAVE_SWIG_TRUE@am__imobiledevice_la_rpath = -rpath \
+@HAVE_SWIG_TRUE@	$(imobiledevicedir)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -119,11 +122,11 @@ am__v_CXXLD_0 = @echo "  CXXLD " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(nodist__iphone_la_SOURCES)
+SOURCES = $(nodist__imobiledevice_la_SOURCES)
 DIST_SOURCES =
-am__iphone_PYTHON_DIST = __init__.py
+am__imobiledevice_PYTHON_DIST = __init__.py
 py_compile = $(top_srcdir)/py-compile
-am__swiginclude_HEADERS_DIST = iphone.i
+am__swiginclude_HEADERS_DIST = imobiledevice.i
 HEADERS = $(swiginclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -167,6 +170,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LFS_CFLAGS = @LFS_CFLAGS@
+LIBIMOBILEDEVICE_SO_VERSION = @LIBIMOBILEDEVICE_SO_VERSION@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -283,29 +287,29 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir)/include  $(libplist_CFLAGS) $(SWIG_PYTHON_CPPFLAGS) -I$(oldincludedir)
-@HAVE_SWIG_TRUE@BUILT_SOURCES = iphone_wrap.cxx
-@HAVE_SWIG_TRUE@SWIG_SOURCES = iphone.i
+@HAVE_SWIG_TRUE@BUILT_SOURCES = imobiledevice_wrap.cxx
+@HAVE_SWIG_TRUE@SWIG_SOURCES = imobiledevice.i
 @HAVE_SWIG_TRUE@CLEANFILES = \
 @HAVE_SWIG_TRUE@        *.pyc               \
 @HAVE_SWIG_TRUE@        *.pyo               \
-@HAVE_SWIG_TRUE@        _iphone.so          \
-@HAVE_SWIG_TRUE@        iphone.py           \
-@HAVE_SWIG_TRUE@        iphone_wrap.cxx
+@HAVE_SWIG_TRUE@        _imobiledevice.so   \
+@HAVE_SWIG_TRUE@        imobiledevice.py    \
+@HAVE_SWIG_TRUE@        imobiledevice_wrap.cxx
 
 @HAVE_SWIG_TRUE@EXTRA_DIST = \
 @HAVE_SWIG_TRUE@        __init__.py         \
-@HAVE_SWIG_TRUE@        iphone.i
+@HAVE_SWIG_TRUE@        imobiledevice.i
 
-@HAVE_SWIG_TRUE@swigincludedir = $(includedir)/libiphone/swig
+@HAVE_SWIG_TRUE@swigincludedir = $(includedir)/libimobiledevice/swig
 @HAVE_SWIG_TRUE@swiginclude_HEADERS = $(SWIG_SOURCES)
-@HAVE_SWIG_TRUE@iphonedir = $(pyexecdir)/iphone
-@HAVE_SWIG_TRUE@iphone_PYTHON = __init__.py
-@HAVE_SWIG_TRUE@nodist_iphone_PYTHON = iphone.py
-@HAVE_SWIG_TRUE@iphone_LTLIBRARIES = _iphone.la
-@HAVE_SWIG_TRUE@nodist__iphone_la_SOURCES = iphone_wrap.cxx $(SWIG_SOURCES)
-@HAVE_SWIG_TRUE@_iphone_la_CFLAGS = $(PYTHON_CPPFLAGS) -I$(top_srcdir)/src
-@HAVE_SWIG_TRUE@_iphone_la_LDFLAGS = -module -avoid-version $(PYTHON_LDFLAGS)
-@HAVE_SWIG_TRUE@_iphone_la_LIBADD = $(top_builddir)/src/libiphone.la $(libplistmm_LIBS)
+@HAVE_SWIG_TRUE@imobiledevicedir = $(pyexecdir)/imobiledevice
+@HAVE_SWIG_TRUE@imobiledevice_PYTHON = __init__.py
+@HAVE_SWIG_TRUE@nodist_imobiledevice_PYTHON = imobiledevice.py
+@HAVE_SWIG_TRUE@imobiledevice_LTLIBRARIES = _imobiledevice.la
+@HAVE_SWIG_TRUE@nodist__imobiledevice_la_SOURCES = imobiledevice_wrap.cxx $(SWIG_SOURCES)
+@HAVE_SWIG_TRUE@_imobiledevice_la_CFLAGS = $(PYTHON_CPPFLAGS) -I$(top_srcdir)/src
+@HAVE_SWIG_TRUE@_imobiledevice_la_LDFLAGS = -module -avoid-version $(PYTHON_LDFLAGS)
+@HAVE_SWIG_TRUE@_imobiledevice_la_LIBADD = $(top_builddir)/src/libimobiledevice.la $(libplistmm_LIBS)
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -341,39 +345,39 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-iphoneLTLIBRARIES: $(iphone_LTLIBRARIES)
+install-imobiledeviceLTLIBRARIES: $(imobiledevice_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
-	test -z "$(iphonedir)" || $(MKDIR_P) "$(DESTDIR)$(iphonedir)"
-	@list='$(iphone_LTLIBRARIES)'; test -n "$(iphonedir)" || list=; \
+	test -z "$(imobiledevicedir)" || $(MKDIR_P) "$(DESTDIR)$(imobiledevicedir)"
+	@list='$(imobiledevice_LTLIBRARIES)'; test -n "$(imobiledevicedir)" || list=; \
 	list2=; for p in $$list; do \
 	  if test -f $$p; then \
 	    list2="$$list2 $$p"; \
 	  else :; fi; \
 	done; \
 	test -z "$$list2" || { \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(iphonedir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(iphonedir)"; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(imobiledevicedir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(imobiledevicedir)"; \
 	}
 
-uninstall-iphoneLTLIBRARIES:
+uninstall-imobiledeviceLTLIBRARIES:
 	@$(NORMAL_UNINSTALL)
-	@list='$(iphone_LTLIBRARIES)'; test -n "$(iphonedir)" || list=; \
+	@list='$(imobiledevice_LTLIBRARIES)'; test -n "$(imobiledevicedir)" || list=; \
 	for p in $$list; do \
 	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(iphonedir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(iphonedir)/$$f"; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(imobiledevicedir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(imobiledevicedir)/$$f"; \
 	done
 
-clean-iphoneLTLIBRARIES:
-	-test -z "$(iphone_LTLIBRARIES)" || rm -f $(iphone_LTLIBRARIES)
-	@list='$(iphone_LTLIBRARIES)'; for p in $$list; do \
+clean-imobiledeviceLTLIBRARIES:
+	-test -z "$(imobiledevice_LTLIBRARIES)" || rm -f $(imobiledevice_LTLIBRARIES)
+	@list='$(imobiledevice_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
 	  test "$$dir" != "$$p" || dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-_iphone.la: $(_iphone_la_OBJECTS) $(_iphone_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(_iphone_la_LINK) $(am__iphone_la_rpath) $(_iphone_la_OBJECTS) $(_iphone_la_LIBADD) $(LIBS)
+_imobiledevice.la: $(_imobiledevice_la_OBJECTS) $(_imobiledevice_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(_imobiledevice_la_LINK) $(am__imobiledevice_la_rpath) $(_imobiledevice_la_OBJECTS) $(_imobiledevice_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -381,7 +385,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iphone_wrap.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/imobiledevice_wrap.Plo@am__quote@
 
 .cxx.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -412,10 +416,10 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-iphonePYTHON: $(iphone_PYTHON)
+install-imobiledevicePYTHON: $(imobiledevice_PYTHON)
 	@$(NORMAL_INSTALL)
-	test -z "$(iphonedir)" || $(MKDIR_P) "$(DESTDIR)$(iphonedir)"
-	@list='$(iphone_PYTHON)'; dlist=; list2=; test -n "$(iphonedir)" || list=; \
+	test -z "$(imobiledevicedir)" || $(MKDIR_P) "$(DESTDIR)$(imobiledevicedir)"
+	@list='$(imobiledevice_PYTHON)'; dlist=; list2=; test -n "$(imobiledevicedir)" || list=; \
 	for p in $$list; do \
 	  if test -f "$$p"; then b=; else b="$(srcdir)/"; fi; \
 	  if test -f $$b$$p; then \
@@ -426,34 +430,34 @@ install-iphonePYTHON: $(iphone_PYTHON)
 	done; \
 	for file in $$list2; do echo $$file; done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(iphonedir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(iphonedir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(imobiledevicedir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(imobiledevicedir)" || exit $$?; \
 	done || exit $$?; \
 	if test -n "$$dlist"; then \
 	  if test -z "$(DESTDIR)"; then \
-	    PYTHON=$(PYTHON) $(py_compile) --basedir "$(iphonedir)" $$dlist; \
+	    PYTHON=$(PYTHON) $(py_compile) --basedir "$(imobiledevicedir)" $$dlist; \
 	  else \
-	    PYTHON=$(PYTHON) $(py_compile) --destdir "$(DESTDIR)" --basedir "$(iphonedir)" $$dlist; \
+	    PYTHON=$(PYTHON) $(py_compile) --destdir "$(DESTDIR)" --basedir "$(imobiledevicedir)" $$dlist; \
 	  fi; \
 	else :; fi
 
-uninstall-iphonePYTHON:
+uninstall-imobiledevicePYTHON:
 	@$(NORMAL_UNINSTALL)
-	@list='$(iphone_PYTHON)'; test -n "$(iphonedir)" || list=; \
+	@list='$(imobiledevice_PYTHON)'; test -n "$(imobiledevicedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	test -n "$$files" || exit 0; \
 	filesc=`echo "$$files" | sed 's|$$|c|'`; \
 	fileso=`echo "$$files" | sed 's|$$|o|'`; \
-	echo " ( cd '$(DESTDIR)$(iphonedir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(iphonedir)" && rm -f $$files || exit $$?; \
-	echo " ( cd '$(DESTDIR)$(iphonedir)' && rm -f" $$filesc ")"; \
-	cd "$(DESTDIR)$(iphonedir)" && rm -f $$filesc || exit $$?; \
-	echo " ( cd '$(DESTDIR)$(iphonedir)' && rm -f" $$fileso ")"; \
-	cd "$(DESTDIR)$(iphonedir)" && rm -f $$fileso
-install-nodist_iphonePYTHON: $(nodist_iphone_PYTHON)
+	echo " ( cd '$(DESTDIR)$(imobiledevicedir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(imobiledevicedir)" && rm -f $$files || exit $$?; \
+	echo " ( cd '$(DESTDIR)$(imobiledevicedir)' && rm -f" $$filesc ")"; \
+	cd "$(DESTDIR)$(imobiledevicedir)" && rm -f $$filesc || exit $$?; \
+	echo " ( cd '$(DESTDIR)$(imobiledevicedir)' && rm -f" $$fileso ")"; \
+	cd "$(DESTDIR)$(imobiledevicedir)" && rm -f $$fileso
+install-nodist_imobiledevicePYTHON: $(nodist_imobiledevice_PYTHON)
 	@$(NORMAL_INSTALL)
-	test -z "$(iphonedir)" || $(MKDIR_P) "$(DESTDIR)$(iphonedir)"
-	@list='$(nodist_iphone_PYTHON)'; dlist=; list2=; test -n "$(iphonedir)" || list=; \
+	test -z "$(imobiledevicedir)" || $(MKDIR_P) "$(DESTDIR)$(imobiledevicedir)"
+	@list='$(nodist_imobiledevice_PYTHON)'; dlist=; list2=; test -n "$(imobiledevicedir)" || list=; \
 	for p in $$list; do \
 	  if test -f "$$p"; then b=; else b="$(srcdir)/"; fi; \
 	  if test -f $$b$$p; then \
@@ -464,30 +468,30 @@ install-nodist_iphonePYTHON: $(nodist_iphone_PYTHON)
 	done; \
 	for file in $$list2; do echo $$file; done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(iphonedir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(iphonedir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(imobiledevicedir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(imobiledevicedir)" || exit $$?; \
 	done || exit $$?; \
 	if test -n "$$dlist"; then \
 	  if test -z "$(DESTDIR)"; then \
-	    PYTHON=$(PYTHON) $(py_compile) --basedir "$(iphonedir)" $$dlist; \
+	    PYTHON=$(PYTHON) $(py_compile) --basedir "$(imobiledevicedir)" $$dlist; \
 	  else \
-	    PYTHON=$(PYTHON) $(py_compile) --destdir "$(DESTDIR)" --basedir "$(iphonedir)" $$dlist; \
+	    PYTHON=$(PYTHON) $(py_compile) --destdir "$(DESTDIR)" --basedir "$(imobiledevicedir)" $$dlist; \
 	  fi; \
 	else :; fi
 
-uninstall-nodist_iphonePYTHON:
+uninstall-nodist_imobiledevicePYTHON:
 	@$(NORMAL_UNINSTALL)
-	@list='$(nodist_iphone_PYTHON)'; test -n "$(iphonedir)" || list=; \
+	@list='$(nodist_imobiledevice_PYTHON)'; test -n "$(imobiledevicedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	test -n "$$files" || exit 0; \
 	filesc=`echo "$$files" | sed 's|$$|c|'`; \
 	fileso=`echo "$$files" | sed 's|$$|o|'`; \
-	echo " ( cd '$(DESTDIR)$(iphonedir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(iphonedir)" && rm -f $$files || exit $$?; \
-	echo " ( cd '$(DESTDIR)$(iphonedir)' && rm -f" $$filesc ")"; \
-	cd "$(DESTDIR)$(iphonedir)" && rm -f $$filesc || exit $$?; \
-	echo " ( cd '$(DESTDIR)$(iphonedir)' && rm -f" $$fileso ")"; \
-	cd "$(DESTDIR)$(iphonedir)" && rm -f $$fileso
+	echo " ( cd '$(DESTDIR)$(imobiledevicedir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(imobiledevicedir)" && rm -f $$files || exit $$?; \
+	echo " ( cd '$(DESTDIR)$(imobiledevicedir)' && rm -f" $$filesc ")"; \
+	cd "$(DESTDIR)$(imobiledevicedir)" && rm -f $$filesc || exit $$?; \
+	echo " ( cd '$(DESTDIR)$(imobiledevicedir)' && rm -f" $$fileso ")"; \
+	cd "$(DESTDIR)$(imobiledevicedir)" && rm -f $$fileso
 install-swigincludeHEADERS: $(swiginclude_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(swigincludedir)" || $(MKDIR_P) "$(DESTDIR)$(swigincludedir)"
@@ -596,7 +600,7 @@ check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(iphonedir)" "$(DESTDIR)$(iphonedir)" "$(DESTDIR)$(iphonedir)" "$(DESTDIR)$(swigincludedir)"; do \
+	for dir in "$(DESTDIR)$(imobiledevicedir)" "$(DESTDIR)$(imobiledevicedir)" "$(DESTDIR)$(imobiledevicedir)" "$(DESTDIR)$(swigincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -629,7 +633,7 @@ maintainer-clean-generic:
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-am
 
-clean-am: clean-generic clean-iphoneLTLIBRARIES clean-libtool \
+clean-am: clean-generic clean-imobiledeviceLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -650,8 +654,9 @@ info: info-am
 
 info-am:
 
-install-data-am: install-iphoneLTLIBRARIES install-iphonePYTHON \
-	install-nodist_iphonePYTHON install-swigincludeHEADERS
+install-data-am: install-imobiledeviceLTLIBRARIES \
+	install-imobiledevicePYTHON install-nodist_imobiledevicePYTHON \
+	install-swigincludeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -697,31 +702,34 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-iphoneLTLIBRARIES uninstall-iphonePYTHON \
-	uninstall-nodist_iphonePYTHON uninstall-swigincludeHEADERS
+uninstall-am: uninstall-imobiledeviceLTLIBRARIES \
+	uninstall-imobiledevicePYTHON \
+	uninstall-nodist_imobiledevicePYTHON \
+	uninstall-swigincludeHEADERS
 
 .MAKE: all check install install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-iphoneLTLIBRARIES clean-libtool ctags distclean \
+	clean-imobiledeviceLTLIBRARIES clean-libtool ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-iphoneLTLIBRARIES install-iphonePYTHON install-man \
-	install-nodist_iphonePYTHON install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip \
+	install-html-am install-imobiledeviceLTLIBRARIES \
+	install-imobiledevicePYTHON install-info install-info-am \
+	install-man install-nodist_imobiledevicePYTHON install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
 	install-swigincludeHEADERS installcheck installcheck-am \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-iphoneLTLIBRARIES \
-	uninstall-iphonePYTHON uninstall-nodist_iphonePYTHON \
+	uninstall-am uninstall-imobiledeviceLTLIBRARIES \
+	uninstall-imobiledevicePYTHON \
+	uninstall-nodist_imobiledevicePYTHON \
 	uninstall-swigincludeHEADERS
 
 
-@HAVE_SWIG_TRUE@iphone_wrap.cxx : $(SWIG_SOURCES)
+@HAVE_SWIG_TRUE@imobiledevice_wrap.cxx : $(SWIG_SOURCES)
 @HAVE_SWIG_TRUE@	$(SWIG) $(SWIG_PYTHON_OPT) $(INCLUDES) -I$(top_srcdir)/src -o $@ $<
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

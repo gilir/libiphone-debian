@@ -34,10 +34,11 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@ENABLE_DEVTOOLS_TRUE@noinst_PROGRAMS = iphoneclient$(EXEEXT) \
+@ENABLE_DEVTOOLS_TRUE@noinst_PROGRAMS = ideviceclient$(EXEEXT) \
 @ENABLE_DEVTOOLS_TRUE@	lckd-client$(EXEEXT) afccheck$(EXEEXT) \
 @ENABLE_DEVTOOLS_TRUE@	msyncclient$(EXEEXT) \
-@ENABLE_DEVTOOLS_TRUE@	iphoneenterrecovery$(EXEEXT)
+@ENABLE_DEVTOOLS_TRUE@	ideviceenterrecovery$(EXEEXT) \
+@ENABLE_DEVTOOLS_TRUE@	filerelaytest$(EXEEXT)
 subdir = dev
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -60,32 +61,44 @@ am__afccheck_SOURCES_DIST = afccheck.c
 @ENABLE_DEVTOOLS_TRUE@am_afccheck_OBJECTS =  \
 @ENABLE_DEVTOOLS_TRUE@	afccheck-afccheck.$(OBJEXT)
 afccheck_OBJECTS = $(am_afccheck_OBJECTS)
-@ENABLE_DEVTOOLS_TRUE@afccheck_DEPENDENCIES = ../src/libiphone.la
+@ENABLE_DEVTOOLS_TRUE@afccheck_DEPENDENCIES =  \
+@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 afccheck_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(afccheck_CFLAGS) \
 	$(CFLAGS) $(afccheck_LDFLAGS) $(LDFLAGS) -o $@
-am__iphoneclient_SOURCES_DIST = iphoneclient.c
-@ENABLE_DEVTOOLS_TRUE@am_iphoneclient_OBJECTS =  \
-@ENABLE_DEVTOOLS_TRUE@	iphoneclient.$(OBJEXT)
-iphoneclient_OBJECTS = $(am_iphoneclient_OBJECTS)
-@ENABLE_DEVTOOLS_TRUE@iphoneclient_DEPENDENCIES = ../src/libiphone.la
-am__iphoneenterrecovery_SOURCES_DIST = iphoneenterrecovery.c
-@ENABLE_DEVTOOLS_TRUE@am_iphoneenterrecovery_OBJECTS = iphoneenterrecovery-iphoneenterrecovery.$(OBJEXT)
-iphoneenterrecovery_OBJECTS = $(am_iphoneenterrecovery_OBJECTS)
-@ENABLE_DEVTOOLS_TRUE@iphoneenterrecovery_DEPENDENCIES =  \
-@ENABLE_DEVTOOLS_TRUE@	../src/libiphone.la
-iphoneenterrecovery_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+am__filerelaytest_SOURCES_DIST = filerelaytest.c
+@ENABLE_DEVTOOLS_TRUE@am_filerelaytest_OBJECTS =  \
+@ENABLE_DEVTOOLS_TRUE@	filerelaytest-filerelaytest.$(OBJEXT)
+filerelaytest_OBJECTS = $(am_filerelaytest_OBJECTS)
+@ENABLE_DEVTOOLS_TRUE@filerelaytest_DEPENDENCIES =  \
+@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
+filerelaytest_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(filerelaytest_CFLAGS) \
+	$(CFLAGS) $(filerelaytest_LDFLAGS) $(LDFLAGS) -o $@
+am__ideviceclient_SOURCES_DIST = ideviceclient.c
+@ENABLE_DEVTOOLS_TRUE@am_ideviceclient_OBJECTS =  \
+@ENABLE_DEVTOOLS_TRUE@	ideviceclient.$(OBJEXT)
+ideviceclient_OBJECTS = $(am_ideviceclient_OBJECTS)
+@ENABLE_DEVTOOLS_TRUE@ideviceclient_DEPENDENCIES =  \
+@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
+am__ideviceenterrecovery_SOURCES_DIST = ideviceenterrecovery.c
+@ENABLE_DEVTOOLS_TRUE@am_ideviceenterrecovery_OBJECTS = ideviceenterrecovery-ideviceenterrecovery.$(OBJEXT)
+ideviceenterrecovery_OBJECTS = $(am_ideviceenterrecovery_OBJECTS)
+@ENABLE_DEVTOOLS_TRUE@ideviceenterrecovery_DEPENDENCIES =  \
+@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
+ideviceenterrecovery_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
-	$(iphoneenterrecovery_CFLAGS) $(CFLAGS) \
-	$(iphoneenterrecovery_LDFLAGS) $(LDFLAGS) -o $@
+	$(ideviceenterrecovery_CFLAGS) $(CFLAGS) \
+	$(ideviceenterrecovery_LDFLAGS) $(LDFLAGS) -o $@
 am__lckd_client_SOURCES_DIST = lckdclient.c
 @ENABLE_DEVTOOLS_TRUE@am_lckd_client_OBJECTS =  \
 @ENABLE_DEVTOOLS_TRUE@	lckd_client-lckdclient.$(OBJEXT)
 lckd_client_OBJECTS = $(am_lckd_client_OBJECTS)
-@ENABLE_DEVTOOLS_TRUE@lckd_client_DEPENDENCIES = ../src/libiphone.la
+@ENABLE_DEVTOOLS_TRUE@lckd_client_DEPENDENCIES =  \
+@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
 lckd_client_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(lckd_client_CFLAGS) \
 	$(CFLAGS) $(lckd_client_LDFLAGS) $(LDFLAGS) -o $@
@@ -93,7 +106,8 @@ am__msyncclient_SOURCES_DIST = msyncclient.c
 @ENABLE_DEVTOOLS_TRUE@am_msyncclient_OBJECTS =  \
 @ENABLE_DEVTOOLS_TRUE@	msyncclient-msyncclient.$(OBJEXT)
 msyncclient_OBJECTS = $(am_msyncclient_OBJECTS)
-@ENABLE_DEVTOOLS_TRUE@msyncclient_DEPENDENCIES = ../src/libiphone.la
+@ENABLE_DEVTOOLS_TRUE@msyncclient_DEPENDENCIES =  \
+@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
 msyncclient_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(msyncclient_CFLAGS) \
 	$(CFLAGS) $(msyncclient_LDFLAGS) $(LDFLAGS) -o $@
@@ -123,12 +137,13 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(afccheck_SOURCES) $(iphoneclient_SOURCES) \
-	$(iphoneenterrecovery_SOURCES) $(lckd_client_SOURCES) \
-	$(msyncclient_SOURCES)
+SOURCES = $(afccheck_SOURCES) $(filerelaytest_SOURCES) \
+	$(ideviceclient_SOURCES) $(ideviceenterrecovery_SOURCES) \
+	$(lckd_client_SOURCES) $(msyncclient_SOURCES)
 DIST_SOURCES = $(am__afccheck_SOURCES_DIST) \
-	$(am__iphoneclient_SOURCES_DIST) \
-	$(am__iphoneenterrecovery_SOURCES_DIST) \
+	$(am__filerelaytest_SOURCES_DIST) \
+	$(am__ideviceclient_SOURCES_DIST) \
+	$(am__ideviceenterrecovery_SOURCES_DIST) \
 	$(am__lckd_client_SOURCES_DIST) \
 	$(am__msyncclient_SOURCES_DIST)
 ETAGS = etags
@@ -173,6 +188,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LFS_CFLAGS = @LFS_CFLAGS@
+LIBIMOBILEDEVICE_SO_VERSION = @LIBIMOBILEDEVICE_SO_VERSION@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -291,25 +307,29 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir)/include
 AM_CFLAGS = $(GLOBAL_CFLAGS) $(libglib2_CFLAGS) $(libgnutls_CFLAGS) $(libtasn1_CFLAGS) $(libgthread2_CFLAGS) $(LFS_CFLAGS)
 AM_LDFLAGS = $(libglib2_LIBS) $(libgnutls_LIBS) $(libtasn1_LIBS) $(libgthread2_LIBS)
-@ENABLE_DEVTOOLS_TRUE@iphoneclient_SOURCES = iphoneclient.c
-@ENABLE_DEVTOOLS_TRUE@iphoneclient_LDADD = ../src/libiphone.la
+@ENABLE_DEVTOOLS_TRUE@ideviceclient_SOURCES = ideviceclient.c
+@ENABLE_DEVTOOLS_TRUE@ideviceclient_LDADD = ../src/libimobiledevice.la
 @ENABLE_DEVTOOLS_TRUE@lckd_client_SOURCES = lckdclient.c
 @ENABLE_DEVTOOLS_TRUE@lckd_client_CFLAGS = $(AM_CFLAGS)
 @ENABLE_DEVTOOLS_TRUE@lckd_client_LDFLAGS = -lreadline $(AM_LDFLAGS)
-@ENABLE_DEVTOOLS_TRUE@lckd_client_LDADD = ../src/libiphone.la
+@ENABLE_DEVTOOLS_TRUE@lckd_client_LDADD = ../src/libimobiledevice.la
 @ENABLE_DEVTOOLS_TRUE@afccheck_SOURCES = afccheck.c
 @ENABLE_DEVTOOLS_TRUE@afccheck_CFLAGS = $(AM_CFLAGS)
 @ENABLE_DEVTOOLS_TRUE@afccheck_LDFLAGS = $(AM_LDFLAGS)
-@ENABLE_DEVTOOLS_TRUE@afccheck_LDADD = ../src/libiphone.la
+@ENABLE_DEVTOOLS_TRUE@afccheck_LDADD = ../src/libimobiledevice.la
 @ENABLE_DEVTOOLS_TRUE@msyncclient_SOURCES = msyncclient.c
 @ENABLE_DEVTOOLS_TRUE@msyncclient_CFLAGS = $(AM_CFLAGS)
 @ENABLE_DEVTOOLS_TRUE@msyncclient_LDFLAGS = $(AM_LDFLAGS)
-@ENABLE_DEVTOOLS_TRUE@msyncclient_LDADD = ../src/libiphone.la
-@ENABLE_DEVTOOLS_TRUE@iphoneenterrecovery_SOURCES = iphoneenterrecovery.c
-@ENABLE_DEVTOOLS_TRUE@iphoneenterrecovery_CFLAGS = $(AM_CFLAGS)
-@ENABLE_DEVTOOLS_TRUE@iphoneenterrecovery_LDFLAGS = $(AM_LDFLAGS)
-@ENABLE_DEVTOOLS_TRUE@iphoneenterrecovery_LDADD = ../src/libiphone.la
-EXTRA_DIST = iphoneclient.c lckdclient.c afccheck.c msyncclient.c iphoneenterrecovery.c
+@ENABLE_DEVTOOLS_TRUE@msyncclient_LDADD = ../src/libimobiledevice.la
+@ENABLE_DEVTOOLS_TRUE@ideviceenterrecovery_SOURCES = ideviceenterrecovery.c
+@ENABLE_DEVTOOLS_TRUE@ideviceenterrecovery_CFLAGS = $(AM_CFLAGS)
+@ENABLE_DEVTOOLS_TRUE@ideviceenterrecovery_LDFLAGS = $(AM_LDFLAGS)
+@ENABLE_DEVTOOLS_TRUE@ideviceenterrecovery_LDADD = ../src/libimobiledevice.la
+@ENABLE_DEVTOOLS_TRUE@filerelaytest_SOURCES = filerelaytest.c
+@ENABLE_DEVTOOLS_TRUE@filerelaytest_CFLAGS = $(AM_CFLAGS)
+@ENABLE_DEVTOOLS_TRUE@filerelaytest_LDFLAGS = $(AM_LDFLAGS)
+@ENABLE_DEVTOOLS_TRUE@filerelaytest_LDADD = ../src/libimobiledevice.la
+EXTRA_DIST = ideviceclient.c lckdclient.c afccheck.c msyncclient.c ideviceenterrecovery.c
 all: all-am
 
 .SUFFIXES:
@@ -356,12 +376,15 @@ clean-noinstPROGRAMS:
 afccheck$(EXEEXT): $(afccheck_OBJECTS) $(afccheck_DEPENDENCIES) 
 	@rm -f afccheck$(EXEEXT)
 	$(AM_V_CCLD)$(afccheck_LINK) $(afccheck_OBJECTS) $(afccheck_LDADD) $(LIBS)
-iphoneclient$(EXEEXT): $(iphoneclient_OBJECTS) $(iphoneclient_DEPENDENCIES) 
-	@rm -f iphoneclient$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(iphoneclient_OBJECTS) $(iphoneclient_LDADD) $(LIBS)
-iphoneenterrecovery$(EXEEXT): $(iphoneenterrecovery_OBJECTS) $(iphoneenterrecovery_DEPENDENCIES) 
-	@rm -f iphoneenterrecovery$(EXEEXT)
-	$(AM_V_CCLD)$(iphoneenterrecovery_LINK) $(iphoneenterrecovery_OBJECTS) $(iphoneenterrecovery_LDADD) $(LIBS)
+filerelaytest$(EXEEXT): $(filerelaytest_OBJECTS) $(filerelaytest_DEPENDENCIES) 
+	@rm -f filerelaytest$(EXEEXT)
+	$(AM_V_CCLD)$(filerelaytest_LINK) $(filerelaytest_OBJECTS) $(filerelaytest_LDADD) $(LIBS)
+ideviceclient$(EXEEXT): $(ideviceclient_OBJECTS) $(ideviceclient_DEPENDENCIES) 
+	@rm -f ideviceclient$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(ideviceclient_OBJECTS) $(ideviceclient_LDADD) $(LIBS)
+ideviceenterrecovery$(EXEEXT): $(ideviceenterrecovery_OBJECTS) $(ideviceenterrecovery_DEPENDENCIES) 
+	@rm -f ideviceenterrecovery$(EXEEXT)
+	$(AM_V_CCLD)$(ideviceenterrecovery_LINK) $(ideviceenterrecovery_OBJECTS) $(ideviceenterrecovery_LDADD) $(LIBS)
 lckd-client$(EXEEXT): $(lckd_client_OBJECTS) $(lckd_client_DEPENDENCIES) 
 	@rm -f lckd-client$(EXEEXT)
 	$(AM_V_CCLD)$(lckd_client_LINK) $(lckd_client_OBJECTS) $(lckd_client_LDADD) $(LIBS)
@@ -376,8 +399,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/afccheck-afccheck.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iphoneclient.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iphoneenterrecovery-iphoneenterrecovery.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filerelaytest-filerelaytest.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceclient.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lckd_client-lckdclient.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/msyncclient-msyncclient.Po@am__quote@
 
@@ -421,21 +445,37 @@ afccheck-afccheck.obj: afccheck.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(afccheck_CFLAGS) $(CFLAGS) -c -o afccheck-afccheck.obj `if test -f 'afccheck.c'; then $(CYGPATH_W) 'afccheck.c'; else $(CYGPATH_W) '$(srcdir)/afccheck.c'; fi`
 
-iphoneenterrecovery-iphoneenterrecovery.o: iphoneenterrecovery.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneenterrecovery_CFLAGS) $(CFLAGS) -MT iphoneenterrecovery-iphoneenterrecovery.o -MD -MP -MF $(DEPDIR)/iphoneenterrecovery-iphoneenterrecovery.Tpo -c -o iphoneenterrecovery-iphoneenterrecovery.o `test -f 'iphoneenterrecovery.c' || echo '$(srcdir)/'`iphoneenterrecovery.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphoneenterrecovery-iphoneenterrecovery.Tpo $(DEPDIR)/iphoneenterrecovery-iphoneenterrecovery.Po
+filerelaytest-filerelaytest.o: filerelaytest.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(filerelaytest_CFLAGS) $(CFLAGS) -MT filerelaytest-filerelaytest.o -MD -MP -MF $(DEPDIR)/filerelaytest-filerelaytest.Tpo -c -o filerelaytest-filerelaytest.o `test -f 'filerelaytest.c' || echo '$(srcdir)/'`filerelaytest.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/filerelaytest-filerelaytest.Tpo $(DEPDIR)/filerelaytest-filerelaytest.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphoneenterrecovery.c' object='iphoneenterrecovery-iphoneenterrecovery.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='filerelaytest.c' object='filerelaytest-filerelaytest.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneenterrecovery_CFLAGS) $(CFLAGS) -c -o iphoneenterrecovery-iphoneenterrecovery.o `test -f 'iphoneenterrecovery.c' || echo '$(srcdir)/'`iphoneenterrecovery.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(filerelaytest_CFLAGS) $(CFLAGS) -c -o filerelaytest-filerelaytest.o `test -f 'filerelaytest.c' || echo '$(srcdir)/'`filerelaytest.c
 
-iphoneenterrecovery-iphoneenterrecovery.obj: iphoneenterrecovery.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneenterrecovery_CFLAGS) $(CFLAGS) -MT iphoneenterrecovery-iphoneenterrecovery.obj -MD -MP -MF $(DEPDIR)/iphoneenterrecovery-iphoneenterrecovery.Tpo -c -o iphoneenterrecovery-iphoneenterrecovery.obj `if test -f 'iphoneenterrecovery.c'; then $(CYGPATH_W) 'iphoneenterrecovery.c'; else $(CYGPATH_W) '$(srcdir)/iphoneenterrecovery.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphoneenterrecovery-iphoneenterrecovery.Tpo $(DEPDIR)/iphoneenterrecovery-iphoneenterrecovery.Po
+filerelaytest-filerelaytest.obj: filerelaytest.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(filerelaytest_CFLAGS) $(CFLAGS) -MT filerelaytest-filerelaytest.obj -MD -MP -MF $(DEPDIR)/filerelaytest-filerelaytest.Tpo -c -o filerelaytest-filerelaytest.obj `if test -f 'filerelaytest.c'; then $(CYGPATH_W) 'filerelaytest.c'; else $(CYGPATH_W) '$(srcdir)/filerelaytest.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/filerelaytest-filerelaytest.Tpo $(DEPDIR)/filerelaytest-filerelaytest.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphoneenterrecovery.c' object='iphoneenterrecovery-iphoneenterrecovery.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='filerelaytest.c' object='filerelaytest-filerelaytest.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneenterrecovery_CFLAGS) $(CFLAGS) -c -o iphoneenterrecovery-iphoneenterrecovery.obj `if test -f 'iphoneenterrecovery.c'; then $(CYGPATH_W) 'iphoneenterrecovery.c'; else $(CYGPATH_W) '$(srcdir)/iphoneenterrecovery.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(filerelaytest_CFLAGS) $(CFLAGS) -c -o filerelaytest-filerelaytest.obj `if test -f 'filerelaytest.c'; then $(CYGPATH_W) 'filerelaytest.c'; else $(CYGPATH_W) '$(srcdir)/filerelaytest.c'; fi`
+
+ideviceenterrecovery-ideviceenterrecovery.o: ideviceenterrecovery.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceenterrecovery_CFLAGS) $(CFLAGS) -MT ideviceenterrecovery-ideviceenterrecovery.o -MD -MP -MF $(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Tpo -c -o ideviceenterrecovery-ideviceenterrecovery.o `test -f 'ideviceenterrecovery.c' || echo '$(srcdir)/'`ideviceenterrecovery.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Tpo $(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ideviceenterrecovery.c' object='ideviceenterrecovery-ideviceenterrecovery.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceenterrecovery_CFLAGS) $(CFLAGS) -c -o ideviceenterrecovery-ideviceenterrecovery.o `test -f 'ideviceenterrecovery.c' || echo '$(srcdir)/'`ideviceenterrecovery.c
+
+ideviceenterrecovery-ideviceenterrecovery.obj: ideviceenterrecovery.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceenterrecovery_CFLAGS) $(CFLAGS) -MT ideviceenterrecovery-ideviceenterrecovery.obj -MD -MP -MF $(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Tpo -c -o ideviceenterrecovery-ideviceenterrecovery.obj `if test -f 'ideviceenterrecovery.c'; then $(CYGPATH_W) 'ideviceenterrecovery.c'; else $(CYGPATH_W) '$(srcdir)/ideviceenterrecovery.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Tpo $(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ideviceenterrecovery.c' object='ideviceenterrecovery-ideviceenterrecovery.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceenterrecovery_CFLAGS) $(CFLAGS) -c -o ideviceenterrecovery-ideviceenterrecovery.obj `if test -f 'ideviceenterrecovery.c'; then $(CYGPATH_W) 'ideviceenterrecovery.c'; else $(CYGPATH_W) '$(srcdir)/ideviceenterrecovery.c'; fi`
 
 lckd_client-lckdclient.o: lckdclient.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lckd_client_CFLAGS) $(CFLAGS) -MT lckd_client-lckdclient.o -MD -MP -MF $(DEPDIR)/lckd_client-lckdclient.Tpo -c -o lckd_client-lckdclient.o `test -f 'lckdclient.c' || echo '$(srcdir)/'`lckdclient.c

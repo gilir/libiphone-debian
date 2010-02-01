@@ -34,8 +34,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = iphone_id$(EXEEXT) iphoneinfo$(EXEEXT) \
-	iphonesyslog$(EXEEXT)
+bin_PROGRAMS = idevice_id$(EXEEXT) ideviceinfo$(EXEEXT) \
+	idevicesyslog$(EXEEXT) idevicebackup$(EXEEXT)
 subdir = tools
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -55,27 +55,33 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_iphone_id_OBJECTS = iphone_id-iphone_id.$(OBJEXT)
-iphone_id_OBJECTS = $(am_iphone_id_OBJECTS)
-iphone_id_DEPENDENCIES = ../src/libiphone.la
+am_idevice_id_OBJECTS = idevice_id-idevice_id.$(OBJEXT)
+idevice_id_OBJECTS = $(am_idevice_id_OBJECTS)
+idevice_id_DEPENDENCIES = ../src/libimobiledevice.la
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
-iphone_id_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(iphone_id_CFLAGS) \
-	$(CFLAGS) $(iphone_id_LDFLAGS) $(LDFLAGS) -o $@
-am_iphoneinfo_OBJECTS = iphoneinfo-iphoneinfo.$(OBJEXT)
-iphoneinfo_OBJECTS = $(am_iphoneinfo_OBJECTS)
-iphoneinfo_DEPENDENCIES = ../src/libiphone.la
-iphoneinfo_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(iphoneinfo_CFLAGS) \
-	$(CFLAGS) $(iphoneinfo_LDFLAGS) $(LDFLAGS) -o $@
-am_iphonesyslog_OBJECTS = iphonesyslog-iphonesyslog.$(OBJEXT)
-iphonesyslog_OBJECTS = $(am_iphonesyslog_OBJECTS)
-iphonesyslog_DEPENDENCIES = ../src/libiphone.la
-iphonesyslog_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(iphonesyslog_CFLAGS) \
-	$(CFLAGS) $(iphonesyslog_LDFLAGS) $(LDFLAGS) -o $@
+idevice_id_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(idevice_id_CFLAGS) \
+	$(CFLAGS) $(idevice_id_LDFLAGS) $(LDFLAGS) -o $@
+am_idevicebackup_OBJECTS = idevicebackup-idevicebackup.$(OBJEXT)
+idevicebackup_OBJECTS = $(am_idevicebackup_OBJECTS)
+idevicebackup_DEPENDENCIES = ../src/libimobiledevice.la
+idevicebackup_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(idevicebackup_CFLAGS) \
+	$(CFLAGS) $(idevicebackup_LDFLAGS) $(LDFLAGS) -o $@
+am_ideviceinfo_OBJECTS = ideviceinfo-ideviceinfo.$(OBJEXT)
+ideviceinfo_OBJECTS = $(am_ideviceinfo_OBJECTS)
+ideviceinfo_DEPENDENCIES = ../src/libimobiledevice.la
+ideviceinfo_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(ideviceinfo_CFLAGS) \
+	$(CFLAGS) $(ideviceinfo_LDFLAGS) $(LDFLAGS) -o $@
+am_idevicesyslog_OBJECTS = idevicesyslog-idevicesyslog.$(OBJEXT)
+idevicesyslog_OBJECTS = $(am_idevicesyslog_OBJECTS)
+idevicesyslog_DEPENDENCIES = ../src/libimobiledevice.la
+idevicesyslog_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(idevicesyslog_CFLAGS) \
+	$(CFLAGS) $(idevicesyslog_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -102,10 +108,10 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(iphone_id_SOURCES) $(iphoneinfo_SOURCES) \
-	$(iphonesyslog_SOURCES)
-DIST_SOURCES = $(iphone_id_SOURCES) $(iphoneinfo_SOURCES) \
-	$(iphonesyslog_SOURCES)
+SOURCES = $(idevice_id_SOURCES) $(idevicebackup_SOURCES) \
+	$(ideviceinfo_SOURCES) $(idevicesyslog_SOURCES)
+DIST_SOURCES = $(idevice_id_SOURCES) $(idevicebackup_SOURCES) \
+	$(ideviceinfo_SOURCES) $(idevicesyslog_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -148,6 +154,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LFS_CFLAGS = @LFS_CFLAGS@
+LIBIMOBILEDEVICE_SO_VERSION = @LIBIMOBILEDEVICE_SO_VERSION@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -266,18 +273,22 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir)/include
 AM_CFLAGS = $(GLOBAL_CFLAGS) $(libglib2_CFLAGS) $(libgnutls_CFLAGS) $(libtasn1_CFLAGS) $(libgthread2_CFLAGS) $(LFS_CFLAGS)
 AM_LDFLAGS = $(libglib2_LIBS) $(libgnutls_LIBS) $(libtasn1_LIBS) $(libgthread2_LIBS)
-iphoneinfo_SOURCES = iphoneinfo.c
-iphoneinfo_CFLAGS = $(AM_CFLAGS)
-iphoneinfo_LDFLAGS = $(AM_LDFLAGS)
-iphoneinfo_LDADD = ../src/libiphone.la
-iphonesyslog_SOURCES = iphonesyslog.c
-iphonesyslog_CFLAGS = $(AM_CFLAGS)
-iphonesyslog_LDFLAGS = $(AM_LDFLAGS)
-iphonesyslog_LDADD = ../src/libiphone.la
-iphone_id_SOURCES = iphone_id.c
-iphone_id_CFLAGS = $(AM_CFLAGS)
-iphone_id_LDFLAGS = $(AM_LDFLAGS)
-iphone_id_LDADD = ../src/libiphone.la
+ideviceinfo_SOURCES = ideviceinfo.c
+ideviceinfo_CFLAGS = $(AM_CFLAGS)
+ideviceinfo_LDFLAGS = $(AM_LDFLAGS)
+ideviceinfo_LDADD = ../src/libimobiledevice.la
+idevicesyslog_SOURCES = idevicesyslog.c
+idevicesyslog_CFLAGS = $(AM_CFLAGS)
+idevicesyslog_LDFLAGS = $(AM_LDFLAGS)
+idevicesyslog_LDADD = ../src/libimobiledevice.la
+idevice_id_SOURCES = idevice_id.c
+idevice_id_CFLAGS = $(AM_CFLAGS)
+idevice_id_LDFLAGS = $(AM_LDFLAGS)
+idevice_id_LDADD = ../src/libimobiledevice.la
+idevicebackup_SOURCES = idevicebackup.c
+idevicebackup_CFLAGS = $(AM_CFLAGS)
+idevicebackup_LDFLAGS = $(AM_LDFLAGS)
+idevicebackup_LDADD = ../src/libimobiledevice.la
 all: all-am
 
 .SUFFIXES:
@@ -355,15 +366,18 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-iphone_id$(EXEEXT): $(iphone_id_OBJECTS) $(iphone_id_DEPENDENCIES) 
-	@rm -f iphone_id$(EXEEXT)
-	$(AM_V_CCLD)$(iphone_id_LINK) $(iphone_id_OBJECTS) $(iphone_id_LDADD) $(LIBS)
-iphoneinfo$(EXEEXT): $(iphoneinfo_OBJECTS) $(iphoneinfo_DEPENDENCIES) 
-	@rm -f iphoneinfo$(EXEEXT)
-	$(AM_V_CCLD)$(iphoneinfo_LINK) $(iphoneinfo_OBJECTS) $(iphoneinfo_LDADD) $(LIBS)
-iphonesyslog$(EXEEXT): $(iphonesyslog_OBJECTS) $(iphonesyslog_DEPENDENCIES) 
-	@rm -f iphonesyslog$(EXEEXT)
-	$(AM_V_CCLD)$(iphonesyslog_LINK) $(iphonesyslog_OBJECTS) $(iphonesyslog_LDADD) $(LIBS)
+idevice_id$(EXEEXT): $(idevice_id_OBJECTS) $(idevice_id_DEPENDENCIES) 
+	@rm -f idevice_id$(EXEEXT)
+	$(AM_V_CCLD)$(idevice_id_LINK) $(idevice_id_OBJECTS) $(idevice_id_LDADD) $(LIBS)
+idevicebackup$(EXEEXT): $(idevicebackup_OBJECTS) $(idevicebackup_DEPENDENCIES) 
+	@rm -f idevicebackup$(EXEEXT)
+	$(AM_V_CCLD)$(idevicebackup_LINK) $(idevicebackup_OBJECTS) $(idevicebackup_LDADD) $(LIBS)
+ideviceinfo$(EXEEXT): $(ideviceinfo_OBJECTS) $(ideviceinfo_DEPENDENCIES) 
+	@rm -f ideviceinfo$(EXEEXT)
+	$(AM_V_CCLD)$(ideviceinfo_LINK) $(ideviceinfo_OBJECTS) $(ideviceinfo_LDADD) $(LIBS)
+idevicesyslog$(EXEEXT): $(idevicesyslog_OBJECTS) $(idevicesyslog_DEPENDENCIES) 
+	@rm -f idevicesyslog$(EXEEXT)
+	$(AM_V_CCLD)$(idevicesyslog_LINK) $(idevicesyslog_OBJECTS) $(idevicesyslog_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -371,9 +385,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iphone_id-iphone_id.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iphoneinfo-iphoneinfo.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iphonesyslog-iphonesyslog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevice_id-idevice_id.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevicebackup-idevicebackup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceinfo-ideviceinfo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevicesyslog-idevicesyslog.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -399,53 +414,69 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-iphone_id-iphone_id.o: iphone_id.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphone_id_CFLAGS) $(CFLAGS) -MT iphone_id-iphone_id.o -MD -MP -MF $(DEPDIR)/iphone_id-iphone_id.Tpo -c -o iphone_id-iphone_id.o `test -f 'iphone_id.c' || echo '$(srcdir)/'`iphone_id.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphone_id-iphone_id.Tpo $(DEPDIR)/iphone_id-iphone_id.Po
+idevice_id-idevice_id.o: idevice_id.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevice_id_CFLAGS) $(CFLAGS) -MT idevice_id-idevice_id.o -MD -MP -MF $(DEPDIR)/idevice_id-idevice_id.Tpo -c -o idevice_id-idevice_id.o `test -f 'idevice_id.c' || echo '$(srcdir)/'`idevice_id.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevice_id-idevice_id.Tpo $(DEPDIR)/idevice_id-idevice_id.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphone_id.c' object='iphone_id-iphone_id.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevice_id.c' object='idevice_id-idevice_id.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphone_id_CFLAGS) $(CFLAGS) -c -o iphone_id-iphone_id.o `test -f 'iphone_id.c' || echo '$(srcdir)/'`iphone_id.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevice_id_CFLAGS) $(CFLAGS) -c -o idevice_id-idevice_id.o `test -f 'idevice_id.c' || echo '$(srcdir)/'`idevice_id.c
 
-iphone_id-iphone_id.obj: iphone_id.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphone_id_CFLAGS) $(CFLAGS) -MT iphone_id-iphone_id.obj -MD -MP -MF $(DEPDIR)/iphone_id-iphone_id.Tpo -c -o iphone_id-iphone_id.obj `if test -f 'iphone_id.c'; then $(CYGPATH_W) 'iphone_id.c'; else $(CYGPATH_W) '$(srcdir)/iphone_id.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphone_id-iphone_id.Tpo $(DEPDIR)/iphone_id-iphone_id.Po
+idevice_id-idevice_id.obj: idevice_id.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevice_id_CFLAGS) $(CFLAGS) -MT idevice_id-idevice_id.obj -MD -MP -MF $(DEPDIR)/idevice_id-idevice_id.Tpo -c -o idevice_id-idevice_id.obj `if test -f 'idevice_id.c'; then $(CYGPATH_W) 'idevice_id.c'; else $(CYGPATH_W) '$(srcdir)/idevice_id.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevice_id-idevice_id.Tpo $(DEPDIR)/idevice_id-idevice_id.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphone_id.c' object='iphone_id-iphone_id.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevice_id.c' object='idevice_id-idevice_id.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphone_id_CFLAGS) $(CFLAGS) -c -o iphone_id-iphone_id.obj `if test -f 'iphone_id.c'; then $(CYGPATH_W) 'iphone_id.c'; else $(CYGPATH_W) '$(srcdir)/iphone_id.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevice_id_CFLAGS) $(CFLAGS) -c -o idevice_id-idevice_id.obj `if test -f 'idevice_id.c'; then $(CYGPATH_W) 'idevice_id.c'; else $(CYGPATH_W) '$(srcdir)/idevice_id.c'; fi`
 
-iphoneinfo-iphoneinfo.o: iphoneinfo.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneinfo_CFLAGS) $(CFLAGS) -MT iphoneinfo-iphoneinfo.o -MD -MP -MF $(DEPDIR)/iphoneinfo-iphoneinfo.Tpo -c -o iphoneinfo-iphoneinfo.o `test -f 'iphoneinfo.c' || echo '$(srcdir)/'`iphoneinfo.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphoneinfo-iphoneinfo.Tpo $(DEPDIR)/iphoneinfo-iphoneinfo.Po
+idevicebackup-idevicebackup.o: idevicebackup.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup_CFLAGS) $(CFLAGS) -MT idevicebackup-idevicebackup.o -MD -MP -MF $(DEPDIR)/idevicebackup-idevicebackup.Tpo -c -o idevicebackup-idevicebackup.o `test -f 'idevicebackup.c' || echo '$(srcdir)/'`idevicebackup.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicebackup-idevicebackup.Tpo $(DEPDIR)/idevicebackup-idevicebackup.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphoneinfo.c' object='iphoneinfo-iphoneinfo.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicebackup.c' object='idevicebackup-idevicebackup.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneinfo_CFLAGS) $(CFLAGS) -c -o iphoneinfo-iphoneinfo.o `test -f 'iphoneinfo.c' || echo '$(srcdir)/'`iphoneinfo.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup_CFLAGS) $(CFLAGS) -c -o idevicebackup-idevicebackup.o `test -f 'idevicebackup.c' || echo '$(srcdir)/'`idevicebackup.c
 
-iphoneinfo-iphoneinfo.obj: iphoneinfo.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneinfo_CFLAGS) $(CFLAGS) -MT iphoneinfo-iphoneinfo.obj -MD -MP -MF $(DEPDIR)/iphoneinfo-iphoneinfo.Tpo -c -o iphoneinfo-iphoneinfo.obj `if test -f 'iphoneinfo.c'; then $(CYGPATH_W) 'iphoneinfo.c'; else $(CYGPATH_W) '$(srcdir)/iphoneinfo.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphoneinfo-iphoneinfo.Tpo $(DEPDIR)/iphoneinfo-iphoneinfo.Po
+idevicebackup-idevicebackup.obj: idevicebackup.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup_CFLAGS) $(CFLAGS) -MT idevicebackup-idevicebackup.obj -MD -MP -MF $(DEPDIR)/idevicebackup-idevicebackup.Tpo -c -o idevicebackup-idevicebackup.obj `if test -f 'idevicebackup.c'; then $(CYGPATH_W) 'idevicebackup.c'; else $(CYGPATH_W) '$(srcdir)/idevicebackup.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicebackup-idevicebackup.Tpo $(DEPDIR)/idevicebackup-idevicebackup.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphoneinfo.c' object='iphoneinfo-iphoneinfo.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicebackup.c' object='idevicebackup-idevicebackup.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphoneinfo_CFLAGS) $(CFLAGS) -c -o iphoneinfo-iphoneinfo.obj `if test -f 'iphoneinfo.c'; then $(CYGPATH_W) 'iphoneinfo.c'; else $(CYGPATH_W) '$(srcdir)/iphoneinfo.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup_CFLAGS) $(CFLAGS) -c -o idevicebackup-idevicebackup.obj `if test -f 'idevicebackup.c'; then $(CYGPATH_W) 'idevicebackup.c'; else $(CYGPATH_W) '$(srcdir)/idevicebackup.c'; fi`
 
-iphonesyslog-iphonesyslog.o: iphonesyslog.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphonesyslog_CFLAGS) $(CFLAGS) -MT iphonesyslog-iphonesyslog.o -MD -MP -MF $(DEPDIR)/iphonesyslog-iphonesyslog.Tpo -c -o iphonesyslog-iphonesyslog.o `test -f 'iphonesyslog.c' || echo '$(srcdir)/'`iphonesyslog.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphonesyslog-iphonesyslog.Tpo $(DEPDIR)/iphonesyslog-iphonesyslog.Po
+ideviceinfo-ideviceinfo.o: ideviceinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceinfo_CFLAGS) $(CFLAGS) -MT ideviceinfo-ideviceinfo.o -MD -MP -MF $(DEPDIR)/ideviceinfo-ideviceinfo.Tpo -c -o ideviceinfo-ideviceinfo.o `test -f 'ideviceinfo.c' || echo '$(srcdir)/'`ideviceinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ideviceinfo-ideviceinfo.Tpo $(DEPDIR)/ideviceinfo-ideviceinfo.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphonesyslog.c' object='iphonesyslog-iphonesyslog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ideviceinfo.c' object='ideviceinfo-ideviceinfo.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphonesyslog_CFLAGS) $(CFLAGS) -c -o iphonesyslog-iphonesyslog.o `test -f 'iphonesyslog.c' || echo '$(srcdir)/'`iphonesyslog.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceinfo_CFLAGS) $(CFLAGS) -c -o ideviceinfo-ideviceinfo.o `test -f 'ideviceinfo.c' || echo '$(srcdir)/'`ideviceinfo.c
 
-iphonesyslog-iphonesyslog.obj: iphonesyslog.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphonesyslog_CFLAGS) $(CFLAGS) -MT iphonesyslog-iphonesyslog.obj -MD -MP -MF $(DEPDIR)/iphonesyslog-iphonesyslog.Tpo -c -o iphonesyslog-iphonesyslog.obj `if test -f 'iphonesyslog.c'; then $(CYGPATH_W) 'iphonesyslog.c'; else $(CYGPATH_W) '$(srcdir)/iphonesyslog.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/iphonesyslog-iphonesyslog.Tpo $(DEPDIR)/iphonesyslog-iphonesyslog.Po
+ideviceinfo-ideviceinfo.obj: ideviceinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceinfo_CFLAGS) $(CFLAGS) -MT ideviceinfo-ideviceinfo.obj -MD -MP -MF $(DEPDIR)/ideviceinfo-ideviceinfo.Tpo -c -o ideviceinfo-ideviceinfo.obj `if test -f 'ideviceinfo.c'; then $(CYGPATH_W) 'ideviceinfo.c'; else $(CYGPATH_W) '$(srcdir)/ideviceinfo.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ideviceinfo-ideviceinfo.Tpo $(DEPDIR)/ideviceinfo-ideviceinfo.Po
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iphonesyslog.c' object='iphonesyslog-iphonesyslog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ideviceinfo.c' object='ideviceinfo-ideviceinfo.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(iphonesyslog_CFLAGS) $(CFLAGS) -c -o iphonesyslog-iphonesyslog.obj `if test -f 'iphonesyslog.c'; then $(CYGPATH_W) 'iphonesyslog.c'; else $(CYGPATH_W) '$(srcdir)/iphonesyslog.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceinfo_CFLAGS) $(CFLAGS) -c -o ideviceinfo-ideviceinfo.obj `if test -f 'ideviceinfo.c'; then $(CYGPATH_W) 'ideviceinfo.c'; else $(CYGPATH_W) '$(srcdir)/ideviceinfo.c'; fi`
+
+idevicesyslog-idevicesyslog.o: idevicesyslog.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicesyslog_CFLAGS) $(CFLAGS) -MT idevicesyslog-idevicesyslog.o -MD -MP -MF $(DEPDIR)/idevicesyslog-idevicesyslog.Tpo -c -o idevicesyslog-idevicesyslog.o `test -f 'idevicesyslog.c' || echo '$(srcdir)/'`idevicesyslog.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicesyslog-idevicesyslog.Tpo $(DEPDIR)/idevicesyslog-idevicesyslog.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicesyslog.c' object='idevicesyslog-idevicesyslog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicesyslog_CFLAGS) $(CFLAGS) -c -o idevicesyslog-idevicesyslog.o `test -f 'idevicesyslog.c' || echo '$(srcdir)/'`idevicesyslog.c
+
+idevicesyslog-idevicesyslog.obj: idevicesyslog.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicesyslog_CFLAGS) $(CFLAGS) -MT idevicesyslog-idevicesyslog.obj -MD -MP -MF $(DEPDIR)/idevicesyslog-idevicesyslog.Tpo -c -o idevicesyslog-idevicesyslog.obj `if test -f 'idevicesyslog.c'; then $(CYGPATH_W) 'idevicesyslog.c'; else $(CYGPATH_W) '$(srcdir)/idevicesyslog.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicesyslog-idevicesyslog.Tpo $(DEPDIR)/idevicesyslog-idevicesyslog.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicesyslog.c' object='idevicesyslog-idevicesyslog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicesyslog_CFLAGS) $(CFLAGS) -c -o idevicesyslog-idevicesyslog.obj `if test -f 'idevicesyslog.c'; then $(CYGPATH_W) 'idevicesyslog.c'; else $(CYGPATH_W) '$(srcdir)/idevicesyslog.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
