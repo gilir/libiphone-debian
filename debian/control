@@ -53,7 +53,7 @@ Description: Library for communicating with iPhone and iPod Touch devices
  .
  This package contains the debugging symbols.
 
-Package: python-iphone
+Package: python-imobiledevice
 Section: python
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
