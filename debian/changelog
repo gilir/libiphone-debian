@@ -14,6 +14,7 @@ libimobiledevice (0.9.7-1) UNRELEASED; urgency=low
    - Build-depends on libusb2-dev on kfreebsd (Closes: #565665).
    - Remove libusb-1.0-0-dev depends for libimobiledevice-dev.
    - Wrap depends.
+   - Add Conflicts/Replaces with libiphone0 for .fdi file.
   * debian/libimobiledevice0.symbols: Rewrite with only remaining symbols.
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
