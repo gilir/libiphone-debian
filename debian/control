@@ -5,7 +5,7 @@ Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
 Standards-Version: 3.8.3
 Build-Depends: debhelper (>= 7.0.50~),
 	libgnutls-dev (>= 1.6.3), 
-	libusb-1.0-0-dev (>= 1.0.3), 
+	libusb-1.0-0-dev (>= 1.0.3) [!kfreebsd-i386 !kfreebsd-amd64] | libusb2-dev (>= 8.0-4) [kfreebsd-i386 kfreebsd-amd64],
 	libglib2.0-dev (>= 2.14.1), 
 	libplist-dev (>= 0.15), 
 	libplist++-dev (>= 0.15),
@@ -33,7 +33,13 @@ Description: Library for communicating with the iPhone and iPod Touch
 Package: libimobiledevice-dev
 Architecture: any
 Section: libdevel
-Depends: libimobiledevice0 (= ${binary:Version}), libusb-1.0-0-dev, libglib2.0-dev, libgnutls-dev, libplist-dev, libusbmuxd-dev,libtasn1-3-dev, ${misc:Depends}
+Depends: libimobiledevice0 (= ${binary:Version}), 
+         ${misc:Depends},
+         libglib2.0-dev,
+         libplist-dev, 
+         libusbmuxd-dev,
+         libgnutls-dev,
+         libtasn1-3-dev
 Description: Library for communicating with iPhone and iPod Touch devices
  libimobiledevice is a library that talks the native Apple USB protocols that
  the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does

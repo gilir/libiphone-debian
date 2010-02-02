@@ -1,6 +1,6 @@
 libimobiledevice (0.9.7-1) UNRELEASED; urgency=low
 
-  * New upstream release, previously named libiphone.
+  * New upstream release, previously named libiphone (Closes: #568136, #568137)
   * Replace all libiphone occurence to libimobiledevice.
   * Remove python-iphone.preinst, not needed since the package was renamed.
   * debian/copyright: Update copyright holders.
@@ -11,12 +11,14 @@ libimobiledevice (0.9.7-1) UNRELEASED; urgency=low
   * debian/control:
    - Build-depends on debhelper (>= 7.0.50~).
    - Add VCS-* fields.
+   - Build-depends on libusb2-dev on kfreebsd (Closes: #565665).
+   - Remove libusb-1.0-0-dev depends for libimobiledevice-dev.
   * debian/libimobiledevice0.symbols: Rewrite with only remaining symbols.
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
-  * Switch to dpkg-source 3.0 (quilt) format
+  * Switch to dpkg-source 3.0 (quilt) format.
   * debian/libimobiledevice-doc.*: Add the documentation to it's own package.
-  * Add debian/idevicebackup.1
+  * Add debian/idevicebackup.1.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 16 Dec 2009 23:03:55 +0100
 
