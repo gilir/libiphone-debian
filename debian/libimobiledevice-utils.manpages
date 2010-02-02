@@ -1,3 +1,4 @@
 debian/idevice_id.1
 debian/ideviceinfo.1
 debian/idevicesyslog.1
+debian/idevicebackup.1
