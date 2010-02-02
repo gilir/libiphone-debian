@@ -24,7 +24,9 @@ Vcs-Browser: http://github.com/gilir/libiphone-debian/tree
 Package: libimobiledevice0
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}, usbmuxd
+Depends: ${shlibs:Depends}, 
+         ${misc:Depends}, 
+         usbmuxd
 Description: Library for communicating with the iPhone and iPod Touch
  libimobiledevice is a library that talks the native Apple USB protocols that
  the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
@@ -51,7 +53,8 @@ Package: libimobiledevice0-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: libimobiledevice0 (= ${binary:Version}), ${misc:Depends}
+Depends: libimobiledevice0 (= ${binary:Version}), 
+         ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
  libimobiledevice is a library that talks the native Apple USB protocols that
  the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
@@ -62,7 +65,9 @@ Description: Library for communicating with iPhone and iPod Touch devices
 Package: python-imobiledevice
 Section: python
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
+Depends: ${shlibs:Depends}, 
+         ${misc:Depends}, 
+         ${python:Depends}
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
 Conflicts: python-libimobiledevice
@@ -77,7 +82,8 @@ Description: Library for communicating with iPhone and iPod Touch devices
 Package: libimobiledevice-utils
 Architecture: any
 Section: utils
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, 
+         ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
  libimobiledevice is a library that talks the native Apple USB protocols that
  the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
