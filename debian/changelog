@@ -3,7 +3,7 @@ libimobiledevice (0.9.7-1) UNRELEASED; urgency=low
   * New upstream release, previously named libiphone (Closes: #568136, #568137)
   * Replace all libiphone occurence to libimobiledevice.
   * Remove python-iphone.preinst, not needed since the package was renamed.
-  * debian/copyright: Update copyright holders.
+  * debian/copyright: Update copyright holders and authors.
   * debian/libimobiledevice-dev & debian/rules: Remove *.la files.
   * debian/rules:
    - Rewrite to use dh7.

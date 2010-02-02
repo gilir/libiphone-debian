@@ -10,6 +10,7 @@ Authors:
  Zoltan Balaton
  Nikias Bassen
  Todd Zullinger
+ Bastien Nocera
 Download: http://matt.colyer.name/projects/iphone-linux/
 
 Files: *
@@ -17,9 +18,9 @@ Copyright:
  Copyright (C) 2008 Zach C. All Rights Reserved
  Copyright (C) 2008-2009 Jonathan Beck All Rights Reserved
  Copyright (C) 2008 Matt Colyer All Rights Reserved
- Copyright (c) 2009 Martin Szulecki All Rights Reserved
+ Copyright (c) 2009-2010 Martin Szulecki All Rights Reserved
  Copyright (c) 2009 Martin S. All Rights Reserved
- Copyright (c) 2009 Nikias Bassen All Rights Reserved
+ Copyright (c) 2009-2010 Nikias Bassen All Rights Reserved
 License: LGPL-2.1+
  This package is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
