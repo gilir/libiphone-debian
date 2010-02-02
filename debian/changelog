@@ -1,4 +1,4 @@
-libimobiledevice (0.9.7-1) UNRELEASED; urgency=low
+libimobiledevice (0.9.7-1) unstable; urgency=low
 
   * New upstream release, previously named libiphone (Closes: #568136, #568137)
   * Replace all libiphone occurence to libimobiledevice.
@@ -23,7 +23,7 @@ libimobiledevice (0.9.7-1) UNRELEASED; urgency=low
   * debian/libimobiledevice-doc.*: Add the documentation to it's own package.
   * Add debian/idevicebackup.1.
 
- -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 16 Dec 2009 23:03:55 +0100
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 02 Feb 2010 21:19:51 +0100
 
 libiphone (0.9.5-1) unstable; urgency=medium
 
