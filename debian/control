@@ -18,8 +18,8 @@ Build-Depends: debhelper (>= 7.0.50~),
 	python-plist
 XS-Python-Version: current
 Homepage: http://matt.colyer.name/projects/iphone-linux/
-Vcs-Git: git://github.com/gilir/libimobiledevice-debian.git
-Vcs-Browser: http://github.com/gilir/libimobiledevice-debian/tree
+Vcs-Git: git://github.com/gilir/libiphone-debian.git
+Vcs-Browser: http://github.com/gilir/libiphone-debian/tree
 
 Package: libimobiledevice0
 Architecture: any
