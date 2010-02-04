@@ -17,8 +17,9 @@ libimobiledevice (0.9.7-1) unstable; urgency=low
    - Add Conflicts/Replaces with libiphone0 for .fdi file.
    - Bump Standards-Version to 3.8.4, no change needed.
   * debian/libimobiledevice0.symbols: Rewrite with only remaining symbols.
-  * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
-    unecessary links.
+  * debian/patches:
+    - 01-libs.private.patch: Use Requires.private in *.pc files to not add
+      unecessary links.
     - 02-add-missing-linking.patch: Add missing LDFLAG on plist for python
       bindings.
     - 03-fix-python-import.patch: Fix name of the python module.
