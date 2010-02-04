@@ -1,0 +1,28 @@
+Index: libiphone/swig/Makefile.am
+===================================================================
+--- libiphone.orig/swig/Makefile.am	2010-02-04 23:47:38.000000000 +0100
++++ libiphone/swig/Makefile.am	2010-02-04 23:49:04.000000000 +0100
+@@ -24,7 +24,7 @@
+ imobiledevice_LTLIBRARIES = _imobiledevice.la
+ nodist__imobiledevice_la_SOURCES = imobiledevice_wrap.cxx $(SWIG_SOURCES)
+ _imobiledevice_la_CFLAGS = $(PYTHON_CPPFLAGS) -I$(top_srcdir)/src
+-_imobiledevice_la_LDFLAGS = -module -avoid-version $(PYTHON_LDFLAGS)
++_imobiledevice_la_LDFLAGS = -module -avoid-version $(PYTHON_LDFLAGS) $(libplist_LDFLAGS)
+ _imobiledevice_la_LIBADD = $(top_builddir)/src/libimobiledevice.la $(libplistmm_LIBS)
+ 
+ imobiledevice_wrap.cxx : $(SWIG_SOURCES)
+
+Index: libiphone/swig/Makefile.in
+===================================================================
+--- libiphone.orig/swig/Makefile.in2010-02-04 23:47:38.000000000 +0100
++++ libiphone/swig/Makefile.in	2010-02-04 23:49:04.000000000 +0100
+@@ -308,7 +308,7 @@ INCLUDES = -I$(top_srcdir)/include  $(libplist_CFLAGS) $(SWI
+ @HAVE_SWIG_TRUE@imobiledevice_LTLIBRARIES = _imobiledevice.la
+ @HAVE_SWIG_TRUE@nodist__imobiledevice_la_SOURCES = imobiledevice_wrap.cxx $(SWI
+ @HAVE_SWIG_TRUE@_imobiledevice_la_CFLAGS = $(PYTHON_CPPFLAGS) -I$(top_srcdir)/s
+-@HAVE_SWIG_TRUE@_imobiledevice_la_LDFLAGS = -module -avoid-version $(PYTHON_LDF
++@HAVE_SWIG_TRUE@_imobiledevice_la_LDFLAGS = -module -avoid-version $(PYTHON_LDF
+ @HAVE_SWIG_TRUE@_imobiledevice_la_LIBADD = $(top_builddir)/src/libimobiledevice
+ all: $(BUILT_SOURCES)
+        $(MAKE) $(AM_MAKEFLAGS) all-am
+

@@ -19,6 +19,8 @@ libimobiledevice (0.9.7-1) unstable; urgency=low
   * debian/libimobiledevice0.symbols: Rewrite with only remaining symbols.
   * debian/01-libs.private.patch: Use Requires.private in *.pc files to not add
     unecessary links.
+    - 02-add-missing-linking.patch: Add missing LDFLAG on plist for python
+      bindings.
   * Switch to dpkg-source 3.0 (quilt) format.
   * debian/libimobiledevice-doc.*: Add the documentation to it's own package.
   * Add debian/idevicebackup.1.
