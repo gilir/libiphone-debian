@@ -21,6 +21,7 @@ libimobiledevice (0.9.7-1) unstable; urgency=low
     unecessary links.
     - 02-add-missing-linking.patch: Add missing LDFLAG on plist for python
       bindings.
+    - 03-fix-python-import.patch: Fix name of the python module.
   * Switch to dpkg-source 3.0 (quilt) format.
   * debian/libimobiledevice-doc.*: Add the documentation to it's own package.
   * Add debian/idevicebackup.1.
