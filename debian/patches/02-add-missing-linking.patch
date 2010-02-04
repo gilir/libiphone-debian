@@ -14,7 +14,7 @@ Index: libiphone/swig/Makefile.am
 
 Index: libiphone/swig/Makefile.in
 ===================================================================
---- libiphone.orig/swig/Makefile.in2010-02-04 23:47:38.000000000 +0100
+--- libiphone.orig/swig/Makefile.in	2010-02-04 23:47:38.000000000 +0100
 +++ libiphone/swig/Makefile.in	2010-02-04 23:49:04.000000000 +0100
 @@ -308,7 +308,7 @@ INCLUDES = -I$(top_srcdir)/include  $(libplist_CFLAGS) $(SWI
  @HAVE_SWIG_TRUE@imobiledevice_LTLIBRARIES = _imobiledevice.la
