@@ -1,5 +1,6 @@
-libimobiledevice (0.9.7-1) unstable; urgency=low
+libimobiledevice (0.9.7-1) unstable; urgency=medium
 
+  * Urgency set to medium to fix RC bug (#565665).
   * New upstream release, previously named libiphone (Closes: #568136, #568137)
   * Replace all libiphone occurence to libimobiledevice.
   * Remove python-iphone.preinst, not needed since the package was renamed.
