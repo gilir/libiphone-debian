@@ -29,7 +29,6 @@ override_dh_install:
 	rm -rf $(CURDIR)/debian/tmp/usr/lib/*.la
 	#Move docs files to be installed
 	mkdir -p $(CURDIR)/debian/tmp/usr/share/doc/libimobiledevice-doc/libimobiledevice
-	cp $(CURDIR)/docs/html/* $(CURDIR)/debian/tmp/usr/share/doc/libimobiledevice-doc/libimobiledevice
 	dh_install --fail-missing
 
 override_dh_strip:

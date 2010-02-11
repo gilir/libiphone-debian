@@ -1,3 +1,11 @@
+libimobiledevice (0.9.7-2) UNRELEASED; urgency=low
+
+  * debian/rules & debian/libimobiledevice-doc.install
+   - Install directly documentation using dh_install to avoid FTBFS. 
+     Thanks Onkar Shinde for the fix (Closes: #569192).
+
+ -- Julien Lavergne <gilir@ubuntu.com>  Fri, 12 Feb 2010 00:20:23 +0100
+
 libimobiledevice (0.9.7-1) unstable; urgency=medium
 
   * Urgency set to medium to fix RC bug (#565665).
