@@ -1,8 +1,8 @@
- /* 
- * mobilebackup.h
- * Definitions for the mobilebackup service
+/*
+ * screenshotr.h
+ * com.apple.mobile.screenshotr service header file.
  * 
- * Copyright (c) 2009 Martin Szulecki All Rights Reserved.
+ * Copyright (c) 2010 Nikias Bassen All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,13 +18,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
-#ifndef MOBILEBACKUP_H
-#define MOBILEBACKUP_H
+#ifndef SCREENSHOTR_H
+#define SCREENSHOTR_H
 
-#include "libimobiledevice/mobilebackup.h"
+#include "libimobiledevice/screenshotr.h"
 #include "device_link_service.h"
 
-struct mobilebackup_client_private {
+struct screenshotr_client_private {
 	device_link_service_client_t parent;
 };
 
