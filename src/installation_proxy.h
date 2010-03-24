@@ -1,6 +1,6 @@
 /*
  * installation_proxy.h
- * Installation Proxy header file.
+ * com.apple.mobile.installation_proxy service header file.
  *
  * Copyright (c) 2009 Nikias Bassen, All Rights Reserved.
  *
@@ -26,7 +26,7 @@
 #include "libimobiledevice/installation_proxy.h"
 #include "property_list_service.h"
 
-struct instproxy_client_int {
+struct instproxy_client_private {
 	property_list_service_client_t parent;
 	GMutex *mutex;
 	GThread *status_updater;

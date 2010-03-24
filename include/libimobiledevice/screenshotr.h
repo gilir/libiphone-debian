@@ -1,6 +1,6 @@
 /**
- * @file libimobiledevice/file_relay.h
- * @brief file_relay Implementation
+ * @file libimobiledevice/screenshotr.h
+ * @brief Screenshot service implementation
  * \internal
  *
  * Copyright (c) 2010 Nikias Bassen All Rights Reserved.
@@ -20,8 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef IFILE_RELAY_H
-#define IFILE_RELAY_H
+#ifndef ISCREENSHOTR_H
+#define ISCREENSHOTR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,26 +31,24 @@ extern "C" {
 
 /** @name Error Codes */
 /*@{*/
-#define FILE_RELAY_E_SUCCESS                0
-#define FILE_RELAY_E_INVALID_ARG           -1
-#define FILE_RELAY_E_PLIST_ERROR           -2
-#define FILE_RELAY_E_MUX_ERROR             -3
-#define FILE_RELAY_E_INVALID_SOURCE        -4
-#define FILE_RELAY_E_STAGING_EMPTY         -5
+#define SCREENSHOTR_E_SUCCESS                0
+#define SCREENSHOTR_E_INVALID_ARG           -1
+#define SCREENSHOTR_E_PLIST_ERROR           -2
+#define SCREENSHOTR_E_MUX_ERROR             -3
+#define SCREENSHOTR_E_BAD_VERSION           -4
 
-#define FILE_RELAY_E_UNKNOWN_ERROR       -256
+#define SCREENSHOTR_E_UNKNOWN_ERROR       -256
 /*@}*/
 
 /** Represents an error code. */
-typedef int16_t file_relay_error_t;
+typedef int16_t screenshotr_error_t;
 
-typedef struct file_relay_client_private file_relay_client_private;
-typedef file_relay_client_private *file_relay_client_t; /**< The client handle. */
+typedef struct screenshotr_client_private screenshotr_client_private;
+typedef screenshotr_client_private *screenshotr_client_t; /**< The client handle. */
 
-file_relay_error_t file_relay_client_new(idevice_t device, uint16_t port, file_relay_client_t *client);
-file_relay_error_t file_relay_client_free(file_relay_client_t client);
-
-file_relay_error_t file_relay_request_sources(file_relay_client_t client, const char **sources, idevice_connection_t *connection);
+screenshotr_error_t screenshotr_client_new(idevice_t device, uint16_t port, screenshotr_client_t * client);
+screenshotr_error_t screenshotr_client_free(screenshotr_client_t client);
+screenshotr_error_t screenshotr_take_screenshot(screenshotr_client_t client, char **imgdata, uint64_t *imgsize);
 
 #ifdef __cplusplus
 }

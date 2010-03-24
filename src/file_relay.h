@@ -1,6 +1,6 @@
  /* 
  * file_relay.h
- * Definitions for the file_relay service
+ * com.apple.mobile.file_relay service header file.
  * 
  * Copyright (c) 2010 Nikias Bassen, All Rights Reserved.
  *
@@ -33,7 +33,7 @@
 #define FILE_RELAY_E_UNKNOWN_ERROR       -256
 
 
-struct file_relay_client_int {
+struct file_relay_client_private {
 	property_list_service_client_t parent;
 };
 

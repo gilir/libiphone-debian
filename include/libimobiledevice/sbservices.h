@@ -1,6 +1,6 @@
 /**
  * @file libimobiledevice/sbservices.h
- * @brief Implementation to talk to com.apple.springboardservices on a device
+ * @brief Implementation to talk to the SpringBoard services on a device
  * \internal
  *
  * Copyright (c) 2009 Nikias Bassen All Rights Reserved.
@@ -29,18 +29,21 @@ extern "C" {
 
 #include <libimobiledevice/libimobiledevice.h>
 
-/* Error Codes */
+/** @name Error Codes */
+/*@{*/
 #define SBSERVICES_E_SUCCESS                0
 #define SBSERVICES_E_INVALID_ARG           -1
 #define SBSERVICES_E_PLIST_ERROR           -2
 #define SBSERVICES_E_CONN_FAILED           -3
 
 #define SBSERVICES_E_UNKNOWN_ERROR       -256
+/*@}*/
 
+/** Represents an error code. */
 typedef int16_t sbservices_error_t;
 
-struct sbservices_client_int;
-typedef struct sbservices_client_int *sbservices_client_t;
+typedef struct sbservices_client_private sbservices_client_private;
+typedef sbservices_client_private *sbservices_client_t; /**< The client handle. */
 
 /* Interface */
 sbservices_error_t sbservices_client_new(idevice_t device, uint16_t port, sbservices_client_t *client);

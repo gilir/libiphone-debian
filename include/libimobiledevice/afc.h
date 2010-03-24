@@ -29,7 +29,8 @@ extern "C" {
 
 #include <libimobiledevice/libimobiledevice.h>
 
-/* Error Codes */
+/** @name Error Codes */
+/*@{*/
 #define AFC_E_SUCCESS                 0
 #define AFC_E_UNKNOWN_ERROR           1
 #define AFC_E_OP_HEADER_INVALID       2
@@ -37,7 +38,7 @@ extern "C" {
 #define AFC_E_READ_ERROR              4
 #define AFC_E_WRITE_ERROR             5
 #define AFC_E_UNKNOWN_PACKET_TYPE     6
-#define AFC_E_INVALID_ARGUMENT        7
+#define AFC_E_INVALID_ARG             7
 #define AFC_E_OBJECT_NOT_FOUND        8
 #define AFC_E_OBJECT_IS_DIR           9
 #define AFC_E_PERM_DENIED            10
@@ -59,32 +60,36 @@ extern "C" {
 #define AFC_E_NO_MEM                 31
 #define AFC_E_NOT_ENOUGH_DATA        32
 #define AFC_E_DIR_NOT_EMPTY          33
+/*@}*/
 
+/** Represents an error code. */
 typedef int16_t afc_error_t;
 
-/* Flags */
+/** Flags for afc_file_open */
 typedef enum {
-	AFC_FOPEN_RDONLY   = 0x00000001, // r   O_RDONLY
-	AFC_FOPEN_RW       = 0x00000002, // r+  O_RDWR   | O_CREAT
-	AFC_FOPEN_WRONLY   = 0x00000003, // w   O_WRONLY | O_CREAT  | O_TRUNC
-	AFC_FOPEN_WR       = 0x00000004, // w+  O_RDWR   | O_CREAT  | O_TRUNC
-	AFC_FOPEN_APPEND   = 0x00000005, // a   O_WRONLY | O_APPEND | O_CREAT
-	AFC_FOPEN_RDAPPEND = 0x00000006  // a+  O_RDWR   | O_APPEND | O_CREAT
+	AFC_FOPEN_RDONLY   = 0x00000001, /**< r   O_RDONLY */
+	AFC_FOPEN_RW       = 0x00000002, /**< r+  O_RDWR   | O_CREAT */
+	AFC_FOPEN_WRONLY   = 0x00000003, /**< w   O_WRONLY | O_CREAT  | O_TRUNC */
+	AFC_FOPEN_WR       = 0x00000004, /**< w+  O_RDWR   | O_CREAT  | O_TRUNC */
+	AFC_FOPEN_APPEND   = 0x00000005, /**< a   O_WRONLY | O_APPEND | O_CREAT */
+	AFC_FOPEN_RDAPPEND = 0x00000006  /**< a+  O_RDWR   | O_APPEND | O_CREAT */
 } afc_file_mode_t;
 
+/** Type of link for afc_make_link() calls */
 typedef enum {
 	AFC_HARDLINK = 1,
 	AFC_SYMLINK = 2
 } afc_link_type_t;
 
+/** Lock operation flags */
 typedef enum {
-	AFC_LOCK_SH = 1 | 4, // shared lock
-	AFC_LOCK_EX = 2 | 4, // exclusive lock
-	AFC_LOCK_UN = 8 | 4  // unlock
+	AFC_LOCK_SH = 1 | 4, /**< shared lock */
+	AFC_LOCK_EX = 2 | 4, /**< exclusive lock */
+	AFC_LOCK_UN = 8 | 4  /**< unlock */
 } afc_lock_op_t;
 
-struct afc_client_int;
-typedef struct afc_client_int *afc_client_t;
+typedef struct afc_client_private afc_client_private;
+typedef afc_client_private *afc_client_t; /**< The client handle. */
 
 /* Interface */
 afc_error_t afc_client_new(idevice_t device, uint16_t port, afc_client_t *client);
