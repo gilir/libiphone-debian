@@ -1,3 +1,2 @@
 version=3
-http://github.com/MattColyer/libiphone/downloads \
-    http://cloud.github.com/downloads/MattColyer/libiphone/libimobiledevice-([\d\.]+)\.tar\.bz2
+http://githubredir.debian.net/github/MattColyer/libiphone (.*).tar.gz
