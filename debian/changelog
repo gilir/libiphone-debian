@@ -1,5 +1,6 @@
-libimobiledevice (0.9.7-3) UNRELEASED; urgency=low
+libimobiledevice (1.0.0-1) UNRELEASED; urgency=low
 
+  * New upstream release.
   * Bump SONAME to libimobiledevice1.
   * debian/watch: Fixed by using githubredir.debian.net redirection.
   * debian/libimobiledevice-utils.manpages: Update to use upstream manpages.
