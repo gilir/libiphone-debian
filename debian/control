@@ -91,7 +91,7 @@ Description: Library for communicating with iPhone and iPod Touch devices
  the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
  not depend on using any existing libraries from Apple.
  .
- This package contains the debugging symbols.
+ This package contains utilities and examples which use libimobiledevice.
 
 Package: libimobiledevice-doc
 Architecture: all
