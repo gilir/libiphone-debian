@@ -1,6 +1,6 @@
 /*
  * notification_proxy.c
- * Notification Proxy implementation.
+ * com.apple.mobile.notification_proxy service implementation.
  *
  * Copyright (c) 2009 Nikias Bassen, All Rights Reserved.
  *
@@ -33,11 +33,13 @@
 struct np_thread {
 	np_client_t client;
 	np_notify_cb_t cbfunc;
+	void *user_data;
 };
 
-/** Locks an NP client, done for thread safety stuff.
+/**
+ * Locks a notification_proxy client, used for thread safety.
  *
- * @param client The NP
+ * @param client notification_proxy client to lock
  */
 static void np_lock(np_client_t client)
 {
@@ -45,9 +47,10 @@ static void np_lock(np_client_t client)
 	g_mutex_lock(client->mutex);
 }
 
-/** Unlocks an NP client, done for thread safety stuff.
+/**
+ * Unlocks a notification_proxy client, used for thread safety.
  * 
- * @param client The NP
+ * @param client notification_proxy client to unlock
  */
 static void np_unlock(np_client_t client)
 {
@@ -81,7 +84,8 @@ static np_error_t np_error(property_list_service_error_t err)
 	return NP_E_UNKNOWN_ERROR;
 }
 
-/** Makes a connection to the NP service on the phone. 
+/**
+ * Connects to the notification_proxy on the specified device.
  * 
  * @param device The device to connect to.
  * @param port Destination port (usually given by lockdownd_start_service).
@@ -106,7 +110,7 @@ np_error_t np_client_new(idevice_t device, uint16_t port, np_client_t *client)
 		return NP_E_CONN_FAILED;
 	}
 
-	np_client_t client_loc = (np_client_t) malloc(sizeof(struct np_client_int));
+	np_client_t client_loc = (np_client_t) malloc(sizeof(struct np_client_private));
 	client_loc->parent = plistclient;
 
 	client_loc->mutex = g_mutex_new();
@@ -117,9 +121,11 @@ np_error_t np_client_new(idevice_t device, uint16_t port, np_client_t *client)
 	return NP_E_SUCCESS;
 }
 
-/** Disconnects an NP client from the device.
+/**
+ * Disconnects a notification_proxy client from the device and frees up the
+ * notification_proxy client data.
  * 
- * @param client The client to disconnect.
+ * @param client The notification_proxy client to disconnect and free.
  *
  * @return NP_E_SUCCESS on success, or NP_E_INVALID_ARG when client is NULL.
  */
@@ -142,7 +148,8 @@ np_error_t np_client_free(np_client_t client)
 	return NP_E_SUCCESS;
 }
 
-/** Sends a notification to the device's Notification Proxy.
+/**
+ * Sends a notification to the device's notification_proxy.
  *
  * @param client The client to send to
  * @param notification The notification message to send
@@ -177,7 +184,8 @@ np_error_t np_post_notification(np_client_t client, const char *notification)
 	return res;
 }
 
-/** Notifies the device to send a notification on the specified event.
+/**
+ * Tells the device to send a notification on the specified event.
  *
  * @param client The client to send to
  * @param notification The notifications that should be observed.
@@ -206,7 +214,8 @@ np_error_t np_observe_notification( np_client_t client, const char *notification
 	return res;
 }
 
-/** Notifies the device to send a notification on specified events.
+/**
+ * Tells the device to send a notification on specified events.
  *
  * @param client The client to send to
  * @param notification_spec Specification of the notifications that should be
@@ -242,7 +251,7 @@ np_error_t np_observe_notifications(np_client_t client, const char **notificatio
 }
 
 /**
- * Checks if a notification has been sent.
+ * Checks if a notification has been sent by the device.
  *
  * @param client NP to get a notification from
  * @param notification Pointer to a buffer that will be allocated and filled
@@ -325,7 +334,7 @@ gpointer np_notifier( gpointer arg )
 	while (npt->client->parent) {
 		np_get_notification(npt->client, &notification);
 		if (notification) {
-			npt->cbfunc(notification);
+			npt->cbfunc(notification, npt->user_data);
 			free(notification);
 			notification = NULL;
 		}
@@ -347,6 +356,8 @@ gpointer np_notifier( gpointer arg )
  * @param client the NP client
  * @param notify_cb pointer to a callback function or NULL to de-register a
  *        previously set callback function.
+ * @param user_data Pointer that will be passed to the callback function as
+ *        user data. If notify_cb is NULL, this parameter is ignored.
  *
  * @note Only one callback function can be registered at the same time;
  *       any previously set callback function will be removed automatically.
@@ -355,7 +366,7 @@ gpointer np_notifier( gpointer arg )
  *         NP_E_INVALID_ARG when client is NULL, or NP_E_UNKNOWN_ERROR when
  *         the callback thread could no be created.
  */
-np_error_t np_set_notify_callback( np_client_t client, np_notify_cb_t notify_cb )
+np_error_t np_set_notify_callback( np_client_t client, np_notify_cb_t notify_cb, void *user_data )
 {
 	if (!client)
 		return NP_E_INVALID_ARG;
@@ -377,6 +388,7 @@ np_error_t np_set_notify_callback( np_client_t client, np_notify_cb_t notify_cb 
 		if (npt) {
 			npt->client = client;
 			npt->cbfunc = notify_cb;
+			npt->user_data = user_data;
 
 			client->notifier = g_thread_create(np_notifier, npt, TRUE, NULL);
 			if (client->notifier) {

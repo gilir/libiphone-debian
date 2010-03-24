@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(libimobiledevice, 0.9.7, nospam@nowhere.com)
+AC_INIT(libimobiledevice, 1.0.0, nospam@nowhere.com)
 AM_INIT_AUTOMAKE([dist-bzip2 no-dist-gzip])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 AC_CONFIG_SRCDIR([src/])
@@ -20,7 +20,7 @@ dnl libtool versioning
 #                 changes to the signature and the semantic)
 #  ? :+1 : ?   == just internal changes
 # CURRENT : REVISION : AGE
-LIBIMOBILEDEVICE_SO_VERSION=0:0:0
+LIBIMOBILEDEVICE_SO_VERSION=1:0:0
 
 AC_SUBST(LIBIMOBILEDEVICE_SO_VERSION)
 
@@ -143,11 +143,12 @@ AC_OUTPUT([
 Makefile
 src/Makefile
 include/Makefile
-fdi/Makefile
 dev/Makefile
 tools/Makefile
 swig/Makefile
+docs/Makefile
 libimobiledevice-1.0.pc
+doxygen.cfg
 ])
 
 echo "

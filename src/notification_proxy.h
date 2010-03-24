@@ -1,6 +1,6 @@
 /*
  * notification_proxy.h
- * Notification Proxy header file.
+ * com.apple.mobile.notification_proxy service header file.
  *
  * Copyright (c) 2009 Nikias Bassen, All Rights Reserved.
  *
@@ -26,7 +26,7 @@
 #include "libimobiledevice/notification_proxy.h"
 #include "property_list_service.h"
 
-struct np_client_int {
+struct np_client_private {
 	property_list_service_client_t parent;
 	GMutex *mutex;
 	GThread *notifier;

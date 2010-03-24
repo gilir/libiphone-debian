@@ -1,6 +1,6 @@
 /*
  * sbservices.h
- * SpringBoard Services header file.
+ * com.apple.springboardservices service header file.
  *
  * Copyright (c) 2009 Nikias Bassen, All Rights Reserved.
  *
@@ -26,7 +26,7 @@
 #include "libimobiledevice/sbservices.h"
 #include "property_list_service.h"
 
-struct sbservices_client_int {
+struct sbservices_client_private {
 	property_list_service_client_t parent;
 	GMutex *mutex;
 };

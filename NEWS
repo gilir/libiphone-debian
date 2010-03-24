@@ -1,3 +1,31 @@
+Version 1.0.0
+~~~~~~~~~~~~~
+
+* Changes:
+  - Update and fix documentation for full coverage
+  - Add man pages for tools
+  - Extend mobilebackup interface
+  - Add user data argument to notification callback function
+  - Fix broken Python bindings
+  - Add Python bindings for notification proxy interface
+  - Add screenshotr interface and tool
+  - Add mobile_image_mounter interface and tool
+  - Remove HAL fdi rules
+
+Version 0.9.7 (RC1)
+~~~~~~~~~~~~~~~~~~~
+
+* Project is now called libimobiledevice due to legal reasons
+* Changes:
+  - Project renamed to libimobiledevice
+  - Add soname versioning for future releases
+  - Fix regression causing never paired devices to not work by adding
+    auto-pairing for devices in lockdownd_client_new_with_handshake
+  - Add file_relay service implementation and dev test tool
+  - Minor device link service fixes 
+  - New idevicebackup tool with support for full and incremental backups
+  - Add mobilebackup service implementation
+
 Version 0.9.6
 ~~~~~~~~~~~~~
 
