@@ -21,7 +21,7 @@ Homepage: http://matt.colyer.name/projects/iphone-linux/
 Vcs-Git: git://github.com/gilir/libiphone-debian.git
 Vcs-Browser: http://github.com/gilir/libiphone-debian/tree
 
-Package: libimobiledevice0
+Package: libimobiledevice1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, 
@@ -37,7 +37,7 @@ Description: Library for communicating with the iPhone and iPod Touch
 Package: libimobiledevice-dev
 Architecture: any
 Section: libdevel
-Depends: libimobiledevice0 (= ${binary:Version}), 
+Depends: libimobiledevice1 (= ${binary:Version}), 
          ${misc:Depends},
          libglib2.0-dev,
          libplist-dev, 
@@ -51,11 +51,11 @@ Description: Library for communicating with iPhone and iPod Touch devices
  .
  This package contains the development files.
 
-Package: libimobiledevice0-dbg
+Package: libimobiledevice1-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: libimobiledevice0 (= ${binary:Version}), 
+Depends: libimobiledevice1 (= ${binary:Version}), 
          ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
  libimobiledevice is a library that talks the native Apple USB protocols that
@@ -96,7 +96,7 @@ Description: Library for communicating with iPhone and iPod Touch devices
 Package: libimobiledevice-doc
 Architecture: all
 Section: doc
-Depends: libimobiledevice0 (>= ${source:Version}),
+Depends: libimobiledevice1 (>= ${source:Version}),
          ${misc:Depends}
 Description: Library for communicating with iPhone and iPod Touch devices
  libimobiledevice is a library that talks the native Apple USB protocols that
