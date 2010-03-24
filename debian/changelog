@@ -2,6 +2,7 @@ libimobiledevice (1.0.0-1) UNRELEASED; urgency=low
 
   * New upstream release.
   * debian/watch: Fixed by using githubredir.debian.net redirection.
+  * debian/libimobiledevice-utils.manpages: Update to use upstream manpages.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Wed, 24 Mar 2010 19:44:15 +0100
 
