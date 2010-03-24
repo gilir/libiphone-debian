@@ -1,8 +1,0 @@
-Index: libiphone/swig/__init__.py
-===================================================================
---- libiphone.orig/swig/__init__.py	2010-02-05 00:46:07.000000000 +0100
-+++ libiphone/swig/__init__.py	2010-02-05 00:46:12.000000000 +0100
-@@ -1,2 +1,2 @@
- # -*- coding: utf-8 -*-
--from iphone import * 
-+from imobiledevice import * 
