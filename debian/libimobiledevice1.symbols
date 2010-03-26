@@ -23,9 +23,11 @@ libimobiledevice.so.1 libimobiledevice1 #MINVER#
  device_link_service_client_free@Base 0.9.7
  device_link_service_client_new@Base 0.9.7
  device_link_service_disconnect@Base 0.9.7
- device_link_service_process_message@Base 0.9.7
  device_link_service_receive@Base 0.9.7
+ device_link_service_receive_process_message@Base 1.0.0
  device_link_service_send@Base 0.9.7
+ device_link_service_send_ping@Base 1.0.0
+ device_link_service_send_process_message@Base 1.0.0
  device_link_service_version_exchange@Base 0.9.7
  file_relay_client_free@Base 0.9.7
  file_relay_client_new@Base 0.9.7
@@ -83,10 +85,18 @@ libimobiledevice.so.1 libimobiledevice1 #MINVER#
  lockdownd_stop_session@Base 0.9.7
  lockdownd_unpair@Base 0.9.7
  lockdownd_validate_pair@Base 0.9.7
+ mobile_image_mounter_free@Base 1.0.0
+ mobile_image_mounter_hangup@Base 1.0.0
+ mobile_image_mounter_lookup_image@Base 1.0.0
+ mobile_image_mounter_mount_image@Base 1.0.0
+ mobile_image_mounter_new@Base 1.0.0-1
  mobilebackup_client_free@Base 0.9.7
  mobilebackup_client_new@Base 0.9.7
  mobilebackup_receive@Base 0.9.7
+ mobilebackup_request_backup@Base 1.0.0
  mobilebackup_send@Base 0.9.7
+ mobilebackup_send_backup_file_received@Base 1.0.0
+ mobilebackup_send_error@Base 1.0.0
  mobilesync_client_free@Base 0.9.7
  mobilesync_client_new@Base 0.9.7
  mobilesync_receive@Base 0.9.7
@@ -112,3 +122,6 @@ libimobiledevice.so.1 libimobiledevice1 #MINVER#
  sbservices_get_icon_pngdata@Base 0.9.7
  sbservices_get_icon_state@Base 0.9.7
  sbservices_set_icon_state@Base 0.9.7
+ screenshotr_client_free@Base 1.0.0
+ screenshotr_client_new@Base 1.0.0
+ screenshotr_take_screenshot@Base 1.0.0

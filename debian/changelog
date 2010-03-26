@@ -12,6 +12,7 @@ libimobiledevice (1.0.0-1) UNRELEASED; urgency=low
   * debian/libimobiledevice1.install: Remove fdi file, not shipped anymore.
   * debian/rules: Remove installed manpages, handle by *.manpages.
   * debian/*.manpages: Update location of the manpages.
+  * debian/*.symbols: Update.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Wed, 24 Mar 2010 19:44:15 +0100
 
