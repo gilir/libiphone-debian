@@ -89,7 +89,7 @@ libimobiledevice.so.1 libimobiledevice1 #MINVER#
  mobile_image_mounter_hangup@Base 1.0.0
  mobile_image_mounter_lookup_image@Base 1.0.0
  mobile_image_mounter_mount_image@Base 1.0.0
- mobile_image_mounter_new@Base 1.0.0-1
+ mobile_image_mounter_new@Base 1.0.0
  mobilebackup_client_free@Base 0.9.7
  mobilebackup_client_new@Base 0.9.7
  mobilebackup_receive@Base 0.9.7
