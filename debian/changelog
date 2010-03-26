@@ -1,4 +1,4 @@
-libimobiledevice (1.0.0-1) UNRELEASED; urgency=low
+libimobiledevice (1.0.0-1) unstable; urgency=low
 
   * New upstream release.
   * Bump SONAME to libimobiledevice1.
@@ -14,7 +14,7 @@ libimobiledevice (1.0.0-1) UNRELEASED; urgency=low
   * debian/*.manpages: Update location of the manpages.
   * debian/*.symbols: Update.
 
- -- Julien Lavergne <gilir@ubuntu.com>  Wed, 24 Mar 2010 19:44:15 +0100
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 26 Mar 2010 21:28:14 +0100
 
 libimobiledevice (0.9.7-2) unstable; urgency=medium
 
