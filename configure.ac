@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(libimobiledevice, 1.0.0, nospam@nowhere.com)
+AC_INIT(libimobiledevice, 1.0.1, nospam@nowhere.com)
 AM_INIT_AUTOMAKE([dist-bzip2 no-dist-gzip])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 AC_CONFIG_SRCDIR([src/])
@@ -20,7 +20,7 @@ dnl libtool versioning
 #                 changes to the signature and the semantic)
 #  ? :+1 : ?   == just internal changes
 # CURRENT : REVISION : AGE
-LIBIMOBILEDEVICE_SO_VERSION=1:0:0
+LIBIMOBILEDEVICE_SO_VERSION=1:1:0
 
 AC_SUBST(LIBIMOBILEDEVICE_SO_VERSION)
 
@@ -41,7 +41,7 @@ AC_CHECK_LIB(gcrypt, gcry_control, [AC_SUBST(libgcrypt_LIBS,[-lgcrypt])], ["libg
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([arpa/inet.h stdint.h stdlib.h string.h gcrypt.h])
+AC_CHECK_HEADERS([stdint.h stdlib.h string.h gcrypt.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

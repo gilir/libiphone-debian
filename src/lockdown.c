@@ -19,8 +19,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <arpa/inet.h>
-#include <errno.h>
 #include <string.h>
 #include <stdlib.h>
 #include <glib.h>
@@ -624,7 +622,7 @@ lockdownd_error_t lockdownd_client_new(idevice_t device, lockdownd_client_t *cli
 	client_loc->uuid = NULL;
 	client_loc->label = NULL;
 	if (label != NULL)
-		strdup(label);
+		client_loc->label = strdup(label);
 
 	if (LOCKDOWN_E_SUCCESS == ret) {
 		*client = client_loc;
@@ -787,6 +785,13 @@ static lockdownd_error_t generate_pair_record_plist(gnutls_datum_t public_key, c
 
 	if (!host_id)
 		free(host_id_loc);
+
+	if (device_cert.data)
+		free(device_cert.data);
+	if (host_cert.data)
+		free(host_cert.data);
+	if (root_cert.data)
+		free(root_cert.data);
 
 	return ret;
 }
@@ -1164,6 +1169,9 @@ lockdownd_error_t lockdownd_gen_pair_cert(gnutls_datum_t public_key, gnutls_datu
 
 						g_free(pem_root_cert.data);
 						g_free(pem_host_cert.data);
+
+						if (dev_pem.data)
+							gnutls_free(dev_pem.data);
 					}
 				}
 			}
@@ -1181,6 +1189,16 @@ lockdownd_error_t lockdownd_gen_pair_cert(gnutls_datum_t public_key, gnutls_datu
 				break;
 			}
 		}
+
+		if (essentially_null.data)
+			free(essentially_null.data);
+		gnutls_x509_crt_deinit(dev_cert);
+		gnutls_x509_crt_deinit(root_cert);
+		gnutls_x509_crt_deinit(host_cert);
+		gnutls_x509_privkey_deinit(fake_privkey);
+		gnutls_x509_privkey_deinit(root_privkey);
+		gnutls_x509_privkey_deinit(host_privkey);
+
 	}
 
 	gnutls_free(modulus.data);
