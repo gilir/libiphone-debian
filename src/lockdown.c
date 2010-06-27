@@ -49,7 +49,8 @@ const ASN1_ARRAY_TYPE pkcs1_asn1_tab[] = {
  * plist to a previously sent request.
  *
  * @param dict The plist to evaluate.
- * @param query_match Name of the request to match.
+ * @param query_match Name of the request to match or NULL if no match is
+ *        required.
  *
  * @return RESULT_SUCCESS when the result is 'Success',
  *         RESULT_FAILURE when the result is 'Failure',
@@ -71,7 +72,7 @@ static int lockdown_check_result(plist_t dict, const char *query_match)
 		if (!query_value) {
 			return ret;
 		}
-		if (strcmp(query_value, query_match) != 0) {
+		if (query_match && (strcmp(query_value, query_match) != 0)) {
 			free(query_value);
 			return ret;
 		}
@@ -189,8 +190,10 @@ lockdownd_error_t lockdownd_client_free(lockdownd_client_t client)
 		return LOCKDOWN_E_INVALID_ARG;
 	lockdownd_error_t ret = LOCKDOWN_E_UNKNOWN_ERROR;
 
-	if (client->session_id)
+	if (client->session_id) {
 		lockdownd_stop_session(client, client->session_id);
+		free(client->session_id);
+	}
 
 	if (client->parent) {
 		lockdownd_goodbye(client);
@@ -595,6 +598,9 @@ lockdownd_error_t lockdownd_get_device_name(lockdownd_client_t client, char **de
  *
  * @note This function does not pair with the device or start a session. This
  *  has to be done manually by the caller after the client is created.
+ *  The device disconnects automatically if the lockdown connection idles
+ *  for more than 10 seconds. Make sure to call lockdownd_client_free() as soon
+ *  as the connection is no longer needed.
  *
  * @param device The device to create a lockdownd client for
  * @param client The pointer to the location of the new lockdownd_client
@@ -637,6 +643,10 @@ lockdownd_error_t lockdownd_client_new(idevice_t device, lockdownd_client_t *cli
  * Creates a new lockdownd client for the device and starts initial handshake.
  * The handshake consists out of query_type, validate_pair, pair and
  * start_session calls. It uses the internal pairing record management.
+ *
+ * @note The device disconnects automatically if the lockdown connection idles
+ *  for more than 10 seconds. Make sure to call lockdownd_client_free() as soon
+ *  as the connection is no longer needed.
  *
  * @param device The device to create a lockdownd client for
  * @param client The pointer to the location of the new lockdownd_client
@@ -870,8 +880,16 @@ static lockdownd_error_t lockdownd_do_pair(lockdownd_client_t client, lockdownd_
 	if (ret != LOCKDOWN_E_SUCCESS)
 		return ret;
 
-	if (lockdown_check_result(dict, verb) != RESULT_SUCCESS) {
-		ret = LOCKDOWN_E_PAIRING_FAILED;
+	if (strcmp(verb, "Unpair") == 0) {
+		/* workaround for Unpair giving back ValidatePair,
+		 * seems to be a bug in the device's fw */
+		if (lockdown_check_result(dict, NULL) != RESULT_SUCCESS) {
+			ret = LOCKDOWN_E_PAIRING_FAILED;
+		}
+	} else {
+		if (lockdown_check_result(dict, verb) != RESULT_SUCCESS) {
+			ret = LOCKDOWN_E_PAIRING_FAILED;
+		}
 	}
 
 	/* if pairing succeeded */
@@ -1233,6 +1251,7 @@ lockdownd_error_t lockdownd_start_session(lockdownd_client_t client, const char 
 	/* if we have a running session, stop current one first */
 	if (client->session_id) {
 		lockdownd_stop_session(client, client->session_id);
+		free(client->session_id);
 	}
 
 	/* setup request plist */
@@ -1426,7 +1445,7 @@ lockdownd_error_t lockdownd_activate(lockdownd_client_t client, plist_t activati
 	plist_t dict = plist_new_dict();
 	plist_dict_add_label(dict, client->label);
 	plist_dict_insert_item(dict,"Request", plist_new_string("Activate"));
-	plist_dict_insert_item(dict,"ActivationRecord", activation_record);
+	plist_dict_insert_item(dict,"ActivationRecord", plist_copy(activation_record));
 
 	ret = lockdownd_send(client, dict);
 	plist_free(dict);

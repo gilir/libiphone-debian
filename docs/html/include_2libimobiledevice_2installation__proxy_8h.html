@@ -185,7 +185,8 @@ This function tells the device to make an archive of the specified application. 
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to archive. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "SkipUninstall" -&gt; Boolean "ArchiveType" -&gt; "ApplicationOnly" </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
@@ -444,7 +445,8 @@ Install an application on the device.
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>pkg_path</em>&nbsp;</td><td>Path of the installation package (inside the AFC jail) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "iTunesMetadata" -&gt; PLIST_DATA "ApplicationSINF" -&gt; PLIST_DATA "PackageType" -&gt; "Developer" If PackageType -&gt; Developer is specified, then pkg_path points to an .app directory instead of an install package. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
@@ -545,7 +547,8 @@ This function removes the ZIP archive from the 'ApplicationArchives' directory.<
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the archived app to remove. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so passing NULL is fine. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
@@ -599,7 +602,8 @@ This function is the counterpart to instproxy_archive. <dl class="see" compact><
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to restore. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
@@ -652,7 +656,8 @@ Uninstall an application from the device.
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to uninstall </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
@@ -706,7 +711,8 @@ This function is nearly the same as instproxy_install; the difference is that th
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>pkg_path</em>&nbsp;</td><td>Path of the installation package (inside the AFC jail) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "iTunesMetadata" -&gt; PLIST_DATA "ApplicationSINF" -&gt; PLIST_DATA "PackageType" -&gt; "Developer" If PackageType -&gt; Developer is specified, then pkg_path points to an .app directory instead of an install package. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>

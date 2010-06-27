@@ -307,7 +307,7 @@ Closes the lockdownd client session if one is running and frees up the lockdownd
 <p>
 Creates a new lockdownd client for the device. 
 <p>
-<dl class="note" compact><dt><b>Note:</b></dt><dd>This function does not pair with the device or start a session. This has to be done manually by the caller after the client is created.</dd></dl>
+<dl class="note" compact><dt><b>Note:</b></dt><dd>This function does not pair with the device or start a session. This has to be done manually by the caller after the client is created. The device disconnects automatically if the lockdown connection idles for more than 10 seconds. Make sure to call <a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a886513215f9cc696ab47696e5498904" title="Closes the lockdownd client session if one is running and frees up the lockdownd_client...">lockdownd_client_free()</a> as soon as the connection is no longer needed.</dd></dl>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to create a lockdownd client for </td></tr>
@@ -354,6 +354,7 @@ Creates a new lockdownd client for the device.
 Creates a new lockdownd client for the device and starts initial handshake. 
 <p>
 The handshake consists out of query_type, validate_pair, pair and start_session calls. It uses the internal pairing record management.<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd>The device disconnects automatically if the lockdown connection idles for more than 10 seconds. Make sure to call <a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a886513215f9cc696ab47696e5498904" title="Closes the lockdownd client session if one is running and frees up the lockdownd_client...">lockdownd_client_free()</a> as soon as the connection is no longer needed.</dd></dl>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to create a lockdownd client for </td></tr>
