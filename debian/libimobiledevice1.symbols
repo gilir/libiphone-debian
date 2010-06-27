@@ -125,3 +125,6 @@ libimobiledevice.so.1 libimobiledevice1 #MINVER#
  screenshotr_client_free@Base 1.0.0
  screenshotr_client_new@Base 1.0.0
  screenshotr_take_screenshot@Base 1.0.0
+ userpref_get_host_id@Base 1.0.2
+ userpref_get_paired_uuids@Base 1.0.2
+ userpref_remove_device_public_key@Base 1.0.2
