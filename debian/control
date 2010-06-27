@@ -5,7 +5,7 @@ Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
 Standards-Version: 3.8.4
 Build-Depends: debhelper (>= 7.0.50~),
 	libgnutls-dev (>= 1.6.3), 
-	libusb-1.0-0-dev (>= 1.0.3) [!kfreebsd-i386 !kfreebsd-amd64] | libusb2-dev (>= 8.0-4) [kfreebsd-i386 kfreebsd-amd64],
+	libusb-1.0-0-dev (>= 1.0.3) [linux-any], libusb2-dev (>= 8.0-4) [kfreebsd-any],
 	libglib2.0-dev (>= 2.14.1), 
 	libplist-dev (>= 0.15), 
 	libplist++-dev (>= 0.15),
