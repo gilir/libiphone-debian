@@ -1,11 +1,11 @@
-libimobiledevice (1.0.2-1) UNRELEASED; urgency=low
+libimobiledevice (1.0.2-1) unstable; urgency=low
 
   * New upstream release.
   * libimobiledevice1.symbols: Update with new symbols.
   * debian/idevicepair.1: Add manpage for the new utility.
   * debian/libimobiledevice-utils.manpages: Add the new manpage.
 
- -- Julien Lavergne <gilir@ubuntu.com>  Sun, 27 Jun 2010 15:29:08 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 27 Jun 2010 16:00:12 +0200
 
 libimobiledevice (1.0.1-1) unstable; urgency=low
 
