@@ -5,3 +5,4 @@ docs/ideviceinfo.1
 docs/idevicescreenshot.1
 docs/idevicesyslog.1
 docs/idevicebackup.1
+debian/idevicepair.1
