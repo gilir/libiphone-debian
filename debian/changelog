@@ -8,6 +8,7 @@ libimobiledevice (1.0.2-1) unstable; urgency=low
    - Use the new homepage (Closes: #586249).
    - Use better build-depends for libusb. Thanks Aurelien Jarno for the advise.
     (Closes: #585635).
+   - Bump Standards-Version to 3.9.0.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 27 Jun 2010 22:47:51 +0200
 
