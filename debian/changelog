@@ -9,7 +9,6 @@ libimobiledevice (1.0.2-1) unstable; urgency=low
    - Use better build-depends for libusb. Thanks Aurelien Jarno for the advise.
     (Closes: #585635).
    - Bump Standards-Version to 3.9.0.
-   - Use Breaks instead of Conflicts to conforme to 3.9.0 Standards-Version.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Tue, 13 Jul 2010 20:29:18 +0200
 
