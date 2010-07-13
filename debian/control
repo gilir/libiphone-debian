@@ -28,7 +28,7 @@ Section: libs
 Depends: ${shlibs:Depends}, 
          ${misc:Depends}, 
          usbmuxd
-Conflicts: libiphone0
+Breaks: libiphone0
 Replaces: libiphone0
 Description: Library for communicating with the iPhone and iPod Touch
  libimobiledevice is a library that talks the native Apple USB protocols that
@@ -73,7 +73,7 @@ Depends: ${shlibs:Depends},
          ${python:Depends}
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
-Conflicts: python-libiphone, python-iphone
+Breaks: python-libiphone, python-iphone
 Replaces: python-libiphone, python-iphone
 Description: Library for communicating with iPhone and iPod Touch devices
  libimobiledevice is a library that talks the native Apple USB protocols that
