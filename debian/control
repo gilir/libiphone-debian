@@ -6,7 +6,7 @@ Standards-Version: 3.9.0
 Build-Depends: debhelper (>= 7.0.50~),
 	libgnutls-dev (>= 1.6.3), 
     libusb-1.0-0-dev (>= 1.0.3) [linux-any],
-    libusb2-dev (>= 8.0-4) [!linux-any],
+    libusb2-dev (>= 8.0-4) [kfreebsd-any],
 	libglib2.0-dev (>= 2.14.1), 
 	libplist-dev (>= 0.15), 
 	libplist++-dev (>= 0.15),
