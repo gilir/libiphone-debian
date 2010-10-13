@@ -2,7 +2,7 @@ Source: libimobiledevice
 Section: libs
 Priority: optional
 Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
-Standards-Version: 3.9.0
+Standards-Version: 3.9.1.0
 Build-Depends: debhelper (>= 7.0.50~),
 	libgnutls-dev (>= 1.6.3), 
     libusb-1.0-0-dev (>= 1.0.3) [linux-any],
