@@ -1,10 +1,10 @@
-libimobiledevice (1.0.3-1) UNRELEASED; urgency=low
+libimobiledevice (1.0.3-1) experimental; urgency=low
 
   * New upstream release.
   * debian/control:
    - Bump Standards-Version to 3.9.1.0 (no change needed).
 
- -- Julien Lavergne <gilir@ubuntu.com>  Wed, 13 Oct 2010 23:59:42 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Thu, 14 Oct 2010 00:10:07 +0200
 
 libimobiledevice (1.0.2-1) unstable; urgency=low
 
