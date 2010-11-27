@@ -1,6 +1,7 @@
 libimobiledevice (1.0.4-1) UNRELEASED; urgency=low
 
   * New upstream release.
+  * debian/docs: Install upstream documentation.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Sun, 28 Nov 2010 00:41:36 +0100
 
