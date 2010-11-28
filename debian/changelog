@@ -2,6 +2,10 @@ libimobiledevice (1.0.4-1) experimental; urgency=low
 
   * New upstream release.
   * debian/docs: Install upstream documentation.
+  * debian/rules:
+   - Remove additional CFLAGS to pass correct flags.
+   - Add additional LDFLAGS.
+   - Use filter instead of findstring to find noopt.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 28 Nov 2010 01:05:51 +0100
 
