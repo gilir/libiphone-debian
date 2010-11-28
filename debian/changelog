@@ -1,9 +1,9 @@
-libimobiledevice (1.0.4-1) UNRELEASED; urgency=low
+libimobiledevice (1.0.4-1) experimental; urgency=low
 
   * New upstream release.
   * debian/docs: Install upstream documentation.
 
- -- Julien Lavergne <gilir@ubuntu.com>  Sun, 28 Nov 2010 00:41:36 +0100
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 28 Nov 2010 01:05:51 +0100
 
 libimobiledevice (1.0.3-1) experimental; urgency=low
 
