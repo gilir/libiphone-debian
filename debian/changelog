@@ -1,6 +1,6 @@
 libimobiledevice (1.1.0-1) UNRELEASED; urgency=low
 
-  * New upstream release.
+  * New upstream development release, API is considered unstable.
   * debian/libimobiledevice1*, debian/rules, debian/control:
    - Bump SONAME for libimobiledevice library.
   * debian/copyright:
