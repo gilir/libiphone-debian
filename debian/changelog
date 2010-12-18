@@ -1,4 +1,4 @@
-libimobiledevice (1.1.0-1) UNRELEASED; urgency=low
+libimobiledevice (1.1.0-1) experimental; urgency=low
 
   * New upstream development release, API is considered unstable.
   * debian/libimobiledevice1*, debian/rules, debian/control:
@@ -12,7 +12,7 @@ libimobiledevice (1.1.0-1) UNRELEASED; urgency=low
   * debian/libimobiledevice-utils.manpages:
    - Install the new manpage.
 
- -- Julien Lavergne <gilir@ubuntu.com>  Sat, 18 Dec 2010 21:53:15 +0100
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 19 Dec 2010 00:11:04 +0100
 
 libimobiledevice (1.0.4-1) experimental; urgency=low
 
