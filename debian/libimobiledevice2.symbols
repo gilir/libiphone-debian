@@ -1,6 +1,8 @@
 libimobiledevice.so.2 libimobiledevice2 #MINVER#
  afc_client_free@Base 0.9.7
  afc_client_new@Base 0.9.7
+ afc_client_new_from_connection@Base 1.1.0
+ afc_client_new_from_house_arrest_client@Base 1.1.0
  afc_file_close@Base 0.9.7
  afc_file_lock@Base 0.9.7
  afc_file_open@Base 0.9.7
@@ -24,6 +26,7 @@ libimobiledevice.so.2 libimobiledevice2 #MINVER#
  device_link_service_client_new@Base 0.9.7
  device_link_service_disconnect@Base 0.9.7
  device_link_service_receive@Base 0.9.7
+ device_link_service_receive_message@Base 1.1.0
  device_link_service_receive_process_message@Base 1.0.0
  device_link_service_send@Base 0.9.7
  device_link_service_send_ping@Base 1.0.0
@@ -32,6 +35,11 @@ libimobiledevice.so.2 libimobiledevice2 #MINVER#
  file_relay_client_free@Base 0.9.7
  file_relay_client_new@Base 0.9.7
  file_relay_request_sources@Base 0.9.7
+ house_arrest_client_free@Base 1.1.0
+ house_arrest_client_new@Base 1.1.0
+ house_arrest_get_result@Base 1.1.0
+ house_arrest_send_command@Base 1.1.0
+ house_arrest_send_request@Base 1.1.0
  idevice_connect@Base 0.9.7
  idevice_connection_disable_ssl@Base 0.9.7
  idevice_connection_enable_ssl@Base 0.9.7
@@ -66,12 +74,14 @@ libimobiledevice.so.2 libimobiledevice2 #MINVER#
  lockdownd_client_new@Base 0.9.7
  lockdownd_client_new_with_handshake@Base 0.9.7
  lockdownd_client_set_label@Base 0.9.7
+ lockdownd_data_classes_free@Base 1.1.0
  lockdownd_deactivate@Base 0.9.7
  lockdownd_enter_recovery@Base 0.9.7
  lockdownd_gen_pair_cert@Base 0.9.7
  lockdownd_get_device_name@Base 0.9.7
  lockdownd_get_device_public_key@Base 0.9.7
  lockdownd_get_device_uuid@Base 0.9.7
+ lockdownd_get_sync_data_classes@Base 1.1.0
  lockdownd_get_value@Base 0.9.7
  lockdownd_goodbye@Base 0.9.7
  lockdownd_pair@Base 0.9.7
@@ -93,14 +103,33 @@ libimobiledevice.so.2 libimobiledevice2 #MINVER#
  mobilebackup_client_free@Base 0.9.7
  mobilebackup_client_new@Base 0.9.7
  mobilebackup_receive@Base 0.9.7
+ mobilebackup_receive_restore_application_received@Base 1.1.0
+ mobilebackup_receive_restore_file_received@Base 1.1.0
  mobilebackup_request_backup@Base 1.0.0
+ mobilebackup_request_restore@Base 1.1.0
  mobilebackup_send@Base 0.9.7
  mobilebackup_send_backup_file_received@Base 1.0.0
  mobilebackup_send_error@Base 1.0.0
+ mobilebackup_send_restore_complete@Base 1.1.0
+ mobilesync_acknowledge_changes_from_device@Base 1.1.0
+ mobilesync_actions_add@Base 1.1.0
+ mobilesync_actions_free@Base 1.1.0
+ mobilesync_actions_new@Base 1.1.0
+ mobilesync_anchors_free@Base 1.1.0
+ mobilesync_anchors_new@Base 1.1.0
+ mobilesync_cancel@Base 1.1.0
  mobilesync_client_free@Base 0.9.7
  mobilesync_client_new@Base 0.9.7
+ mobilesync_finish@Base 1.1.0
+ mobilesync_get_all_records_from_device@Base 1.1.0
+ mobilesync_get_changes_from_device@Base 1.1.0
+ mobilesync_ready_to_send_changes_from_computer@Base 1.1.0
  mobilesync_receive@Base 0.9.7
+ mobilesync_receive_changes@Base 1.1.0
+ mobilesync_remap_identifiers@Base 1.1.0
  mobilesync_send@Base 0.9.7
+ mobilesync_send_changes@Base 1.1.0
+ mobilesync_start@Base 1.1.0
  np_client_free@Base 0.9.7
  np_client_new@Base 0.9.7
  np_notifier@Base 0.9.7
@@ -117,8 +146,19 @@ libimobiledevice.so.2 libimobiledevice2 #MINVER#
  property_list_service_receive_plist_with_timeout@Base 0.9.7
  property_list_service_send_binary_plist@Base 0.9.7
  property_list_service_send_xml_plist@Base 0.9.7
+ restored_client_free@Base 1.1.0
+ restored_client_new@Base 1.1.0
+ restored_client_set_label@Base 1.1.0
+ restored_get_value@Base 1.1.0
+ restored_goodbye@Base 1.1.0
+ restored_query_type@Base 1.1.0
+ restored_reboot@Base 1.1.0
+ restored_receive@Base 1.1.0
+ restored_send@Base 1.1.0
+ restored_start_restore@Base 1.1.0
  sbservices_client_free@Base 0.9.7
  sbservices_client_new@Base 0.9.7
+ sbservices_get_home_screen_wallpaper_pngdata@Base 1.1.0
  sbservices_get_icon_pngdata@Base 0.9.7
  sbservices_get_icon_state@Base 0.9.7
  sbservices_set_icon_state@Base 0.9.7

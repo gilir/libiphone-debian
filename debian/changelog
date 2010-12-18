@@ -5,6 +5,8 @@ libimobiledevice (1.1.0-1) UNRELEASED; urgency=low
    - Bump SONAME for libimobiledevice library.
   * debian/copyright:
    - Update copyright holders.
+  * debian/libimobiledevice2.symbols:
+   - Update with new symbols.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Sat, 18 Dec 2010 21:53:15 +0100
 
