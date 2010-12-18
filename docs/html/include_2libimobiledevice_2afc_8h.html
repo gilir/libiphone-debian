@@ -25,7 +25,7 @@
 </div>
 <div class="contents">
 <h1>libimobiledevice/afc.h File Reference</h1>
-<p>AFC Implementation.  
+<p>Access the filesystem.  
 <a href="#_details">More...</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Typedefs</h2></td></tr>
@@ -69,10 +69,12 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Lock operation flags. </p>
  <a href="include_2libimobiledevice_2afc_8h.html#ab249684dc55f8ec52b31db88fff35d9f">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2afc_8h.html#afa46b7e1ac472a5589d85d6a6a7104fb">afc_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2afc_8h.html#ace20f84f3ef1e63c8731512cfa3ec4ec">afc_client_new_from_connection</a> (<a class="el" href="structidevice__connection__private.html">idevice_connection_t</a> connection, <a class="el" href="structafc__client__private.html">afc_client_t</a> *client)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Makes a connection to the AFC service on the device using the given connection.  <a href="#ace20f84f3ef1e63c8731512cfa3ec4ec"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2afc_8h.html#afa46b7e1ac472a5589d85d6a6a7104fb">afc_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2afc_8h.html#a1b409e6038694b8124e5e671cd528a75">afc_client_new</a> (<a class="el" href="structidevice__private.html">idevice_t</a> device, uint16_t port, <a class="el" href="structafc__client__private.html">afc_client_t</a> *client)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Makes a connection to the AFC service on the phone.  <a href="#a1b409e6038694b8124e5e671cd528a75"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Makes a connection to the AFC service on the device.  <a href="#a1b409e6038694b8124e5e671cd528a75"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2afc_8h.html#afa46b7e1ac472a5589d85d6a6a7104fb">afc_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2afc_8h.html#a1cee6b357bdd7f187b7411a41c136412">afc_client_free</a> (<a class="el" href="structafc__client__private.html">afc_client_t</a> client)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Disconnects an AFC client from the phone.  <a href="#a1cee6b357bdd7f187b7411a41c136412"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Frees up an AFC client.  <a href="#a1cee6b357bdd7f187b7411a41c136412"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2afc_8h.html#afa46b7e1ac472a5589d85d6a6a7104fb">afc_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2afc_8h.html#ab4b5ee19121c0283364d3cee5b72cc15">afc_get_device_info</a> (<a class="el" href="structafc__client__private.html">afc_client_t</a> client, char ***infos)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get device info for a client connection to phone.  <a href="#ab4b5ee19121c0283364d3cee5b72cc15"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2afc_8h.html#afa46b7e1ac472a5589d85d6a6a7104fb">afc_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2afc_8h.html#aa5dcaf88c17b087b5140fe9a9ada21b0">afc_read_directory</a> (<a class="el" href="structafc__client__private.html">afc_client_t</a> client, const char *dir, char ***list)</td></tr>
@@ -170,7 +172,7 @@
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>AFC_E_DIR_NOT_EMPTY</b>&nbsp;&nbsp;&nbsp;33</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>AFC Implementation. </p>
+<p>Access the filesystem. </p>
 <hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="a06351ca31179c322c0a5eb4f13296ec7"></a><!-- doxytag: member="afc.h::afc_client_t" ref="a06351ca31179c322c0a5eb4f13296ec7" args="" -->
 <div class="memitem">
@@ -285,10 +287,11 @@
 </div>
 <div class="memdoc">
 
-<p>Disconnects an AFC client from the phone. </p>
+<p>Frees up an AFC client. </p>
+<p>If the connection was created by the client itself, the connection will be closed.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to disconnect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to free. </td></tr>
   </table>
   </dd>
 </dl>
@@ -326,16 +329,70 @@
 </div>
 <div class="memdoc">
 
-<p>Makes a connection to the AFC service on the phone. </p>
+<p>Makes a connection to the AFC service on the device. </p>
+<p>This function calls <a class="el" href="include_2libimobiledevice_2afc_8h.html#ace20f84f3ef1e63c8731512cfa3ec4ec" title="Makes a connection to the AFC service on the device using the given connection.">afc_client_new_from_connection()</a> after creating a connection to the specified device and port.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="include_2libimobiledevice_2afc_8h.html#ace20f84f3ef1e63c8731512cfa3ec4ec" title="Makes a connection to the AFC service on the device using the given connection.">afc_client_new_from_connection</a></dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>The destination port. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>The destination port. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>Pointer that will be set to a newly allocated afc_client_t upon successful return.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success, AFC_E_INVALID_ARG when device or port is invalid, AFC_E_MUX_ERROR when the connection failed, or AFC_E_NO_MEM if there is a memory allocation problem. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success, AFC_E_INVALID_ARG if device or port is invalid, AFC_E_MUX_ERROR if the connection cannot be established, or AFC_E_NO_MEM if there is a memory allocation problem. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ace20f84f3ef1e63c8731512cfa3ec4ec"></a><!-- doxytag: member="afc.h::afc_client_new_from_connection" ref="ace20f84f3ef1e63c8731512cfa3ec4ec" args="(idevice_connection_t connection, afc_client_t *client)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2afc_8h.html#afa46b7e1ac472a5589d85d6a6a7104fb">afc_error_t</a> afc_client_new_from_connection </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structidevice__connection__private.html">idevice_connection_t</a>&nbsp;</td>
+          <td class="paramname"> <em>connection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structafc__client__private.html">afc_client_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>client</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Makes a connection to the AFC service on the device using the given connection. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>An idevice_connection_t that must have been previously connected using <a class="el" href="libimobiledevice_8h.html#a487774a7f9ae8f617cbe7f8eef68596b" title="Set up a connection to the given device.">idevice_connect()</a>. Note that this connection will not be closed by calling <a class="el" href="include_2libimobiledevice_2afc_8h.html#a1cee6b357bdd7f187b7411a41c136412" title="Frees up an AFC client.">afc_client_free()</a>. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>Pointer that will be set to a newly allocated afc_client_t upon successful return.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success, AFC_E_INVALID_ARG if connection is invalid, or AFC_E_NO_MEM if there is a memory allocation problem. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -367,8 +424,13 @@
 <p>Closes a file on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to close the file with. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to close the file with. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file. </td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -410,9 +472,19 @@
 <p>makes use of flock on the device, see <a href="http://developer.apple.com/documentation/Darwin/Reference/ManPages/man2/flock.2.html">http://developer.apple.com/documentation/Darwin/Reference/ManPages/man2/flock.2.html</a></p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to lock the file with. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to lock the file with. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>the lock or unlock operation to perform, this is one of AFC_LOCK_SH (shared lock), AFC_LOCK_EX (exclusive lock), or AFC_LOCK_UN (unlock). </td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -459,14 +531,29 @@
 <p>Opens a file on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to open the file. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>filename</em>&nbsp;</td><td>The file to open. (must be a fully-qualified path) </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>file_mode</em>&nbsp;</td><td>The mode to use to open the file. Can be AFC_FILE_READ or AFC_FILE_WRITE; the former lets you read and write, however, and the second one will *create* the file, destroying anything previously there. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to open the file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>filename</em>&nbsp;</td><td>The file to open. (must be a fully-qualified path) <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>file_mode</em>&nbsp;</td><td>The mode to use to open the file. Can be AFC_FILE_READ or AFC_FILE_WRITE; the former lets you read and write, however, and the second one will *create* the file, destroying anything previously there. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>Pointer to a uint64_t that will hold the handle of the file</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -516,15 +603,35 @@
 <p>Attempts to the read the given number of bytes from the given file. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The relevant AFC client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>The pointer to the memory region to store the read data </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>length</em>&nbsp;</td><td>The number of bytes to read </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The relevant AFC client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>The pointer to the memory region to store the read data <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>length</em>&nbsp;</td><td>The number of bytes to read <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>bytes_read</em>&nbsp;</td><td>The number of bytes actually read.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -568,14 +675,29 @@
 <p>Seeks to a given position of a pre-opened file on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to seek to the position. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>offset</em>&nbsp;</td><td>Seek offset. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to seek to the position. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>offset</em>&nbsp;</td><td>Seek offset. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>whence</em>&nbsp;</td><td>Seeking direction, one of SEEK_SET, SEEK_CUR, or SEEK_END.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -613,13 +735,23 @@
 <p>Returns current position in a pre-opened file on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>Position in bytes of indicator</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -657,14 +789,24 @@
 <p>Sets the size of a file on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to set the file size. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to set the file size. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of a previously opened file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>newsize</em>&nbsp;</td><td>The size to set the file to.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>This function is more akin to ftruncate than truncate, and truncate calls would have to open the file before calling this, sadly. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -714,15 +856,35 @@
 <p>Writes a given number of bytes to a file. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to write to the file. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of previously opened file. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>The data to write to the file. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>length</em>&nbsp;</td><td>How much data to write. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to write to the file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>File handle of previously opened file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>The data to write to the file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>length</em>&nbsp;</td><td>How much data to write. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>bytes_written</em>&nbsp;</td><td>The number of bytes actually written to the file.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -755,12 +917,17 @@
 <p>The device information returned is the device model as well as the free space, the total capacity and blocksize on the accessed disk partition.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to get device info for. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to get device info for. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>infos</em>&nbsp;</td><td>A char ** list of parameters as given by AFC or NULL if there was an error.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -799,13 +966,23 @@
 <p>Known key values are: Model, FSTotalBytes, FSFreeBytes and FSBlockSize. This is a helper function for <a class="el" href="include_2libimobiledevice_2afc_8h.html#ab4b5ee19121c0283364d3cee5b72cc15" title="Get device info for a client connection to phone.">afc_get_device_info()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to get device info for. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>The key to get the value of. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to get device info for. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>The key to get the value of. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>value</em>&nbsp;</td><td>The value for the key if successful or NULL otherwise.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -843,13 +1020,23 @@
 <p>Gets information about a specific file. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to get the information of the file. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>The fully-qualified path to the file. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to get the information of the file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>The fully-qualified path to the file. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>infolist</em>&nbsp;</td><td>Pointer to a buffer that will be filled with a NULL-terminated list of strings with the file information. Set to NULL before calling this function.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -881,12 +1068,17 @@
 <p>Creates a directory on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to make a directory. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to make a directory. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>dir</em>&nbsp;</td><td>The directory's path. (must be a fully-qualified path, I assume all other mkdir restrictions apply as well)</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -930,14 +1122,29 @@
 <p>Creates a hard link or symbolic link on the device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use for making a link </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>linktype</em>&nbsp;</td><td>1 = hard link, 2 = symlink </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>target</em>&nbsp;</td><td>The file to be linked. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use for making a link <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>linktype</em>&nbsp;</td><td>1 = hard link, 2 = symlink <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>target</em>&nbsp;</td><td>The file to be linked. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>linkname</em>&nbsp;</td><td>The name of link.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -975,13 +1182,23 @@
 <p>Gets a directory listing of the directory requested. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to get a directory listing from. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>dir</em>&nbsp;</td><td>The directory to list. (must be a fully-qualified path) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to get a directory listing from. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>dir</em>&nbsp;</td><td>The directory to list. (must be a fully-qualified path) <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>list</em>&nbsp;</td><td>A char list of files in that directory, terminated by an empty string or NULL if there was an error.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1013,12 +1230,17 @@
 <p>Deletes a file or directory. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>The path to delete. (must be a fully-qualified path)</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1056,13 +1278,23 @@
 <p>Renames a file or directory on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to have rename. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>from</em>&nbsp;</td><td>The name to rename from. (must be a fully-qualified path) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to have rename. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>from</em>&nbsp;</td><td>The name to rename from. (must be a fully-qualified path) <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>to</em>&nbsp;</td><td>The new name. (must also be a fully-qualified path)</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1100,13 +1332,23 @@
 <p>Sets the modification time of a file on the phone. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to set the file size. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>Path of the file for which the modification time should be set. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to set the file size. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>Path of the file for which the modification time should be set. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>mtime</em>&nbsp;</td><td>The modification time to set in nanoseconds since epoch.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1144,18 +1386,28 @@
 <p>Sets the size of a file on the phone without prior opening it. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to set the file size. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>The path of the file to be truncated. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to use to set the file size. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>The path of the file to be truncated. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>newsize</em>&nbsp;</td><td>The size to set the file to.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>AFC_E_SUCCESS on success or an AFC_E_* error value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Nov 27 19:58:07 2010 for libimobiledevice by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Dec 16 22:53:47 2010 for libimobiledevice by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

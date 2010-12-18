@@ -25,15 +25,30 @@
 </div>
 <div class="contents">
 <h1>libimobiledevice/mobilesync.h File Reference</h1>
-<p>MobileSync Implementation.  
+<p>Synchronize data classes with a device and computer.  
 <a href="#_details">More...</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Data Structures</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmobilesync__anchors.html">mobilesync_anchors</a></td></tr>
 <tr><td colspan="2"><h2>Typedefs</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef int16_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Represents an error code.  <a href="#a860c449a8dc2d56bcbcfdb44bfc79b6f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9416410eb63a6f40c144f5e13576650"></a><!-- doxytag: member="include/libimobiledevice/mobilesync.h::mobilesync_client_t" ref="ae9416410eb63a6f40c144f5e13576650" args="" -->
 typedef <a class="el" href="structmobilesync__client__private.html">mobilesync_client_private</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ae9416410eb63a6f40c144f5e13576650">mobilesync_client_t</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The client handle. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="structmobilesync__anchors.html">mobilesync_anchors</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a8c58f99e22c6fa4ad18073d31f71cb3b">mobilesync_anchors_t</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Anchors used by the device and computer.  <a href="#a8c58f99e22c6fa4ad18073d31f71cb3b"></a><br/></td></tr>
+<tr><td colspan="2"><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80c">mobilesync_sync_type_t</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80cae0430179c44c50bef80b51f990eee230">MOBILESYNC_SYNC_TYPE_FAST</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80caeffffd3b2f288fad21820cd403780100">MOBILESYNC_SYNC_TYPE_SLOW</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80ca8327459ac3c534d30050e76cd30f95c1">MOBILESYNC_SYNC_TYPE_RESET</a>
+<br/>
+ }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>The sync type of the current sync session. </p>
+ <a href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80c">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ab70c2c3ec18a6bd654ecd2792564c4f6">mobilesync_client_new</a> (<a class="el" href="structidevice__private.html">idevice_t</a> device, uint16_t port, <a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> *client)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Connects to the mobilesync service on the specified device.  <a href="#ab70c2c3ec18a6bd654ecd2792564c4f6"></a><br/></td></tr>
@@ -43,6 +58,36 @@ typedef <a class="el" href="structmobilesync__client__private.html">mobilesync_c
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Polls the device for mobilesync data.  <a href="#a85d593631f8dddd7f58691c7351a1f44"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a76e54260a77572f07327cbc17d805533">mobilesync_send</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client, plist_t plist)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sends mobilesync data to the device.  <a href="#a76e54260a77572f07327cbc17d805533"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ad275428ba492e22fa0819b24c30515f1">mobilesync_start</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client, const char *data_class, <a class="el" href="structmobilesync__anchors.html">mobilesync_anchors_t</a> anchors, uint64_t computer_data_class_version, <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80c">mobilesync_sync_type_t</a> *sync_type, uint64_t *device_data_class_version)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Requests starting synchronization of a data class with the device.  <a href="#ad275428ba492e22fa0819b24c30515f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#afdabe2be886c047027bf059e337339fd">mobilesync_cancel</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client, const char *reason)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Cancells a running synchronization session with a device at any time.  <a href="#afdabe2be886c047027bf059e337339fd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a2b6d0acc51dc8a1e9064c79c54cdbcea">mobilesync_finish</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Finish a synchronization session of a data class on the device.  <a href="#a2b6d0acc51dc8a1e9064c79c54cdbcea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ab5c816504e565b9f391a7b1692667e7b">mobilesync_get_all_records_from_device</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Requests to receive all records of the currently set data class from the device.  <a href="#ab5c816504e565b9f391a7b1692667e7b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a96b9227e7e8d6602329b4c10d99ce9bb">mobilesync_get_changes_from_device</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Requests to receive only changed records of the currently set data class from the device.  <a href="#a96b9227e7e8d6602329b4c10d99ce9bb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#aad274556b5e793d0d4ebd83dbef8f20e">mobilesync_receive_changes</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client, plist_t *entities, uint8_t *is_last_record, plist_t *actions)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Receives changed entitites of the currently set data class from the device.  <a href="#aad274556b5e793d0d4ebd83dbef8f20e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a8e93751ac8f9cd584b16b946b7618abf">mobilesync_acknowledge_changes_from_device</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Acknowledges to the device that the changes have been merged on the computer.  <a href="#a8e93751ac8f9cd584b16b946b7618abf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a19bca33f057c33d0487ac1947beaeceb">mobilesync_ready_to_send_changes_from_computer</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Verifies if the device is ready to receive changes from the computer.  <a href="#a19bca33f057c33d0487ac1947beaeceb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a9d27a8141804c3527af0ea54c2d1976a">mobilesync_send_changes</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client, plist_t entities, uint8_t is_last_record, plist_t actions)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sends changed entitites of the currently set data class to the device.  <a href="#a9d27a8141804c3527af0ea54c2d1976a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac22e10874abce6b1dfa34a4a44e13607">mobilesync_remap_identifiers</a> (<a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a> client, plist_t *mapping)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Receives any remapped identifiers reported after the device merged submitted changes.  <a href="#ac22e10874abce6b1dfa34a4a44e13607"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmobilesync__anchors.html">mobilesync_anchors_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a8624bfd0265ecb8a79f042da3f9fdb85">mobilesync_anchors_new</a> (const char *device_anchor, const char *computer_anchor)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Allocates memory for a new anchors struct initialized with the passed anchors.  <a href="#a8624bfd0265ecb8a79f042da3f9fdb85"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a3430ddf7577dc5953b8d7f68b77bb05e">mobilesync_anchors_free</a> (<a class="el" href="structmobilesync__anchors.html">mobilesync_anchors_t</a> anchors)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Free memory used by anchors.  <a href="#a3430ddf7577dc5953b8d7f68b77bb05e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">plist_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a0c6d310281e82bdfb7093fa250660d40">mobilesync_actions_new</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Create a new actions plist to use in <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a9d27a8141804c3527af0ea54c2d1976a" title="Sends changed entitites of the currently set data class to the device.">mobilesync_send_changes()</a>.  <a href="#a0c6d310281e82bdfb7093fa250660d40"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#aa74b108e231afd7c15630dd64b894712">mobilesync_actions_add</a> (plist_t actions,...) G_GNUC_NULL_TERMINATED</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Add one or more new key:value pairs to the given actions plist.  <a href="#aa74b108e231afd7c15630dd64b894712"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#afa2edaa908a063346974208e674a3d3d">mobilesync_actions_free</a> (plist_t actions)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Free actions plist.  <a href="#afa2edaa908a063346974208e674a3d3d"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Error Codes</h2></td></tr>
 <tr><td colspan="2"><p><a class="anchor" id="amgrp5c244138ac975df1b1cec1afc71a6c9a"></a> </p>
 <br/><br/></td></tr>
@@ -56,12 +101,35 @@ typedef <a class="el" href="structmobilesync__client__private.html">mobilesync_c
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILESYNC_E_MUX_ERROR</b>&nbsp;&nbsp;&nbsp;-3</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab45959745dd9125082275d978e91f252"></a><!-- doxytag: member="include/libimobiledevice/mobilesync.h::MOBILESYNC_E_BAD_VERSION" ref="ab45959745dd9125082275d978e91f252" args="" -->
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILESYNC_E_BAD_VERSION</b>&nbsp;&nbsp;&nbsp;-4</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41a8e6022d90b4559b13ef90a7162928"></a><!-- doxytag: member="include/libimobiledevice/mobilesync.h::MOBILESYNC_E_SYNC_REFUSED" ref="a41a8e6022d90b4559b13ef90a7162928" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILESYNC_E_SYNC_REFUSED</b>&nbsp;&nbsp;&nbsp;-5</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3f10e3ffd71f287d320e9c062fafe35"></a><!-- doxytag: member="include/libimobiledevice/mobilesync.h::MOBILESYNC_E_CANCELLED" ref="aa3f10e3ffd71f287d320e9c062fafe35" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILESYNC_E_CANCELLED</b>&nbsp;&nbsp;&nbsp;-6</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee7c2012ba44d7f24f5ca57412aeaad4"></a><!-- doxytag: member="include/libimobiledevice/mobilesync.h::MOBILESYNC_E_WRONG_DIRECTION" ref="aee7c2012ba44d7f24f5ca57412aeaad4" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILESYNC_E_WRONG_DIRECTION</b>&nbsp;&nbsp;&nbsp;-7</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6970e4af258694a8939ebb4aee34fcb8"></a><!-- doxytag: member="include/libimobiledevice/mobilesync.h::MOBILESYNC_E_NOT_READY" ref="a6970e4af258694a8939ebb4aee34fcb8" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILESYNC_E_NOT_READY</b>&nbsp;&nbsp;&nbsp;-8</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45a511c0d72bc83582952aeaf5110374"></a><!-- doxytag: member="include/libimobiledevice/mobilesync.h::MOBILESYNC_E_UNKNOWN_ERROR" ref="a45a511c0d72bc83582952aeaf5110374" args="" -->
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILESYNC_E_UNKNOWN_ERROR</b>&nbsp;&nbsp;&nbsp;-256</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>MobileSync Implementation. </p>
+<p>Synchronize data classes with a device and computer. </p>
 <hr/><h2>Typedef Documentation</h2>
+<a class="anchor" id="a8c58f99e22c6fa4ad18073d31f71cb3b"></a><!-- doxytag: member="mobilesync.h::mobilesync_anchors_t" ref="a8c58f99e22c6fa4ad18073d31f71cb3b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="structmobilesync__anchors.html">mobilesync_anchors</a>* <a class="el" href="structmobilesync__anchors.html">mobilesync_anchors_t</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Anchors used by the device and computer. </p>
+
+</div>
+</div>
 <a class="anchor" id="a860c449a8dc2d56bcbcfdb44bfc79b6f"></a><!-- doxytag: member="mobilesync.h::mobilesync_error_t" ref="a860c449a8dc2d56bcbcfdb44bfc79b6f" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -77,7 +145,261 @@ typedef <a class="el" href="structmobilesync__client__private.html">mobilesync_c
 
 </div>
 </div>
+<hr/><h2>Enumeration Type Documentation</h2>
+<a class="anchor" id="ac9f9e31e087d8a816ddb4aeed1eea80c"></a><!-- doxytag: member="mobilesync.h::mobilesync_sync_type_t" ref="ac9f9e31e087d8a816ddb4aeed1eea80c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80c">mobilesync_sync_type_t</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The sync type of the current sync session. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="ac9f9e31e087d8a816ddb4aeed1eea80cae0430179c44c50bef80b51f990eee230"></a><!-- doxytag: member="MOBILESYNC_SYNC_TYPE_FAST" ref="ac9f9e31e087d8a816ddb4aeed1eea80cae0430179c44c50bef80b51f990eee230" args="" -->MOBILESYNC_SYNC_TYPE_FAST</em>&nbsp;</td><td>
+<p>Fast-sync requires that only the changes made since the last synchronization should be reported by the computer. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ac9f9e31e087d8a816ddb4aeed1eea80caeffffd3b2f288fad21820cd403780100"></a><!-- doxytag: member="MOBILESYNC_SYNC_TYPE_SLOW" ref="ac9f9e31e087d8a816ddb4aeed1eea80caeffffd3b2f288fad21820cd403780100" args="" -->MOBILESYNC_SYNC_TYPE_SLOW</em>&nbsp;</td><td>
+<p>Slow-sync requires that all data from the computer needs to be synchronized/sent. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ac9f9e31e087d8a816ddb4aeed1eea80ca8327459ac3c534d30050e76cd30f95c1"></a><!-- doxytag: member="MOBILESYNC_SYNC_TYPE_RESET" ref="ac9f9e31e087d8a816ddb4aeed1eea80ca8327459ac3c534d30050e76cd30f95c1" args="" -->MOBILESYNC_SYNC_TYPE_RESET</em>&nbsp;</td><td>
+<p>Reset-sync signals that the computer should send all data again. </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+</div>
+</div>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a8e93751ac8f9cd584b16b946b7618abf"></a><!-- doxytag: member="mobilesync.h::mobilesync_acknowledge_changes_from_device" ref="a8e93751ac8f9cd584b16b946b7618abf" args="(mobilesync_client_t client)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_acknowledge_changes_from_device </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Acknowledges to the device that the changes have been merged on the computer. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa74b108e231afd7c15630dd64b894712"></a><!-- doxytag: member="mobilesync.h::mobilesync_actions_add" ref="aa74b108e231afd7c15630dd64b894712" args="(plist_t actions,...) G_GNUC_NULL_TERMINATED" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mobilesync_actions_add </td>
+          <td>(</td>
+          <td class="paramtype">plist_t&nbsp;</td>
+          <td class="paramname"> <em>actions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&nbsp;</td>
+          <td class="paramname"> <em>...</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add one or more new key:value pairs to the given actions plist. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>actions</em>&nbsp;</td><td>The actions to modify. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>...</em>&nbsp;</td><td>KEY, VALUE, [KEY, VALUE], NULL</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>The known keys so far are "SyncDeviceLinkEntityNamesKey" which expects an array of entity names, followed by a count paramter as well as "SyncDeviceLinkAllRecordsOfPulledEntityTypeSentKey" which expects an integer to use as a boolean value indiciating that the device should link submitted changes and report remapped identifiers. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afa2edaa908a063346974208e674a3d3d"></a><!-- doxytag: member="mobilesync.h::mobilesync_actions_free" ref="afa2edaa908a063346974208e674a3d3d" args="(plist_t actions)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mobilesync_actions_free </td>
+          <td>(</td>
+          <td class="paramtype">plist_t&nbsp;</td>
+          <td class="paramname"> <em>actions</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Free actions plist. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>actions</em>&nbsp;</td><td>The actions plist to free. Does nothing if NULL is passed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0c6d310281e82bdfb7093fa250660d40"></a><!-- doxytag: member="mobilesync.h::mobilesync_actions_new" ref="a0c6d310281e82bdfb7093fa250660d40" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">plist_t mobilesync_actions_new </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Create a new actions plist to use in <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a9d27a8141804c3527af0ea54c2d1976a" title="Sends changed entitites of the currently set data class to the device.">mobilesync_send_changes()</a>. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A new plist_t of type PLIST_DICT. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3430ddf7577dc5953b8d7f68b77bb05e"></a><!-- doxytag: member="mobilesync.h::mobilesync_anchors_free" ref="a3430ddf7577dc5953b8d7f68b77bb05e" args="(mobilesync_anchors_t anchors)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mobilesync_anchors_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__anchors.html">mobilesync_anchors_t</a>&nbsp;</td>
+          <td class="paramname"> <em>anchors</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Free memory used by anchors. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>anchors</em>&nbsp;</td><td>The anchors free. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8624bfd0265ecb8a79f042da3f9fdb85"></a><!-- doxytag: member="mobilesync.h::mobilesync_anchors_new" ref="a8624bfd0265ecb8a79f042da3f9fdb85" args="(const char *device_anchor, const char *computer_anchor)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmobilesync__anchors.html">mobilesync_anchors_t</a> mobilesync_anchors_new </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>device_anchor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>computer_anchor</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Allocates memory for a new anchors struct initialized with the passed anchors. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>device_anchor</em>&nbsp;</td><td>An anchor the device reported the last time or NULL if none is known yet which for instance is true on first synchronization. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>computer_anchor</em>&nbsp;</td><td>An arbitrary string to use as anchor for the computer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A new mobilesync_anchors_t struct. Must be freed using <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a3430ddf7577dc5953b8d7f68b77bb05e" title="Free memory used by anchors.">mobilesync_anchors_free()</a>. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afdabe2be886c047027bf059e337339fd"></a><!-- doxytag: member="mobilesync.h::mobilesync_cancel" ref="afdabe2be886c047027bf059e337339fd" args="(mobilesync_client_t client, const char *reason)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_cancel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>reason</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cancells a running synchronization session with a device at any time. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>reason</em>&nbsp;</td><td>The reason to supply to the device for cancelling</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a684e78bdb59be1169217f3e9d7fbc2da"></a><!-- doxytag: member="mobilesync.h::mobilesync_client_free" ref="a684e78bdb59be1169217f3e9d7fbc2da" args="(mobilesync_client_t client)" -->
 <div class="memitem">
 <div class="memproto">
@@ -139,13 +461,135 @@ typedef <a class="el" href="structmobilesync__client__private.html">mobilesync_c
 <p>Connects to the mobilesync service on the specified device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>Pointer that will be set to a newly allocated mobilesync_client_t upon successful return.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID ARG if one or more parameters are invalid, or DEVICE_LINK_SERVICE_E_BAD_VERSION if the mobilesync version on the device is newer. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2b6d0acc51dc8a1e9064c79c54cdbcea"></a><!-- doxytag: member="mobilesync.h::mobilesync_finish" ref="a2b6d0acc51dc8a1e9064c79c54cdbcea" args="(mobilesync_client_t client)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_finish </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Finish a synchronization session of a data class on the device. </p>
+<p>A session must have previously been started using <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ad275428ba492e22fa0819b24c30515f1" title="Requests starting synchronization of a data class with the device.">mobilesync_start()</a>.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid form </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab5c816504e565b9f391a7b1692667e7b"></a><!-- doxytag: member="mobilesync.h::mobilesync_get_all_records_from_device" ref="ab5c816504e565b9f391a7b1692667e7b" args="(mobilesync_client_t client)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_get_all_records_from_device </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Requests to receive all records of the currently set data class from the device. </p>
+<p>The actually changes are retrieved using <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#aad274556b5e793d0d4ebd83dbef8f20e" title="Receives changed entitites of the currently set data class from the device.">mobilesync_receive_changes()</a> after this request has been successful.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a96b9227e7e8d6602329b4c10d99ce9bb"></a><!-- doxytag: member="mobilesync.h::mobilesync_get_changes_from_device" ref="a96b9227e7e8d6602329b4c10d99ce9bb" args="(mobilesync_client_t client)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_get_changes_from_device </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Requests to receive only changed records of the currently set data class from the device. </p>
+<p>The actually changes are retrieved using <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#aad274556b5e793d0d4ebd83dbef8f20e" title="Receives changed entitites of the currently set data class from the device.">mobilesync_receive_changes()</a> after this request has been successful.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a19bca33f057c33d0487ac1947beaeceb"></a><!-- doxytag: member="mobilesync.h::mobilesync_ready_to_send_changes_from_computer" ref="a19bca33f057c33d0487ac1947beaeceb" args="(mobilesync_client_t client)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_ready_to_send_changes_from_computer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verifies if the device is ready to receive changes from the computer. </p>
+<p>This call changes the synchronization direction so that <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a9d27a8141804c3527af0ea54c2d1976a" title="Sends changed entitites of the currently set data class to the device.">mobilesync_send_changes()</a> can be used to send changes to the device.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid form, MOBILESYNC_E_WRONG_DIRECTION if the current sync direction does not permit this call, MOBILESYNC_E_CANCELLED if the device explicitly cancelled the session or MOBILESYNC_E_NOT_READY if the device is not ready to start receiving any changes </dd></dl>
 
 </div>
 </div>
@@ -177,12 +621,125 @@ typedef <a class="el" href="structmobilesync__client__private.html">mobilesync_c
 <p>Polls the device for mobilesync data. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>plist</em>&nbsp;</td><td>A pointer to the location where the plist should be stored</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>an error code </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aad274556b5e793d0d4ebd83dbef8f20e"></a><!-- doxytag: member="mobilesync.h::mobilesync_receive_changes" ref="aad274556b5e793d0d4ebd83dbef8f20e" args="(mobilesync_client_t client, plist_t *entities, uint8_t *is_last_record, plist_t *actions)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_receive_changes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t *&nbsp;</td>
+          <td class="paramname"> <em>entities</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&nbsp;</td>
+          <td class="paramname"> <em>is_last_record</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t *&nbsp;</td>
+          <td class="paramname"> <em>actions</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Receives changed entitites of the currently set data class from the device. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>entities</em>&nbsp;</td><td>A pointer to store the changed entity records as a PLIST_DICT <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>is_last_record</em>&nbsp;</td><td>A pointer to store a flag indiciating if this submission is the last one <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>actions</em>&nbsp;</td><td>A pointer to additional flags the device is sending or NULL to ignore</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid, MOBILESYNC_E_CANCELLED if the device explicitly cancelled the session </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac22e10874abce6b1dfa34a4a44e13607"></a><!-- doxytag: member="mobilesync.h::mobilesync_remap_identifiers" ref="ac22e10874abce6b1dfa34a4a44e13607" args="(mobilesync_client_t client, plist_t *mapping)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_remap_identifiers </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t *&nbsp;</td>
+          <td class="paramname"> <em>mapping</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Receives any remapped identifiers reported after the device merged submitted changes. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>mapping</em>&nbsp;</td><td>A pointer to an array plist containing a dict of identifier remappings</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid form, MOBILESYNC_E_WRONG_DIRECTION if the current sync direction does not permit this call or MOBILESYNC_E_CANCELLED if the device explicitly cancelled the session </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -215,17 +772,180 @@ typedef <a class="el" href="structmobilesync__client__private.html">mobilesync_c
 <dl class="note"><dt><b>Note:</b></dt><dd>This function is low-level and should only be used if you need to send a new type of message.</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>plist</em>&nbsp;</td><td>The location of the plist to send</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>an error code </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9d27a8141804c3527af0ea54c2d1976a"></a><!-- doxytag: member="mobilesync.h::mobilesync_send_changes" ref="a9d27a8141804c3527af0ea54c2d1976a" args="(mobilesync_client_t client, plist_t entities, uint8_t is_last_record, plist_t actions)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_send_changes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t&nbsp;</td>
+          <td class="paramname"> <em>entities</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>is_last_record</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t&nbsp;</td>
+          <td class="paramname"> <em>actions</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sends changed entitites of the currently set data class to the device. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>entities</em>&nbsp;</td><td>The changed entity records as a PLIST_DICT <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>is_last_record</em>&nbsp;</td><td>A flag indiciating if this submission is the last one <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>actions</em>&nbsp;</td><td>Additional actions for the device created with <a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a0c6d310281e82bdfb7093fa250660d40" title="Create a new actions plist to use in mobilesync_send_changes().">mobilesync_actions_new()</a> or NULL if no actions should be passed</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid, MOBILESYNC_E_WRONG_DIRECTION if the current sync direction does not permit this call </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad275428ba492e22fa0819b24c30515f1"></a><!-- doxytag: member="mobilesync.h::mobilesync_start" ref="ad275428ba492e22fa0819b24c30515f1" args="(mobilesync_client_t client, const char *data_class, mobilesync_anchors_t anchors, uint64_t computer_data_class_version, mobilesync_sync_type_t *sync_type, uint64_t *device_data_class_version)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#a860c449a8dc2d56bcbcfdb44bfc79b6f">mobilesync_error_t</a> mobilesync_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilesync__client__private.html">mobilesync_client_t</a>&nbsp;</td>
+          <td class="paramname"> <em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>data_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmobilesync__anchors.html">mobilesync_anchors_t</a>&nbsp;</td>
+          <td class="paramname"> <em>anchors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&nbsp;</td>
+          <td class="paramname"> <em>computer_data_class_version</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2mobilesync_8h.html#ac9f9e31e087d8a816ddb4aeed1eea80c">mobilesync_sync_type_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>sync_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&nbsp;</td>
+          <td class="paramname"> <em>device_data_class_version</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Requests starting synchronization of a data class with the device. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The mobilesync client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data_class</em>&nbsp;</td><td>The data class identifier to sync <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>anchors</em>&nbsp;</td><td>The anchors required to exchange with the device. The anchors allow the device to tell if the synchronization information on the computer and device are consistent to determine what sync type is required. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>computer_data_class_version</em>&nbsp;</td><td>The version of the data class storage on the computer <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sync_type</em>&nbsp;</td><td>A pointer to store the sync type reported by the device_anchor <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>device_data_class_version</em>&nbsp;</td><td>The version of the data class storage on the device</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid form, MOBILESYNC_E_SYNC_REFUSED if the device refused to sync or MOBILESYNC_E_CANCELLED if the device explicitly cancelled the sync request </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>References <a class="el" href="include_2libimobiledevice_2mobilesync_8h_source.html#l00051">MOBILESYNC_SYNC_TYPE_FAST</a>, <a class="el" href="include_2libimobiledevice_2mobilesync_8h_source.html#l00053">MOBILESYNC_SYNC_TYPE_RESET</a>, and <a class="el" href="include_2libimobiledevice_2mobilesync_8h_source.html#l00052">MOBILESYNC_SYNC_TYPE_SLOW</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Nov 27 19:58:07 2010 for libimobiledevice by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Dec 16 22:53:47 2010 for libimobiledevice by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

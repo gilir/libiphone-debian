@@ -25,7 +25,7 @@
 </div>
 <div class="contents">
 <h1>libimobiledevice/installation_proxy.h File Reference</h1>
-<p>Implementation to talk to the installation proxy on a device.  
+<p>Manage applications on a device.  
 <a href="#_details">More...</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Typedefs</h2></td></tr>
@@ -33,8 +33,8 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Represents an error code.  <a href="#a488853e737060e4269b9e3a7706271cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="structinstproxy__client__private.html">instproxy_client_private</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a397d08ac5391f6e5bf20a42cfebec9f9">instproxy_client_t</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The client handle.  <a href="#a397d08ac5391f6e5bf20a42cfebec9f9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92b83275dce2d558a2366f92a62f5b80"></a><!-- doxytag: member="include/libimobiledevice/installation_proxy.h::instproxy_status_cb_t" ref="a92b83275dce2d558a2366f92a62f5b80" args=")(const char *operation, plist_t status)" -->
-typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a> )(const char *operation, plist_t status)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaff8b7499c6002da8d5a8fe7b8fe864d"></a><!-- doxytag: member="include/libimobiledevice/installation_proxy.h::instproxy_status_cb_t" ref="aaff8b7499c6002da8d5a8fe7b8fe864d" args=")(const char *operation, plist_t status, void *user_data)" -->
+typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a> )(const char *operation, plist_t status, void *user_data)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Reports the status of the given operation. <br/></td></tr>
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a3f7068e2a47bbebdea43bbeb86656157">instproxy_client_new</a> (<a class="el" href="structidevice__private.html">idevice_t</a> device, uint16_t port, <a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> *client)</td></tr>
@@ -43,20 +43,20 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Disconnects an installation_proxy client from the device and frees up the installation_proxy client data.  <a href="#a3d9667bc75e60f3e9b4ec71b47334044"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a8f5c351869472a10ba8e2d47e8f09edb">instproxy_browse</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, plist_t client_options, plist_t *result)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">List installed applications.  <a href="#a8f5c351869472a10ba8e2d47e8f09edb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a0ee9939b249aadfc89e44c2e7701868f">instproxy_install</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *pkg_path, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a> status_cb)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Install an application on the device.  <a href="#a0ee9939b249aadfc89e44c2e7701868f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a8d5e97d6c3b80d6c67259293ef5fb09d">instproxy_upgrade</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *pkg_path, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a> status_cb)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Upgrade an application on the device.  <a href="#a8d5e97d6c3b80d6c67259293ef5fb09d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a05c8dceee6f29fcc01c203dab96f53b0">instproxy_uninstall</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a> status_cb)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Uninstall an application from the device.  <a href="#a05c8dceee6f29fcc01c203dab96f53b0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a667b16c9a8a555eddec1a452b4e52149">instproxy_install</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *pkg_path, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a> status_cb, void *user_data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Install an application on the device.  <a href="#a667b16c9a8a555eddec1a452b4e52149"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a3884538e6fb05b96c0b3b11bbaaf6824">instproxy_upgrade</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *pkg_path, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a> status_cb, void *user_data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Upgrade an application on the device.  <a href="#a3884538e6fb05b96c0b3b11bbaaf6824"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a5a2800e2eeeb68b81f50be368f6e4633">instproxy_uninstall</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a> status_cb, void *user_data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Uninstall an application from the device.  <a href="#a5a2800e2eeeb68b81f50be368f6e4633"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a9487418c57758fd672f60c8eb8e2b16c">instproxy_lookup_archives</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, plist_t client_options, plist_t *result)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">List archived applications.  <a href="#a9487418c57758fd672f60c8eb8e2b16c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a14a12024b5dca9a54d528aaf051dd22b">instproxy_archive</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a> status_cb)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Archive an application on the device.  <a href="#a14a12024b5dca9a54d528aaf051dd22b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a62d33ff9f5da3a3b58627bd9ca335776">instproxy_restore</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a> status_cb)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Restore a previously archived application on the device.  <a href="#a62d33ff9f5da3a3b58627bd9ca335776"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#ae0831d5caccd1b2f7c6e93527b3f8a22">instproxy_remove_archive</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a> status_cb)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Removes a previously archived application from the device.  <a href="#ae0831d5caccd1b2f7c6e93527b3f8a22"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#af114bcdcb40175b7512c0ccb5ab6df58">instproxy_archive</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a> status_cb, void *user_data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Archive an application on the device.  <a href="#af114bcdcb40175b7512c0ccb5ab6df58"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#ac03b25ea43fd33b9ad73174612c97226">instproxy_restore</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a> status_cb, void *user_data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Restore a previously archived application on the device.  <a href="#ac03b25ea43fd33b9ad73174612c97226"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a488853e737060e4269b9e3a7706271cc">instproxy_error_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a5a26de366000091502849fcc99dd913b">instproxy_remove_archive</a> (<a class="el" href="structinstproxy__client__private.html">instproxy_client_t</a> client, const char *appid, plist_t client_options, <a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a> status_cb, void *user_data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Removes a previously archived application from the device.  <a href="#a5a26de366000091502849fcc99dd913b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">plist_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a570202c469be75185cc4fda62bbae7e0">instproxy_client_options_new</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Create a new client_options plist.  <a href="#a570202c469be75185cc4fda62bbae7e0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a2b7c6cfb5d3503f4db7342288030895b">instproxy_client_options_add</a> (plist_t client_options,...) G_GNUC_NULL_TERMINATED</td></tr>
@@ -82,7 +82,7 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>INSTPROXY_E_UNKNOWN_ERROR</b>&nbsp;&nbsp;&nbsp;-256</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>Implementation to talk to the installation proxy on a device. </p>
+<p>Manage applications on a device. </p>
 <hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="a397d08ac5391f6e5bf20a42cfebec9f9"></a><!-- doxytag: member="installation_proxy.h::instproxy_client_t" ref="a397d08ac5391f6e5bf20a42cfebec9f9" args="" -->
 <div class="memitem">
@@ -115,7 +115,7 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </div>
 </div>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a14a12024b5dca9a54d528aaf051dd22b"></a><!-- doxytag: member="installation_proxy.h::instproxy_archive" ref="a14a12024b5dca9a54d528aaf051dd22b" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)" -->
+<a class="anchor" id="af114bcdcb40175b7512c0ccb5ab6df58"></a><!-- doxytag: member="installation_proxy.h::instproxy_archive" ref="af114bcdcb40175b7512c0ccb5ab6df58" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -140,8 +140,14 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a>&nbsp;</td>
-          <td class="paramname"> <em>status_cb</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a>&nbsp;</td>
+          <td class="paramname"> <em>status_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -156,16 +162,36 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>This function tells the device to make an archive of the specified application. This results in the device creating a ZIP archive in the 'ApplicationArchives' directory and uninstalling the application.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to archive. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "SkipUninstall" -&gt; Boolean "ArchiveType" -&gt; "ApplicationOnly" </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to archive. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "SkipUninstall" -&gt; Boolean "ArchiveType" -&gt; "ApplicationOnly" <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>If a callback function is given (async mode), this function returns INSTPROXY_E_SUCCESS immediately if the status updater thread has been created successfully; any error occuring during the operation has to be handled inside the specified callback function. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -204,13 +230,23 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>This function runs synchronously.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid client options include: "ApplicationType" -&gt; "User" "ApplicationType" -&gt; "System" </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid client options include: "ApplicationType" -&gt; "User" "ApplicationType" -&gt; "System" <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>result</em>&nbsp;</td><td>Pointer that will be set to a plist that will hold an array of PLIST_DICT holding information about the applications found.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -275,13 +311,23 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Connects to the installation_proxy service on the specified device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>Pointer that will be set to a newly allocated instproxy_client_t upon successful return.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success, or an INSTPROXY_E_* error value when an error occured. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -313,12 +359,17 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Add one or more new key:value pairs to the given client_options. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to modify. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to modify. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>...</em>&nbsp;</td><td>KEY, VALUE, [KEY, VALUE], NULL</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>The keys and values passed are expected to be strings, except for "ApplicationSINF" and "iTunesMetadata" expecting a plist node of type PLIST_DATA as value, or "SkipUninstall" needing int as value. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -368,7 +419,7 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
-<a class="anchor" id="a0ee9939b249aadfc89e44c2e7701868f"></a><!-- doxytag: member="installation_proxy.h::instproxy_install" ref="a0ee9939b249aadfc89e44c2e7701868f" args="(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb)" -->
+<a class="anchor" id="a667b16c9a8a555eddec1a452b4e52149"></a><!-- doxytag: member="installation_proxy.h::instproxy_install" ref="a667b16c9a8a555eddec1a452b4e52149" args="(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -393,8 +444,14 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a>&nbsp;</td>
-          <td class="paramname"> <em>status_cb</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a>&nbsp;</td>
+          <td class="paramname"> <em>status_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -408,16 +465,36 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Install an application on the device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>pkg_path</em>&nbsp;</td><td>Path of the installation package (inside the AFC jail) </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "iTunesMetadata" -&gt; PLIST_DATA "ApplicationSINF" -&gt; PLIST_DATA "PackageType" -&gt; "Developer" If PackageType -&gt; Developer is specified, then pkg_path points to an .app directory instead of an install package. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pkg_path</em>&nbsp;</td><td>Path of the installation package (inside the AFC jail) <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "iTunesMetadata" -&gt; PLIST_DATA "ApplicationSINF" -&gt; PLIST_DATA "PackageType" -&gt; "Developer" If PackageType -&gt; Developer is specified, then pkg_path points to an .app directory instead of an install package. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>If a callback function is given (async mode), this function returns INSTPROXY_E_SUCCESS immediately if the status updater thread has been created successfully; any error occuring during the operation has to be handled inside the specified callback function. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -454,20 +531,30 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>List archived applications. </p>
 <p>This function runs synchronously.</p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a14a12024b5dca9a54d528aaf051dd22b" title="Archive an application on the device.">instproxy_archive</a></dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#af114bcdcb40175b7512c0ccb5ab6df58" title="Archive an application on the device.">instproxy_archive</a></dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>result</em>&nbsp;</td><td>Pointer that will be set to a plist containing a PLIST_DICT holding information about the archived applications found.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ae0831d5caccd1b2f7c6e93527b3f8a22"></a><!-- doxytag: member="installation_proxy.h::instproxy_remove_archive" ref="ae0831d5caccd1b2f7c6e93527b3f8a22" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)" -->
+<a class="anchor" id="a5a26de366000091502849fcc99dd913b"></a><!-- doxytag: member="installation_proxy.h::instproxy_remove_archive" ref="a5a26de366000091502849fcc99dd913b" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -492,8 +579,14 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a>&nbsp;</td>
-          <td class="paramname"> <em>status_cb</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a>&nbsp;</td>
+          <td class="paramname"> <em>status_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -508,20 +601,40 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>This function removes the ZIP archive from the 'ApplicationArchives' directory.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the archived app to remove. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so passing NULL is fine. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the archived app to remove. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so passing NULL is fine. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>If a callback function is given (async mode), this function returns INSTPROXY_E_SUCCESS immediately if the status updater thread has been created successfully; any error occuring during the operation has to be handled inside the specified callback function. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="a62d33ff9f5da3a3b58627bd9ca335776"></a><!-- doxytag: member="installation_proxy.h::instproxy_restore" ref="a62d33ff9f5da3a3b58627bd9ca335776" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)" -->
+<a class="anchor" id="ac03b25ea43fd33b9ad73174612c97226"></a><!-- doxytag: member="installation_proxy.h::instproxy_restore" ref="ac03b25ea43fd33b9ad73174612c97226" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -546,8 +659,14 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a>&nbsp;</td>
-          <td class="paramname"> <em>status_cb</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a>&nbsp;</td>
+          <td class="paramname"> <em>status_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -559,24 +678,43 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <div class="memdoc">
 
 <p>Restore a previously archived application on the device. </p>
-<p>This function is the counterpart to instproxy_archive. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a14a12024b5dca9a54d528aaf051dd22b" title="Archive an application on the device.">instproxy_archive</a></dd></dl>
+<p>This function is the counterpart to instproxy_archive. <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#af114bcdcb40175b7512c0ccb5ab6df58" title="Archive an application on the device.">instproxy_archive</a></dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to restore. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to restore. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>If a callback function is given (async mode), this function returns INSTPROXY_E_SUCCESS immediately if the status updater thread has been created successfully; any error occuring during the operation has to be handled inside the specified callback function. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="a05c8dceee6f29fcc01c203dab96f53b0"></a><!-- doxytag: member="installation_proxy.h::instproxy_uninstall" ref="a05c8dceee6f29fcc01c203dab96f53b0" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)" -->
+<a class="anchor" id="a5a2800e2eeeb68b81f50be368f6e4633"></a><!-- doxytag: member="installation_proxy.h::instproxy_uninstall" ref="a5a2800e2eeeb68b81f50be368f6e4633" args="(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -601,8 +739,14 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a>&nbsp;</td>
-          <td class="paramname"> <em>status_cb</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a>&nbsp;</td>
+          <td class="paramname"> <em>status_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -616,20 +760,40 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Uninstall an application from the device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to uninstall </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>appid</em>&nbsp;</td><td>ApplicationIdentifier of the app to uninstall <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Currently there are no known client options, so pass NULL here. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>If a callback function is given (async mode), this function returns INSTPROXY_E_SUCCESS immediately if the status updater thread has been created successfully; any error occuring during the operation has to be handled inside the specified callback function. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="a8d5e97d6c3b80d6c67259293ef5fb09d"></a><!-- doxytag: member="installation_proxy.h::instproxy_upgrade" ref="a8d5e97d6c3b80d6c67259293ef5fb09d" args="(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb)" -->
+<a class="anchor" id="a3884538e6fb05b96c0b3b11bbaaf6824"></a><!-- doxytag: member="installation_proxy.h::instproxy_upgrade" ref="a3884538e6fb05b96c0b3b11bbaaf6824" args="(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -654,8 +818,14 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#a92b83275dce2d558a2366f92a62f5b80">instproxy_status_cb_t</a>&nbsp;</td>
-          <td class="paramname"> <em>status_cb</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="include_2libimobiledevice_2installation__proxy_8h.html#aaff8b7499c6002da8d5a8fe7b8fe864d">instproxy_status_cb_t</a>&nbsp;</td>
+          <td class="paramname"> <em>status_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>user_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -670,21 +840,41 @@ typedef void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>This function is nearly the same as instproxy_install; the difference is that the installation progress on the device is faster if the application is already installed.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>pkg_path</em>&nbsp;</td><td>Path of the installation package (inside the AFC jail) </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "iTunesMetadata" -&gt; PLIST_DATA "ApplicationSINF" -&gt; PLIST_DATA "PackageType" -&gt; "Developer" If PackageType -&gt; Developer is specified, then pkg_path points to an .app directory instead of an install package. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected installation_proxy client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pkg_path</em>&nbsp;</td><td>Path of the installation package (inside the AFC jail) <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>client_options</em>&nbsp;</td><td>The client options to use, as PLIST_DICT, or NULL. Valid options include: "iTunesMetadata" -&gt; PLIST_DATA "ApplicationSINF" -&gt; PLIST_DATA "PackageType" -&gt; "Developer" If PackageType -&gt; Developer is specified, then pkg_path points to an .app directory instead of an install package. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>status_cb</em>&nbsp;</td><td>Callback function for progress and status information. If NULL is passed, this function will run synchronously. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Callback data passed to status_cb.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if an error occured.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>If a callback function is given (async mode), this function returns INSTPROXY_E_SUCCESS immediately if the status updater thread has been created successfully; any error occuring during the operation has to be handled inside the specified callback function. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Nov 27 19:58:07 2010 for libimobiledevice by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Dec 16 22:53:47 2010 for libimobiledevice by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

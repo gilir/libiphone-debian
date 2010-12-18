@@ -25,7 +25,7 @@
 </div>
 <div class="contents">
 <h1>libimobiledevice/file_relay.h File Reference</h1>
-<p>file_relay Implementation  
+<p>Retrieve compressed CPIO archives.  
 <a href="#_details">More...</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Typedefs</h2></td></tr>
@@ -59,7 +59,7 @@
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>FILE_RELAY_E_UNKNOWN_ERROR</b>&nbsp;&nbsp;&nbsp;-256</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>file_relay Implementation </p>
+<p>Retrieve compressed CPIO archives. </p>
 <hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="ab3be437eb59c3a5684ee572d554ac044"></a><!-- doxytag: member="file_relay.h::file_relay_client_t" ref="ab3be437eb59c3a5684ee572d554ac044" args="" -->
 <div class="memitem">
@@ -153,13 +153,23 @@
 <p>Connects to the file_relay service on the specified device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>Reference that will point to a newly allocated file_relay_client_t upon successful return.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>FILE_RELAY_E_SUCCESS on success, FILE_RELAY_E_INVALID_ARG when one of the parameters is invalid, or FILE_RELAY_E_MUX_ERROR when the connection failed. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -197,30 +207,53 @@
 <p>Request data for the given sources. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected file_relay client. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>sources</em>&nbsp;</td><td>A NULL-terminated list of sources to retrieve. Valid sources are:</p>
-<ul>
-<li>AppleSupport</li>
-<li>Network</li>
-<li>VPN</li>
-<li>WiFi</li>
-<li>UserDatabases</li>
-<li>CrashReporter</li>
-<li>tmp</li>
-<li>SystemConfiguration </li>
-</ul>
-</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected file_relay client. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sources</em>&nbsp;</td><td>A NULL-terminated list of sources to retrieve. Valid sources are:<ul>
+<li>AppleSupport<ul>
+<li>Network<ul>
+<li>VPN<ul>
+<li>WiFi<ul>
+<li>UserDatabases<ul>
+<li>CrashReporter<ul>
+<li>tmp<ul>
+<li>SystemConfiguration <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>The connection that has to be used for receiving the data using <a class="el" href="libimobiledevice_8h.html#a0f40ec458db4f77449f67e41bd14170d" title="Receive data from a device via the given connection.">idevice_connection_receive()</a>. The connection will be closed automatically by the device, but use <a class="el" href="include_2libimobiledevice_2file__relay_8h.html#a505e17a6a1184d65c0cb30119d169d2b" title="Disconnects a file_relay client from the device and frees up the file_relay client...">file_relay_client_free()</a> to clean up properly.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>WARNING: Don't call this function without reading the data afterwards. A directory mobile_file_relay.XXXX used for creating the archive will remain in the /tmp directory otherwise.</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>FILE_RELAY_E_SUCCESS on succes, FILE_RELAY_E_INVALID_ARG when one or more parameters are invalid, FILE_RELAY_E_MUX_ERROR if a communication error occurs, FILE_RELAY_E_PLIST_ERROR when the received result is NULL or is not a valid plist, FILE_RELAY_E_INVALID_SOURCE if one or more sources are invalid, FILE_RELAY_E_STAGING_EMPTY if no data is available for the given sources, or FILE_RELAY_E_UNKNOWN_ERROR otherwise. </dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Nov 27 19:58:07 2010 for libimobiledevice by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Dec 16 22:53:47 2010 for libimobiledevice by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

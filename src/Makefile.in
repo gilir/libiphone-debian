@@ -79,7 +79,8 @@ am_libimobiledevice_la_OBJECTS = idevice.lo debug.lo userpref.lo \
 	property_list_service.lo device_link_service.lo lockdown.lo \
 	afc.lo file_relay.lo notification_proxy.lo \
 	installation_proxy.lo sbservices.lo mobile_image_mounter.lo \
-	screenshotr.lo mobilesync.lo mobilebackup.lo
+	screenshotr.lo mobilesync.lo mobilebackup.lo house_arrest.lo \
+	restore.lo
 libimobiledevice_la_OBJECTS = $(am_libimobiledevice_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -293,7 +294,9 @@ libimobiledevice_la_SOURCES = idevice.c idevice.h \
 		       mobile_image_mounter.c mobile_image_mounter.h\
 		       screenshotr.c screenshotr.h\
 		       mobilesync.c mobilesync.h\
-		       mobilebackup.c mobilebackup.h
+		       mobilebackup.c mobilebackup.h\
+		       house_arrest.c house_arrest.h\
+		       restore.c restore.h
 
 all: all-am
 
@@ -373,6 +376,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/device_link_service.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file_relay.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/house_arrest.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevice.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/installation_proxy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lockdown.Plo@am__quote@
@@ -381,6 +385,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mobilesync.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/notification_proxy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/property_list_service.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/restore.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sbservices.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/screenshotr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/userpref.Plo@am__quote@

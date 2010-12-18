@@ -196,13 +196,23 @@
 <p>Set up a connection to the given device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>The destination port to connect to. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>The destination port to connect to. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>Pointer to an idevice_connection_t that will be filled with the necessary data of the connection.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>IDEVICE_E_SUCCESS if ok, otherwise an error code. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -247,14 +257,29 @@
 <p>This function is like idevice_connection_receive_timeout, but with a predefined reasonable timeout.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>The connection to receive data from. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>Buffer that will be filled with the received data. This buffer has to be large enough to hold len bytes. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>Buffer size or number of bytes to receive. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>The connection to receive data from. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>Buffer that will be filled with the received data. This buffer has to be large enough to hold len bytes. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>Buffer size or number of bytes to receive. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>recv_bytes</em>&nbsp;</td><td>Number of bytes actually received.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>IDEVICE_E_SUCCESS if ok, otherwise an error code. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -305,15 +330,35 @@
 <p>This function will return after the given timeout even if no data has been received.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>The connection to receive data from. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>Buffer that will be filled with the received data. This buffer has to be large enough to hold len bytes. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>Buffer size or number of bytes to receive. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>recv_bytes</em>&nbsp;</td><td>Number of bytes actually received. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>The connection to receive data from. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>Buffer that will be filled with the received data. This buffer has to be large enough to hold len bytes. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>Buffer size or number of bytes to receive. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>recv_bytes</em>&nbsp;</td><td>Number of bytes actually received. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>Timeout in milliseconds after which this function should return even if no data has been received.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>IDEVICE_E_SUCCESS if ok, otherwise an error code. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -357,14 +402,29 @@
 <p>Send data to a device via the given connection. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>The connection to send data over. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>Buffer with data to send. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>Size of the buffer to send. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>connection</em>&nbsp;</td><td>The connection to send data over. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>Buffer with data to send. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>Size of the buffer to send. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>sent_bytes</em>&nbsp;</td><td>Pointer to an uint32_t that will be filled with the number of bytes actually sent.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>IDEVICE_E_SUCCESS if ok, otherwise an error code. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -450,12 +510,17 @@
 <p>Register a callback function that will be called when device add/remove events occur. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>callback</em>&nbsp;</td><td>Callback function to call. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>callback</em>&nbsp;</td><td>Callback function to call. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Application-specific data passed as parameter to the registered callback function.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>IDEVICE_E_SUCCESS on success or an error value when an error occured. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -534,12 +599,17 @@
 <p>Get a list of currently available devices. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>devices</em>&nbsp;</td><td>List of uuids of devices that are currently available. This list is terminated by a NULL pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>devices</em>&nbsp;</td><td>List of uuids of devices that are currently available. This list is terminated by a NULL pointer. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>count</em>&nbsp;</td><td>Number of devices found.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>IDEVICE_E_SUCCESS on success or an error value when an error occured. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -602,12 +672,17 @@
 <dl class="note"><dt><b>Note:</b></dt><dd>The resulting idevice_t structure has to be freed with <a class="el" href="libimobiledevice_8h.html#a98caab570c77156838829f760560f81a" title="Cleans up an idevice structure, then frees the structure itself.">idevice_free()</a> if it is no longer used.</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>Upon calling this function, a pointer to a location of type idevice_t. On successful return, this location will be populated. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>Upon calling this function, a pointer to a location of type idevice_t. On successful return, this location will be populated. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>uuid</em>&nbsp;</td><td>The UUID to match.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>IDEVICE_E_SUCCESS if ok, otherwise an error code. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -639,7 +714,7 @@
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Nov 27 19:58:07 2010 for libimobiledevice by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Dec 16 22:53:47 2010 for libimobiledevice by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

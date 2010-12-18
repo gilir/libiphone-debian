@@ -25,7 +25,7 @@
 </div>
 <div class="contents">
 <h1>libimobiledevice/notification_proxy.h File Reference</h1>
-<p>Implementation to talk to the notification proxy on a device.  
+<p>Observe and post notifications.  
 <a href="#_details">More...</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Typedefs</h2></td></tr>
@@ -99,6 +99,9 @@
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>NP_ACTIVATION_STATE</b>&nbsp;&nbsp;&nbsp;&quot;com.apple.mobile.lockdown.activation_state&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30ec5e2a07ae42673ea3abac2d72cb0a"></a><!-- doxytag: member="include/libimobiledevice/notification_proxy.h::NP_BRICK_STATE" ref="a30ec5e2a07ae42673ea3abac2d72cb0a" args="" -->
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>NP_BRICK_STATE</b>&nbsp;&nbsp;&nbsp;&quot;com.apple.mobile.lockdown.brick_state&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a771f707ce667d75072a191f1f4d1b32b"></a><!-- doxytag: member="include/libimobiledevice/notification_proxy.h::NP_DISK_USAGE_CHANGED" ref="a771f707ce667d75072a191f1f4d1b32b" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2notification__proxy_8h.html#a771f707ce667d75072a191f1f4d1b32b">NP_DISK_USAGE_CHANGED</a>&nbsp;&nbsp;&nbsp;&quot;com.apple.mobile.lockdown.disk_usage_changed&quot;</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">iOS 4.0+ <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a974e97517ebccf59e43cf7ace19447a6"></a><!-- doxytag: member="include/libimobiledevice/notification_proxy.h::NP_DS_DOMAIN_CHANGED" ref="a974e97517ebccf59e43cf7ace19447a6" args="" -->
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>NP_DS_DOMAIN_CHANGED</b>&nbsp;&nbsp;&nbsp;&quot;com.apple.mobile.data_sync.domain_changed&quot;</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66bc93162ae3ab3a387bd2acd69534d1"></a><!-- doxytag: member="include/libimobiledevice/notification_proxy.h::NP_BACKUP_DOMAIN_CHANGED" ref="a66bc93162ae3ab3a387bd2acd69534d1" args="" -->
@@ -119,7 +122,7 @@
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>NP_ADDRESS_BOOK_PREF_CHANGED</b>&nbsp;&nbsp;&nbsp;&quot;com.apple.AddressBook.PreferenceChanged&quot;</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>Implementation to talk to the notification proxy on a device. </p>
+<p>Observe and post notifications. </p>
 <hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="ac70ac0a2cdf28fe43b181c8e8b4a900e"></a><!-- doxytag: member="notification_proxy.h::np_client_t" ref="ac70ac0a2cdf28fe43b181c8e8b4a900e" args="" -->
 <div class="memitem">
@@ -228,13 +231,23 @@
 <p>Connects to the notification_proxy on the specified device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>Pointer that will be set to a newly allocated np_client_t upon successful return.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NP_E_SUCCESS on success, NP_E_INVALID_ARG when device is NULL, or NP_E_CONN_FAILED when the connection to the device could not be established. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -266,12 +279,17 @@
 <p>Tells the device to send a notification on the specified event. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to send to </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to send to <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>notification</em>&nbsp;</td><td>The notifications that should be observed.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NP_E_SUCCESS on success, NP_E_INVALID_ARG when client or notification are NULL, or an error returned by np_plist_send. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -303,12 +321,17 @@
 <p>Tells the device to send a notification on specified events. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to send to </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to send to <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>notification_spec</em>&nbsp;</td><td>Specification of the notifications that should be observed. This is expected to be an array of const char* that MUST have a terminating NULL entry.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NP_E_SUCCESS on success, NP_E_INVALID_ARG when client is null, or an error returned by np_observe_notification. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -340,12 +363,17 @@
 <p>Sends a notification to the device's notification_proxy. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to send to </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client to send to <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>notification</em>&nbsp;</td><td>The notification message to send</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NP_E_SUCCESS on success, or an error returned by np_plist_send </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -384,19 +412,29 @@
 <p>It will start a thread that polls for notifications and calls the callback function if a notification has been received.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>the NP client </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>notify_cb</em>&nbsp;</td><td>pointer to a callback function or NULL to de-register a previously set callback function. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>the NP client <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>notify_cb</em>&nbsp;</td><td>pointer to a callback function or NULL to de-register a previously set callback function. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user_data</em>&nbsp;</td><td>Pointer that will be passed to the callback function as user data. If notify_cb is NULL, this parameter is ignored.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>Only one callback function can be registered at the same time; any previously set callback function will be removed automatically.</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NP_E_SUCCESS when the callback was successfully registered, NP_E_INVALID_ARG when client is NULL, or NP_E_UNKNOWN_ERROR when the callback thread could no be created. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Nov 27 19:58:07 2010 for libimobiledevice by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Dec 16 22:53:47 2010 for libimobiledevice by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

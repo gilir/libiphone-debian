@@ -25,7 +25,7 @@
 </div>
 <div class="contents">
 <h1>libimobiledevice/mobile_image_mounter.h File Reference</h1>
-<p>Implementation of the mobile image mounter service.  
+<p>Mount developer/debug disk images on the device.  
 <a href="#_details">More...</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Typedefs</h2></td></tr>
@@ -60,7 +60,7 @@
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><b>MOBILE_IMAGE_MOUNTER_E_UNKNOWN_ERROR</b>&nbsp;&nbsp;&nbsp;-256</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>Implementation of the mobile image mounter service. </p>
+<p>Mount developer/debug disk images on the device. </p>
 <hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="ae7690ee36890c0c64933107e86c1ab0f"></a><!-- doxytag: member="mobile_image_mounter.h::mobile_image_mounter_client_t" ref="ae7690ee36890c0c64933107e86c1ab0f" args="" -->
 <div class="memitem">
@@ -182,14 +182,24 @@
 <p>Tells if the image of ImageType is already mounted. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client use </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>image_type</em>&nbsp;</td><td>The type of the image to look up </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The client use <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>image_type</em>&nbsp;</td><td>The type of the image to look up <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>result</em>&nbsp;</td><td>Pointer to a plist that will receive the result of the operation.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>This function may return MOBILE_IMAGE_MOUNTER_E_SUCCESS even if the operation has failed. Check the resulting plist for further information.</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>MOBILE_IMAGE_MOUNTER_E_SUCCESS on success, or an error code on error </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -245,17 +255,42 @@
 <p>Mounts an image on the device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected mobile_image_mounter client. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>image_path</em>&nbsp;</td><td>The absolute path of the image to mount. The image must be present before calling this function. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>image_signature</em>&nbsp;</td><td>Pointer to a buffer holding the images' signature </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>signature_length</em>&nbsp;</td><td>Length of the signature image_signature points to </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>image_type</em>&nbsp;</td><td>Type of image to mount </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>The connected mobile_image_mounter client. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>image_path</em>&nbsp;</td><td>The absolute path of the image to mount. The image must be present before calling this function. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>image_signature</em>&nbsp;</td><td>Pointer to a buffer holding the images' signature <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>signature_length</em>&nbsp;</td><td>Length of the signature image_signature points to <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>image_type</em>&nbsp;</td><td>Type of image to mount <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>result</em>&nbsp;</td><td>Pointer to a plist that will receive the result of the operation.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>This function may return MOBILE_IMAGE_MOUNTER_E_SUCCESS even if the operation has failed. Check the resulting plist for further information. Note that there is no unmounting function. The mount persists until the device is rebooted.</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>MOBILE_IMAGE_MOUNTER_E_SUCCESS on success, MOBILE_IMAGE_MOUNTER_E_INVALID_ARG if on ore more parameters are invalid, or another error code otherwise. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -293,18 +328,28 @@
 <p>Connects to the mobile_image_mounter service on the specified device. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>device</em>&nbsp;</td><td>The device to connect to. <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>Destination port (usually given by lockdownd_start_service). <dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>client</em>&nbsp;</td><td>Pointer that will be set to a newly allocated mobile_image_mounter_client_t upon successful return.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>MOBILE_IMAGE_MOUNTER_E_SUCCESS on success, MOBILE_IMAGE_MOUNTER_E_INVALID_ARG if device is NULL, or MOBILE_IMAGE_MOUNTER_E_CONN_FAILED if the connection to the device could not be established. </dd></dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Nov 27 19:58:07 2010 for libimobiledevice by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Dec 16 22:53:47 2010 for libimobiledevice by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
