@@ -1,4 +1,4 @@
-libimobiledevice.so.1 libimobiledevice1 #MINVER#
+libimobiledevice.so.2 libimobiledevice2 #MINVER#
  afc_client_free@Base 0.9.7
  afc_client_new@Base 0.9.7
  afc_file_close@Base 0.9.7
