@@ -1,3 +1,9 @@
+libimobiledevice (1.1.0-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Julien Lavergne <gilir@ubuntu.com>  Sat, 18 Dec 2010 21:53:15 +0100
+
 libimobiledevice (1.0.4-1) experimental; urgency=low
 
   * New upstream release.
