@@ -58,6 +58,8 @@ Section: debug
 Priority: extra
 Depends: libimobiledevice2 (= ${binary:Version}),
          ${misc:Depends}
+Conflicts: libimobiledevice1-dbg
+Replaces: libimobiledevice1-dbg
 Description: Library for communicating with iPhone and iPod Touch devices
  libimobiledevice is a library that talks the native Apple USB protocols that
  the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
