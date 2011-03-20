@@ -1,3 +1,13 @@
+libimobiledevice (1.0.4-3) UNRELEASED; urgency=low
+
+  * debian/31-apple-mobile-device.fdi
+   - Re-add HAL fdi file, until Amarok don't rely on it.
+     Closes: #615107, LP: #362182
+  * debian/libimobiledevice1.install:
+   - Install the HAL fdi file.
+
+ -- Julien Lavergne <gilir@ubuntu.com>  Sun, 20 Mar 2011 15:33:34 +0100
+
 libimobiledevice (1.0.4-2) unstable; urgency=low
 
   * Upload to unstable.
