@@ -1,4 +1,4 @@
-libimobiledevice (1.1.0-2) UNRELEASED; urgency=low
+libimobiledevice (1.1.0-2) experimental; urgency=low
 
   * debian/control:
     - Add Conflicts/Replaces for libimobiledevice2-dbg with previous version.
@@ -8,9 +8,9 @@ libimobiledevice (1.1.0-2) UNRELEASED; urgency=low
   * debian/libimobiledevice2.install:
    - Install the HAL fdi file.
   * debian/patches:
-   - 90_fix_4.3_iOS.patch: Drom upstream, fix corrupted bytes in iOS 4.3.
+   - 90_fix_4.3_iOS.patch: From upstream, fix corrupted bytes in iOS 4.3.
 
- -- Julien Lavergne <gilir@ubuntu.com>  Sat, 08 Jan 2011 13:52:27 +0100
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sat, 26 Mar 2011 21:03:07 +0100
 
 libimobiledevice (1.1.0-1) experimental; urgency=low
 
