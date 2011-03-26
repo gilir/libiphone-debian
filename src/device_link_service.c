@@ -25,49 +25,44 @@
 #include "debug.h"
 
 /**
- * Internally used function to extract the message string from a DL* message
+ * Internally used function to extract the message string from a DLMessage*
  * plist.
  *
  * @param dl_msg The DeviceLink property list to parse.
- * @param message A pointer that will be set to a newly allocated char*
- *     containing the DLMessage* string from the given plist. It is up to
- *     the caller to free the allocated memory. If this parameter is NULL
- *     it will be ignored.
  *
- * @return 1 if the given plist is a DL* message, or 0 if the plist does not
- *     contain any DL* message.
+ * @return An allocated char* with the DLMessage from the given plist,
+ *     or NULL when the plist does not contain any DLMessage. It is up to
+ *     the caller to free the allocated memory.
  */
-static int device_link_service_get_message(plist_t dl_msg, char **message)
+static char *device_link_service_get_message(plist_t dl_msg)
 {
-	plist_t cmd = NULL;
+	plist_t cmd = 0;
 	char *cmd_str = NULL;
 
 	/* sanity check */
 	if ((plist_get_node_type(dl_msg) != PLIST_ARRAY) || (plist_array_get_size(dl_msg) < 1)) {
-		return 0;
+		return NULL;
 	}
 
 	/* get dl command */
 	cmd = plist_array_get_item(dl_msg, 0);
 	if (!cmd || (plist_get_node_type(cmd) != PLIST_STRING)) {
-		return 0;
+		return NULL;
 	}
 
 	plist_get_string_val(cmd, &cmd_str);
 	if (!cmd_str) {
-		return 0;
+		return NULL;
 	}
 
-	if ((strlen(cmd_str) < 9) || (strncmp(cmd_str, "DL", 2))) {
+	if ((strlen(cmd_str) < (strlen("DLMessage")+1))
+	    || (strncmp(cmd_str, "DLMessage", strlen("DLMessage")))) {
 		free(cmd_str);
-		return 0;
+		return NULL;
 	}
 
-	if (message)
-		*message = cmd_str;
-
-	/* we got a DL* message */
-	return 1;
+	/* we got a DLMessage* command */
+	return cmd_str;
 }
 
 /**
@@ -158,7 +153,7 @@ device_link_service_error_t device_link_service_version_exchange(device_link_ser
 		err = DEVICE_LINK_SERVICE_E_MUX_ERROR;
 		goto leave;
 	}
-	device_link_service_get_message(array, &msg);
+	msg = device_link_service_get_message(array);
 	if (!msg || strcmp(msg, "DLMessageVersionExchange")) {
 		debug_info("Did not receive DLMessageVersionExchange from device!");
 		err = DEVICE_LINK_SERVICE_E_PLIST_ERROR;
@@ -213,7 +208,7 @@ device_link_service_error_t device_link_service_version_exchange(device_link_ser
 		err = DEVICE_LINK_SERVICE_E_MUX_ERROR;
 		goto leave;
 	}
-	device_link_service_get_message(array, &msg);
+	msg = device_link_service_get_message(array);
 	if (!msg || strcmp(msg, "DLMessageDeviceReady")) {
 		debug_info("Did not get DLMessageDeviceReady!");
 		err = DEVICE_LINK_SERVICE_E_PLIST_ERROR;
@@ -318,40 +313,6 @@ device_link_service_error_t device_link_service_send_process_message(device_link
 }
 
 /**
- * Receives a DL* message plist
- *
- * @param client The connected device link service client used for receiving.
- * @param msg_plist Pointer to a plist that will be set to the contents of the
- *    message plist upon successful return.
- * @param dlmessage A pointer that will be set to a newly allocated char*
- *     containing the DL* string from the given plist. It is up to the caller
- *     to free the allocated memory. If this parameter is NULL
- *     it will be ignored.
- *
- * @return DEVICE_LINK_SERVICE_E_SUCCESS if a DL* message was received,
- *    DEVICE_LINK_SERVICE_E_INVALID_ARG if client or message is invalid,
- *    DEVICE_LINK_SERVICE_E_PLIST_ERROR if the received plist is invalid
- *    or is not a DL* message plist, or DEVICE_LINK_SERVICE_E_MUX_ERROR if
- *    receiving from the device failed.
- */
-device_link_service_error_t device_link_service_receive_message(device_link_service_client_t client, plist_t *msg_plist, char **dlmessage)
-{
-	if (!client || !client->parent || !msg_plist)
-		return DEVICE_LINK_SERVICE_E_INVALID_ARG;
-
-	*msg_plist = NULL;
-	if (property_list_service_receive_plist(client->parent, msg_plist) != PROPERTY_LIST_SERVICE_E_SUCCESS) {
-		return DEVICE_LINK_SERVICE_E_MUX_ERROR;
-	}
-
-	if (!device_link_service_get_message(*msg_plist, dlmessage)) {
-		debug_info("Did not receive a DL* message as expected!");
-		return DEVICE_LINK_SERVICE_E_PLIST_ERROR;
-	}
-	return DEVICE_LINK_SERVICE_E_SUCCESS;
-}
-
-/**
  * Receives a DLMessageProcessMessage plist.
  *
  * @param client The connected device link service client used for receiving.
@@ -376,8 +337,7 @@ device_link_service_error_t device_link_service_receive_process_message(device_l
 
 	device_link_service_error_t err = DEVICE_LINK_SERVICE_E_UNKNOWN_ERROR;
 
-	char *msg = NULL;
-	device_link_service_get_message(pmsg, &msg);
+	char *msg = device_link_service_get_message(pmsg);
 	if (!msg || strcmp(msg, "DLMessageProcessMessage")) {
 		debug_info("Did not receive DLMessageProcessMessage as expected!");
 		err = DEVICE_LINK_SERVICE_E_PLIST_ERROR;

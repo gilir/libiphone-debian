@@ -19,6 +19,4 @@ libimobiledevice_la_SOURCES = idevice.c idevice.h \
 		       mobile_image_mounter.c mobile_image_mounter.h\
 		       screenshotr.c screenshotr.h\
 		       mobilesync.c mobilesync.h\
-		       mobilebackup.c mobilebackup.h\
-		       house_arrest.c house_arrest.h\
-		       restore.c restore.h
+		       mobilebackup.c mobilebackup.h

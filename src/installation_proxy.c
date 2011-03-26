@@ -32,7 +32,6 @@ struct instproxy_status_data {
 	instproxy_client_t client;
 	instproxy_status_cb_t cbfunc;
 	char *operation;
-	void *user_data;
 };
 
 /**
@@ -273,7 +272,7 @@ leave_unlock:
  *        in async mode or shown in debug messages in sync mode. 
  * @param user_data Callback data passed to status_cb.
  */
-static instproxy_error_t instproxy_perform_operation(instproxy_client_t client, instproxy_status_cb_t status_cb, const char *operation, void *user_data)
+static instproxy_error_t instproxy_perform_operation(instproxy_client_t client, instproxy_status_cb_t status_cb, const char *operation)
 {
 	instproxy_error_t res = INSTPROXY_E_UNKNOWN_ERROR;
 	int ok = 1;
@@ -290,7 +289,7 @@ static instproxy_error_t instproxy_perform_operation(instproxy_client_t client, 
 		if (dict) {
 			/* invoke callback function */
 			if (status_cb) {
-				status_cb(operation, dict, user_data);
+				status_cb(operation, dict);
 			}
 			/* check for 'Error', so we can abort cleanly */
 			plist_t err = plist_dict_get_item(dict, "Error");
@@ -354,7 +353,7 @@ static gpointer instproxy_status_updater(gpointer arg)
 	struct instproxy_status_data *data = (struct instproxy_status_data*)arg;
 
 	/* run until the operation is complete or an error occurs */
-	(void)instproxy_perform_operation(data->client, data->cbfunc, data->operation, data->user_data);
+	(void)instproxy_perform_operation(data->client, data->cbfunc, data->operation);
 
 	/* cleanup */
 	instproxy_lock(data->client);
@@ -385,7 +384,7 @@ static gpointer instproxy_status_updater(gpointer arg)
  *         when the operation completed successfully (sync).
  *         An INSTPROXY_E_* error value is returned if an error occured.
  */
-static instproxy_error_t instproxy_create_status_updater(instproxy_client_t client, instproxy_status_cb_t status_cb, const char *operation, void *user_data)
+static instproxy_error_t instproxy_create_status_updater(instproxy_client_t client, instproxy_status_cb_t status_cb, const char *operation)
 {
 	instproxy_error_t res = INSTPROXY_E_UNKNOWN_ERROR;
 	if (status_cb) {
@@ -395,7 +394,6 @@ static instproxy_error_t instproxy_create_status_updater(instproxy_client_t clie
 			data->client = client;
 			data->cbfunc = status_cb;
 			data->operation = strdup(operation);
-			data->user_data = user_data;
 
 			client->status_updater = g_thread_create(instproxy_status_updater, data, TRUE, NULL);
 			if (client->status_updater) {
@@ -404,7 +402,7 @@ static instproxy_error_t instproxy_create_status_updater(instproxy_client_t clie
 		}
 	} else {
 		/* sync mode */
-		res = instproxy_perform_operation(client, NULL, operation, NULL);
+		res = instproxy_perform_operation(client, NULL, operation);
 	}
 	return res;
 }
@@ -424,7 +422,7 @@ static instproxy_error_t instproxy_create_status_updater(instproxy_client_t clie
  * @return INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
  *     an error occured. 
  */
-static instproxy_error_t instproxy_install_or_upgrade(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb, const char *command, void *user_data)
+static instproxy_error_t instproxy_install_or_upgrade(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb, const char *command)
 {
 	if (!client || !client->parent || !pkg_path) {
 		return INSTPROXY_E_INVALID_ARG;
@@ -442,7 +440,7 @@ static instproxy_error_t instproxy_install_or_upgrade(instproxy_client_t client,
 		return res;
 	}
 
-	return instproxy_create_status_updater(client, status_cb, command, user_data);
+	return instproxy_create_status_updater(client, status_cb, command);
 }
 
 /**
@@ -469,9 +467,9 @@ static instproxy_error_t instproxy_install_or_upgrade(instproxy_client_t client,
  *     created successfully; any error occuring during the operation has to be
  *     handled inside the specified callback function.
  */
-instproxy_error_t instproxy_install(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)
+instproxy_error_t instproxy_install(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb)
 {
-	return instproxy_install_or_upgrade(client, pkg_path, client_options, status_cb, "Install", user_data);
+	return instproxy_install_or_upgrade(client, pkg_path, client_options, status_cb, "Install");
 }
 
 /**
@@ -500,9 +498,9 @@ instproxy_error_t instproxy_install(instproxy_client_t client, const char *pkg_p
  *     created successfully; any error occuring during the operation has to be
  *     handled inside the specified callback function.
  */
-instproxy_error_t instproxy_upgrade(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)
+instproxy_error_t instproxy_upgrade(instproxy_client_t client, const char *pkg_path, plist_t client_options, instproxy_status_cb_t status_cb)
 {
-	return instproxy_install_or_upgrade(client, pkg_path, client_options, status_cb, "Upgrade", user_data);
+	return instproxy_install_or_upgrade(client, pkg_path, client_options, status_cb, "Upgrade");
 }
 
 /**
@@ -524,7 +522,7 @@ instproxy_error_t instproxy_upgrade(instproxy_client_t client, const char *pkg_p
  *     created successfully; any error occuring during the operation has to be
  *     handled inside the specified callback function.
  */
-instproxy_error_t instproxy_uninstall(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)
+instproxy_error_t instproxy_uninstall(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)
 {
 	if (!client || !client->parent || !appid) {
 		return INSTPROXY_E_INVALID_ARG;
@@ -550,7 +548,7 @@ instproxy_error_t instproxy_uninstall(instproxy_client_t client, const char *app
 		return res;
 	}
 
-	return instproxy_create_status_updater(client, status_cb, "Uninstall", user_data);
+	return instproxy_create_status_updater(client, status_cb, "Uninstall");
 }
 
 /**
@@ -617,7 +615,7 @@ leave_unlock:
  *     created successfully; any error occuring during the operation has to be
  *     handled inside the specified callback function.
  */
-instproxy_error_t instproxy_archive(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)
+instproxy_error_t instproxy_archive(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)
 {
 	if (!client || !client->parent || !appid)
 		return INSTPROXY_E_INVALID_ARG;
@@ -634,7 +632,7 @@ instproxy_error_t instproxy_archive(instproxy_client_t client, const char *appid
 		debug_info("could not send plist, error %d", res);
 		return res;
 	}
-	return instproxy_create_status_updater(client, status_cb, "Archive", user_data);
+	return instproxy_create_status_updater(client, status_cb, "Archive");
 }
 
 /**
@@ -658,7 +656,7 @@ instproxy_error_t instproxy_archive(instproxy_client_t client, const char *appid
  *     created successfully; any error occuring during the operation has to be
  *     handled inside the specified callback function.
  */
-instproxy_error_t instproxy_restore(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)
+instproxy_error_t instproxy_restore(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)
 {
 	if (!client || !client->parent || !appid)
 		return INSTPROXY_E_INVALID_ARG;
@@ -675,7 +673,7 @@ instproxy_error_t instproxy_restore(instproxy_client_t client, const char *appid
 		debug_info("could not send plist, error %d", res);
 		return res;
 	}
-	return instproxy_create_status_updater(client, status_cb, "Restore", user_data);
+	return instproxy_create_status_updater(client, status_cb, "Restore");
 }
 
 /**
@@ -699,7 +697,7 @@ instproxy_error_t instproxy_restore(instproxy_client_t client, const char *appid
  *     created successfully; any error occuring during the operation has to be
  *     handled inside the specified callback function.
  */
-instproxy_error_t instproxy_remove_archive(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb, void *user_data)
+instproxy_error_t instproxy_remove_archive(instproxy_client_t client, const char *appid, plist_t client_options, instproxy_status_cb_t status_cb)
 {
 	if (!client || !client->parent || !appid)
 		return INSTPROXY_E_INVALID_ARG;
@@ -716,7 +714,7 @@ instproxy_error_t instproxy_remove_archive(instproxy_client_t client, const char
 		debug_info("could not send plist, error %d", res);
 		return res;
 	}
-	return instproxy_create_status_updater(client, status_cb, "RemoveArchive", user_data);
+	return instproxy_create_status_updater(client, status_cb, "RemoveArchive");
 }
 
 /**

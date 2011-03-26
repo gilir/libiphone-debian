@@ -1,7 +1,6 @@
 /**
  * @file libimobiledevice/screenshotr.h
- * @brief Retrieve a screenshot from device.
- * @note Requires a mounted developer image.
+ * @brief Screenshot service implementation
  * \internal
  *
  * Copyright (c) 2010 Nikias Bassen All Rights Reserved.

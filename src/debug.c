@@ -20,9 +20,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA 
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 #include <stdarg.h>
 #define _GNU_SOURCE 1
 #define __USE_GNU 1
@@ -46,6 +43,7 @@ void idevice_set_debug_level(int level)
 	debug_level = level;
 }
 
+#ifndef STRIP_DEBUG_CODE
 static void debug_print_line(const char *func, const char *file, int line, const char *buffer)
 {
 	char *str_time = NULL;
@@ -73,6 +71,7 @@ static void debug_print_line(const char *func, const char *file, int line, const
 
 	free (header);
 }
+#endif
 
 inline void debug_info_real(const char *func, const char *file, int line, const char *format, ...)
 {

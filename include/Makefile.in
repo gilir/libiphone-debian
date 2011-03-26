@@ -149,6 +149,8 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
+PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PYTHON = @PYTHON@
 PYTHON_CPPFLAGS = @PYTHON_CPPFLAGS@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -251,9 +253,7 @@ nobase_include_HEADERS = libimobiledevice/libimobiledevice.h \
 			 libimobiledevice/mobile_image_mounter.h \
 			 libimobiledevice/screenshotr.h \
 			 libimobiledevice/mobilesync.h \
-			 libimobiledevice/mobilebackup.h \
-			 libimobiledevice/house_arrest.h \
-			 libimobiledevice/restore.h
+			 libimobiledevice/mobilebackup.h
 
 all: all-am
 

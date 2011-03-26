@@ -1,6 +1,6 @@
 /**
  * @file libimobiledevice/lockdown.h
- * @brief Manage device preferences, start services, pairing and activation.
+ * @brief Implementation to communicate with the lockdown device daemon
  * \internal
  *
  * Copyright (c) 2008 Zach C. All Rights Reserved.
@@ -96,8 +96,6 @@ lockdownd_error_t lockdownd_goodbye(lockdownd_client_t client);
 void lockdownd_client_set_label(lockdownd_client_t client, const char *label);
 lockdownd_error_t lockdownd_get_device_uuid(lockdownd_client_t control, char **uuid);
 lockdownd_error_t lockdownd_get_device_name(lockdownd_client_t client, char **device_name);
-lockdownd_error_t lockdownd_get_sync_data_classes(lockdownd_client_t client, char ***classes, int *count);
-lockdownd_error_t lockdownd_data_classes_free(char **classes);
 
 #ifdef __cplusplus
 }
