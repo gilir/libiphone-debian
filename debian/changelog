@@ -1,10 +1,10 @@
-libimobiledevice (1.1.0-2) UNRELEASED; urgency=low
+libimobiledevice (1.1.0-3) experimental; urgency=low
 
   * debian/control:
    - Add Conlicts on libimobiledevice1, since they provide the same fdi file.
      (Closing: #620065)
 
- -- Julien Lavergne <gilir@ubuntu.com>  Tue, 29 Mar 2011 22:06:29 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 29 Mar 2011 22:13:48 +0200
 
 libimobiledevice (1.1.0-2) experimental; urgency=low
 
