@@ -1,7 +1,8 @@
 Source: libimobiledevice
 Section: libs
 Priority: optional
-Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
+Maintainer: gtkpod Maintainers <pkg-gtkpod-devel@lists.alioth.debian.org>
+Uploaders: Julien Lavergne <julien.lavergne@gmail.com>
 Standards-Version: 3.9.1.0
 Build-Depends: debhelper (>= 7.0.50~),
 	libgnutls-dev (>= 1.6.3), 

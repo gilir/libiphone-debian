@@ -3,6 +3,7 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
   * debian/control:
    - Add Conlicts on libimobiledevice1 and libimobiledevice0, since they
      provide the same fdi file. (Closing: #620065)
+   - Update Maintainer field, and add me to Uploaders.
    - Update Vcs-*.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 29 Mar 2011 22:13:48 +0200
