@@ -19,8 +19,8 @@ Build-Depends: debhelper (>= 7.0.50~),
 	python-plist
 XS-Python-Version: current
 Homepage: http://libimobiledevice.org/
-Vcs-Git: git://github.com/gilir/libiphone-debian.git
-Vcs-Browser: http://github.com/gilir/libiphone-debian/tree
+Vcs-Git: git://git.debian.org/git/pkg-gtkpod/packages/libimobiledevice.git
+Vcs-Browser: http://git.debian.org/?p=pkg-gtkpod/packages/libimobiledevice.git
 
 Package: libimobiledevice2
 Architecture: any
