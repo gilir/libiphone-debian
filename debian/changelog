@@ -10,9 +10,9 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
   * debian/libimobiledevice2.install & debian/libimobiledevice-data.install:
    - Update installation locations with the new binary.
   * debian/gbp.conf:
-   - Add specific gdb.conf. 
+   - Add specific gdb.conf.
 
- -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 29 Mar 2011 22:13:48 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 01 Apr 2011 21:17:42 +0200
 
 libimobiledevice (1.1.0-2) experimental; urgency=low
 
