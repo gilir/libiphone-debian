@@ -5,6 +5,8 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
      provide the same fdi file. (Closing: #620065)
    - Update Maintainer field, and add me to Uploaders.
    - Update Vcs-*.
+  * debian/gbp.conf:
+   - Add specific gdb.conf. 
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 29 Mar 2011 22:13:48 +0200
 
