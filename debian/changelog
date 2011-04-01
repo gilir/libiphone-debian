@@ -4,6 +4,7 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
    - Add a data binary which contains HAL fdi file.
    - Add Conlicts / Replaces on libimobiledevice1 and libimobiledevice0, since
      they provide the same fdi file. (Closing: #620065)
+   - Add depend on libimobiledevice-data for libimobiledevice2.
    - Update Maintainer field, and add me to Uploaders.
    - Update Vcs-*.
   * debian/gbp.conf:
