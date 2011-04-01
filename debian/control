@@ -25,7 +25,6 @@ Vcs-Browser: http://git.debian.org/?p=pkg-gtkpod/packages/libimobiledevice.git
 
 Package: libimobiledevice2
 Architecture: any
-Section: libs
 Depends: ${shlibs:Depends}, 
          ${misc:Depends},
          libimobiledevice-data, 
