@@ -7,6 +7,8 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
    - Add depend on libimobiledevice-data for libimobiledevice2.
    - Update Maintainer field, and add me to Uploaders.
    - Update Vcs-*.
+  * debian/libimobiledevice2.install & debian/libimobiledevice-data.install:
+   - Update installation locations with the new binary.
   * debian/gbp.conf:
    - Add specific gdb.conf. 
 
