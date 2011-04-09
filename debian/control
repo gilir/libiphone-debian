@@ -27,10 +27,9 @@ Package: libimobiledevice2
 Architecture: any
 Depends: ${shlibs:Depends}, 
          ${misc:Depends},
-         libimobiledevice-data, 
          usbmuxd
-Conflicts: libiphone0
-Replaces: libiphone0
+Conflicts: libiphone0, libimobiledevice1, libimobiledevice0
+Replaces: libiphone0, libimobiledevice1, libimobiledevice0
 Description: Library for communicating with the iPhone and iPod Touch
  libimobiledevice is a library that talks the native Apple USB protocols that
  the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
@@ -108,16 +107,3 @@ Description: Library for communicating with iPhone and iPod Touch devices
  not depend on using any existing libraries from Apple.
  .
  This package contains the documentation for the library.
-
-Package: libimobiledevice-data
-Architecture: all
-Depends: ${misc:Depends}
-Conflicts: libimobiledevice1, libimobiledevice0
-Replaces: libimobiledevice1, libimobiledevice0, libimobiledevice2 (<< 1.1.0-3)
-Breaks: libimobiledevice2 (<< 1.1.0-3)
-Description: Library for communicating with iPhone and iPod Touch devices
- libimobiledevice is a library that talks the native Apple USB protocols that
- the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
- not depend on using any existing libraries from Apple.
- .
- This package contains arch-independant data, such as HAL configuration files.
