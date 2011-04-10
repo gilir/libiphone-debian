@@ -9,7 +9,7 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
   * debian/gbp.conf:
    - Add specific gdb.conf.
 
- -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 01 Apr 2011 21:17:42 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 10 Apr 2011 22:37:36 +0200
 
 libimobiledevice (1.1.0-2) experimental; urgency=low
 
