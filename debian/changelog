@@ -2,7 +2,7 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
 
   * debian/control:
    - Add Conlicts / Replaces on libimobiledevice1 and libimobiledevice0, since
-     they provide the same fdi file. (Closing: #620065)
+     they provide the same fdi file. LP: #753015, Closes: #620065
    - Update Maintainer field, and add me to Uploaders.
    - Update Vcs-*.
    - Remove duplicate section.
