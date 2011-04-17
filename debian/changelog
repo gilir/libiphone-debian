@@ -1,3 +1,9 @@
+libimobiledevice (1.1.0-4) UNRELEASED; urgency=low
+
+  * debian/changelog: Fix typo in previous entry.
+
+ -- Julien Lavergne <gilir@ubuntu.com>  Sun, 17 Apr 2011 22:43:56 +0200
+
 libimobiledevice (1.1.0-3) experimental; urgency=low
 
   * debian/control:
@@ -7,7 +13,7 @@ libimobiledevice (1.1.0-3) experimental; urgency=low
    - Update Vcs-*.
    - Remove duplicate section.
   * debian/gbp.conf:
-   - Add specific gdb.conf.
+   - Add specific gbp.conf.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 10 Apr 2011 22:37:36 +0200
 
