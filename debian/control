@@ -17,6 +17,7 @@ Build-Depends: debhelper (>= 7.0.50~),
 	libtasn1-3-dev (>= 1.1),
 	libreadline-dev,
 	python-plist
+X-Python-Version: >= 2.3
 Homepage: http://libimobiledevice.org/
 Vcs-Git: git://git.debian.org/git/pkg-gtkpod/packages/libimobiledevice.git
 Vcs-Browser: http://git.debian.org/?p=pkg-gtkpod/packages/libimobiledevice.git
