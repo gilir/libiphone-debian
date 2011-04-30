@@ -16,6 +16,7 @@ libimobiledevice (1.1.1-1) UNRELEASED; urgency=low
    - Increase required python-all-dev package version to 2.6.6-3~.
    - Remove XB-Python-Version fields.
    - Add X-Python-Version field.
+   - Bump Standards-Version to 3.9.2.0 (no change needed).
   * debian/copyright:
    - Update copyright years.
   * debian/libimobiledevice2.symbols:
