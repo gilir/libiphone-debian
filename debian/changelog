@@ -13,6 +13,7 @@ libimobiledevice (1.1.1-1) UNRELEASED; urgency=low
      libimobiledevice1 (Closes: #620065).
    - Add Conflicts/Replaces also on libimobiledevice0-dbg (LP: #693895)
    - Remove python-support from Build-Depends.
+   - Increase required python-all-dev package version to 2.6.6-3~.
   * debian/copyright:
    - Update copyright years.
   * debian/libimobiledevice2.symbols:
