@@ -19,6 +19,8 @@ libimobiledevice (1.1.1-1) UNRELEASED; urgency=low
    - Update copyright years.
   * debian/libimobiledevice2.symbols:
    - Update with new symbols.
+  * debian/rules:
+   - Use --with python2.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Sat, 30 Apr 2011 12:02:53 +0200
 
