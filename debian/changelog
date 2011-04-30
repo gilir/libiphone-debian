@@ -7,7 +7,7 @@ libimobiledevice (1.1.1-1) experimental; urgency=low
   * debian/libimobiledevice-utils.manpages:
    - Add man page for idevicebackup2.
    - Add man page for idevicedate.
-   - Add upstream man page for ideviceenterrecovery and idevicepair.
+   - Add upstream man pages for ideviceenterrecovery and idevicepair.
   * debian/control:
    - Remove Conflitcs of libimobiledevice2 to make it installable with
      libimobiledevice1 (Closes: #620065).
