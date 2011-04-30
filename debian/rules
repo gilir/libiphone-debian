@@ -32,3 +32,7 @@ override_dh_install:
 
 override_dh_strip:
 	dh_strip --dbg-package=libimobiledevice2-dbg
+
+override_dh_python2:
+	# Only build for the current version of python, not all supported.
+	dh_python2 --no-guessing-versions

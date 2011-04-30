@@ -22,6 +22,8 @@ libimobiledevice (1.1.1-1) UNRELEASED; urgency=low
    - Update with new symbols.
   * debian/rules:
    - Use --with python2.
+   - Pass --no-guessing-versions to dh_python2 to build only with default
+     python version.
   * debian/pycompat:
    - Removed.
 
