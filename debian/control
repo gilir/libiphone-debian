@@ -71,7 +71,6 @@ Architecture: any
 Depends: ${shlibs:Depends}, 
          ${misc:Depends}, 
          ${python:Depends}
-XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
 Conflicts: python-libiphone, python-iphone
 Replaces: python-libiphone, python-iphone
