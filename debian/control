@@ -27,6 +27,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, 
          ${misc:Depends},
          usbmuxd
+Conflicts: libiphone0
 Replaces: libiphone0, libimobiledevice1, libimobiledevice0
 Description: Library for communicating with the iPhone and iPod Touch
  libimobiledevice is a library that talks the native Apple USB protocols that
