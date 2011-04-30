@@ -36,8 +36,9 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = idevice_id$(EXEEXT) ideviceinfo$(EXEEXT) \
 	idevicepair$(EXEEXT) idevicesyslog$(EXEEXT) \
-	idevicebackup$(EXEEXT) ideviceimagemounter$(EXEEXT) \
-	idevicescreenshot$(EXEEXT) ideviceenterrecovery$(EXEEXT)
+	idevicebackup$(EXEEXT) idevicebackup2$(EXEEXT) \
+	ideviceimagemounter$(EXEEXT) idevicescreenshot$(EXEEXT) \
+	ideviceenterrecovery$(EXEEXT) idevicedate$(EXEEXT)
 subdir = tools
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -72,6 +73,19 @@ idevicebackup_DEPENDENCIES = ../src/libimobiledevice.la
 idevicebackup_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(idevicebackup_CFLAGS) \
 	$(CFLAGS) $(idevicebackup_LDFLAGS) $(LDFLAGS) -o $@
+am_idevicebackup2_OBJECTS = idevicebackup2-idevicebackup2.$(OBJEXT)
+idevicebackup2_OBJECTS = $(am_idevicebackup2_OBJECTS)
+idevicebackup2_DEPENDENCIES = ../src/libimobiledevice.la
+idevicebackup2_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(idevicebackup2_CFLAGS) $(CFLAGS) $(idevicebackup2_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_idevicedate_OBJECTS = idevicedate-idevicedate.$(OBJEXT)
+idevicedate_OBJECTS = $(am_idevicedate_OBJECTS)
+idevicedate_DEPENDENCIES = ../src/libimobiledevice.la
+idevicedate_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(idevicedate_CFLAGS) \
+	$(CFLAGS) $(idevicedate_LDFLAGS) $(LDFLAGS) -o $@
 am_ideviceenterrecovery_OBJECTS =  \
 	ideviceenterrecovery-ideviceenterrecovery.$(OBJEXT)
 ideviceenterrecovery_OBJECTS = $(am_ideviceenterrecovery_OBJECTS)
@@ -141,10 +155,12 @@ AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(idevice_id_SOURCES) $(idevicebackup_SOURCES) \
+	$(idevicebackup2_SOURCES) $(idevicedate_SOURCES) \
 	$(ideviceenterrecovery_SOURCES) $(ideviceimagemounter_SOURCES) \
 	$(ideviceinfo_SOURCES) $(idevicepair_SOURCES) \
 	$(idevicescreenshot_SOURCES) $(idevicesyslog_SOURCES)
 DIST_SOURCES = $(idevice_id_SOURCES) $(idevicebackup_SOURCES) \
+	$(idevicebackup2_SOURCES) $(idevicedate_SOURCES) \
 	$(ideviceenterrecovery_SOURCES) $(ideviceimagemounter_SOURCES) \
 	$(ideviceinfo_SOURCES) $(idevicepair_SOURCES) \
 	$(idevicescreenshot_SOURCES) $(idevicesyslog_SOURCES)
@@ -214,6 +230,8 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
+PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PYTHON = @PYTHON@
 PYTHON_CPPFLAGS = @PYTHON_CPPFLAGS@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -329,6 +347,10 @@ idevicebackup_SOURCES = idevicebackup.c
 idevicebackup_CFLAGS = $(AM_CFLAGS)
 idevicebackup_LDFLAGS = $(AM_LDFLAGS)
 idevicebackup_LDADD = ../src/libimobiledevice.la
+idevicebackup2_SOURCES = idevicebackup2.c
+idevicebackup2_CFLAGS = $(AM_CFLAGS)
+idevicebackup2_LDFLAGS = $(AM_LDFLAGS)
+idevicebackup2_LDADD = ../src/libimobiledevice.la
 ideviceimagemounter_SOURCES = ideviceimagemounter.c
 ideviceimagemounter_CFLAGS = $(AM_CFLAGS)
 ideviceimagemounter_LDFLAGS = $(AM_LDFLAGS)
@@ -341,6 +363,10 @@ ideviceenterrecovery_SOURCES = ideviceenterrecovery.c
 ideviceenterrecovery_CFLAGS = $(AM_CFLAGS)
 ideviceenterrecovery_LDFLAGS = $(AM_LDFLAGS)
 ideviceenterrecovery_LDADD = ../src/libimobiledevice.la
+idevicedate_SOURCES = idevicedate.c
+idevicedate_CFLAGS = $(AM_CFLAGS)
+idevicedate_LDFLAGS = $(AM_LDFLAGS)
+idevicedate_LDADD = ../src/libimobiledevice.la
 all: all-am
 
 .SUFFIXES:
@@ -424,6 +450,12 @@ idevice_id$(EXEEXT): $(idevice_id_OBJECTS) $(idevice_id_DEPENDENCIES)
 idevicebackup$(EXEEXT): $(idevicebackup_OBJECTS) $(idevicebackup_DEPENDENCIES) 
 	@rm -f idevicebackup$(EXEEXT)
 	$(AM_V_CCLD)$(idevicebackup_LINK) $(idevicebackup_OBJECTS) $(idevicebackup_LDADD) $(LIBS)
+idevicebackup2$(EXEEXT): $(idevicebackup2_OBJECTS) $(idevicebackup2_DEPENDENCIES) 
+	@rm -f idevicebackup2$(EXEEXT)
+	$(AM_V_CCLD)$(idevicebackup2_LINK) $(idevicebackup2_OBJECTS) $(idevicebackup2_LDADD) $(LIBS)
+idevicedate$(EXEEXT): $(idevicedate_OBJECTS) $(idevicedate_DEPENDENCIES) 
+	@rm -f idevicedate$(EXEEXT)
+	$(AM_V_CCLD)$(idevicedate_LINK) $(idevicedate_OBJECTS) $(idevicedate_LDADD) $(LIBS)
 ideviceenterrecovery$(EXEEXT): $(ideviceenterrecovery_OBJECTS) $(ideviceenterrecovery_DEPENDENCIES) 
 	@rm -f ideviceenterrecovery$(EXEEXT)
 	$(AM_V_CCLD)$(ideviceenterrecovery_LINK) $(ideviceenterrecovery_OBJECTS) $(ideviceenterrecovery_LDADD) $(LIBS)
@@ -451,6 +483,8 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevice_id-idevice_id.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevicebackup-idevicebackup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevicebackup2-idevicebackup2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idevicedate-idevicedate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceimagemounter-ideviceimagemounter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceinfo-ideviceinfo.Po@am__quote@
@@ -513,6 +547,38 @@ idevicebackup-idevicebackup.obj: idevicebackup.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicebackup.c' object='idevicebackup-idevicebackup.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup_CFLAGS) $(CFLAGS) -c -o idevicebackup-idevicebackup.obj `if test -f 'idevicebackup.c'; then $(CYGPATH_W) 'idevicebackup.c'; else $(CYGPATH_W) '$(srcdir)/idevicebackup.c'; fi`
+
+idevicebackup2-idevicebackup2.o: idevicebackup2.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup2_CFLAGS) $(CFLAGS) -MT idevicebackup2-idevicebackup2.o -MD -MP -MF $(DEPDIR)/idevicebackup2-idevicebackup2.Tpo -c -o idevicebackup2-idevicebackup2.o `test -f 'idevicebackup2.c' || echo '$(srcdir)/'`idevicebackup2.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicebackup2-idevicebackup2.Tpo $(DEPDIR)/idevicebackup2-idevicebackup2.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicebackup2.c' object='idevicebackup2-idevicebackup2.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup2_CFLAGS) $(CFLAGS) -c -o idevicebackup2-idevicebackup2.o `test -f 'idevicebackup2.c' || echo '$(srcdir)/'`idevicebackup2.c
+
+idevicebackup2-idevicebackup2.obj: idevicebackup2.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup2_CFLAGS) $(CFLAGS) -MT idevicebackup2-idevicebackup2.obj -MD -MP -MF $(DEPDIR)/idevicebackup2-idevicebackup2.Tpo -c -o idevicebackup2-idevicebackup2.obj `if test -f 'idevicebackup2.c'; then $(CYGPATH_W) 'idevicebackup2.c'; else $(CYGPATH_W) '$(srcdir)/idevicebackup2.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicebackup2-idevicebackup2.Tpo $(DEPDIR)/idevicebackup2-idevicebackup2.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicebackup2.c' object='idevicebackup2-idevicebackup2.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicebackup2_CFLAGS) $(CFLAGS) -c -o idevicebackup2-idevicebackup2.obj `if test -f 'idevicebackup2.c'; then $(CYGPATH_W) 'idevicebackup2.c'; else $(CYGPATH_W) '$(srcdir)/idevicebackup2.c'; fi`
+
+idevicedate-idevicedate.o: idevicedate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicedate_CFLAGS) $(CFLAGS) -MT idevicedate-idevicedate.o -MD -MP -MF $(DEPDIR)/idevicedate-idevicedate.Tpo -c -o idevicedate-idevicedate.o `test -f 'idevicedate.c' || echo '$(srcdir)/'`idevicedate.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicedate-idevicedate.Tpo $(DEPDIR)/idevicedate-idevicedate.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicedate.c' object='idevicedate-idevicedate.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicedate_CFLAGS) $(CFLAGS) -c -o idevicedate-idevicedate.o `test -f 'idevicedate.c' || echo '$(srcdir)/'`idevicedate.c
+
+idevicedate-idevicedate.obj: idevicedate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicedate_CFLAGS) $(CFLAGS) -MT idevicedate-idevicedate.obj -MD -MP -MF $(DEPDIR)/idevicedate-idevicedate.Tpo -c -o idevicedate-idevicedate.obj `if test -f 'idevicedate.c'; then $(CYGPATH_W) 'idevicedate.c'; else $(CYGPATH_W) '$(srcdir)/idevicedate.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/idevicedate-idevicedate.Tpo $(DEPDIR)/idevicedate-idevicedate.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='idevicedate.c' object='idevicedate-idevicedate.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(idevicedate_CFLAGS) $(CFLAGS) -c -o idevicedate-idevicedate.obj `if test -f 'idevicedate.c'; then $(CYGPATH_W) 'idevicedate.c'; else $(CYGPATH_W) '$(srcdir)/idevicedate.c'; fi`
 
 ideviceenterrecovery-ideviceenterrecovery.o: ideviceenterrecovery.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceenterrecovery_CFLAGS) $(CFLAGS) -MT ideviceenterrecovery-ideviceenterrecovery.o -MD -MP -MF $(DEPDIR)/ideviceenterrecovery-ideviceenterrecovery.Tpo -c -o ideviceenterrecovery-ideviceenterrecovery.o `test -f 'ideviceenterrecovery.c' || echo '$(srcdir)/'`ideviceenterrecovery.c

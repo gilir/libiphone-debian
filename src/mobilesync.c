@@ -39,12 +39,12 @@
 #define EMPTY_PARAMETER_STRING "___EmptyParameterString___"
 
 /**
- * Convert an device_link_service_error_t value to an mobilesync_error_t value.
+ * Convert an #device_link_service_error_t value to an #mobilesync_error_t value.
  * Used internally to get correct error codes when using device_link_service stuff.
  *
- * @param err An device_link_service_error_t error code
+ * @param err A #device_link_service_error_t error code
  *
- * @return A matching mobilesync_error_t error code,
+ * @return A matching #mobilesync_error_t error code,
  *     MOBILESYNC_E_UNKNOWN_ERROR otherwise.
  */
 static mobilesync_error_t mobilesync_error(device_link_service_error_t err)
@@ -70,13 +70,14 @@ static mobilesync_error_t mobilesync_error(device_link_service_error_t err)
  * Connects to the mobilesync service on the specified device.
  *
  * @param device The device to connect to.
- * @param port Destination port (usually given by lockdownd_start_service).
+ * @param port Destination port (usually given by lockdownd_start_service()).
  * @param client Pointer that will be set to a newly allocated
- *     mobilesync_client_t upon successful return.
+ *     #mobilesync_client_t upon successful return.
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID ARG if one
- *     or more parameters are invalid, or DEVICE_LINK_SERVICE_E_BAD_VERSION if
- *     the mobilesync version on the device is newer.
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one or more parameters are invalid
+ * @retval DEVICE_LINK_SERVICE_E_BAD_VERSION if the mobilesync version on
+ * the device is newer.
  */
 mobilesync_error_t mobilesync_client_new(idevice_t device, uint16_t port,
 						   mobilesync_client_t * client)
@@ -114,14 +115,14 @@ mobilesync_error_t mobilesync_client_new(idevice_t device, uint16_t port,
  *
  * @param client The mobilesync client to disconnect and free.
  *
- * @return MOBILESYNC_E_SUCCESS on success, or MOBILESYNC_E_INVALID_ARG
- *     if client is NULL.
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if \a client is NULL.
  */
 mobilesync_error_t mobilesync_client_free(mobilesync_client_t client)
 {
 	if (!client)
 		return MOBILESYNC_E_INVALID_ARG;
-	device_link_service_disconnect(client->parent);
+	device_link_service_disconnect(client->parent, "All done, thanks for the memories");
 	mobilesync_error_t err = mobilesync_error(device_link_service_client_free(client->parent));
 	free(client);
 	return err;
@@ -173,11 +174,12 @@ mobilesync_error_t mobilesync_send(mobilesync_client_t client, plist_t plist)
  * @param sync_type A pointer to store the sync type reported by the device_anchor
  * @param device_data_class_version The version of the data class storage on the device
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if
- *    the received plist is not of valid form, MOBILESYNC_E_SYNC_REFUSED if the 
- *    device refused to sync or MOBILESYNC_E_CANCELLED if the device explicitly
- *    cancelled the sync request
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
+ * @retval MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid form
+ * @retval MOBILESYNC_E_SYNC_REFUSED if the device refused to sync
+ * @retval MOBILESYNC_E_CANCELLED if the device explicitly cancelled the
+ * sync request
  */
 mobilesync_error_t mobilesync_start(mobilesync_client_t client, const char *data_class, mobilesync_anchors_t anchors, uint64_t computer_data_class_version, mobilesync_sync_type_t *sync_type, uint64_t *device_data_class_version)
 {
@@ -313,9 +315,10 @@ mobilesync_error_t mobilesync_start(mobilesync_client_t client, const char *data
  *
  * @param client The mobilesync client
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if
- *    the received plist is not of valid form
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
+ * @retval MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid
+ * form
  */
 mobilesync_error_t mobilesync_finish(mobilesync_client_t client)
 {
@@ -409,8 +412,8 @@ static mobilesync_error_t mobilesync_get_records(mobilesync_client_t client, con
  *
  * @param client The mobilesync client
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
  */
 mobilesync_error_t mobilesync_get_all_records_from_device(mobilesync_client_t client)
 {
@@ -424,8 +427,8 @@ mobilesync_error_t mobilesync_get_all_records_from_device(mobilesync_client_t cl
  *
  * @param client The mobilesync client
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
  */
 mobilesync_error_t mobilesync_get_changes_from_device(mobilesync_client_t client)
 {
@@ -437,12 +440,13 @@ mobilesync_error_t mobilesync_get_changes_from_device(mobilesync_client_t client
  *
  * @param client The mobilesync client
  * @param entities A pointer to store the changed entity records as a PLIST_DICT
- * @param is_last_record A pointer to store a flag indiciating if this submission is the last one
+ * @param is_last_record A pointer to store a flag indicating if this submission is the last one
  * @param actions A pointer to additional flags the device is sending or NULL to ignore
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid, MOBILESYNC_E_CANCELLED if the device
- *    explicitly cancelled the session
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
+ * @retval MOBILESYNC_E_CANCELLED if the device explicitly cancelled the
+ * session
  */
 mobilesync_error_t mobilesync_receive_changes(mobilesync_client_t client, plist_t *entities, uint8_t *is_last_record, plist_t *actions)
 {
@@ -512,12 +516,92 @@ mobilesync_error_t mobilesync_receive_changes(mobilesync_client_t client, plist_
 }
 
 /**
+ * Requests the device to delete all records of the current data class
+ *
+ * @note The operation must be called after starting synchronization.
+ *
+ * @param client The mobilesync client
+ *
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
+ * @retval MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid form
+ */
+mobilesync_error_t mobilesync_clear_all_records_on_device(mobilesync_client_t client)
+{
+	if (!client || !client->data_class) {
+		return MOBILESYNC_E_INVALID_ARG;
+	}
+
+	mobilesync_error_t err = MOBILESYNC_E_UNKNOWN_ERROR;
+	plist_t msg = NULL;
+	plist_t response_type_node = NULL;
+	char *response_type = NULL;
+
+	msg = plist_new_array();
+	plist_array_append_item(msg, plist_new_string("SDMessageClearAllRecordsOnDevice"));
+	plist_array_append_item(msg, plist_new_string(client->data_class));
+	plist_array_append_item(msg, plist_new_string(EMPTY_PARAMETER_STRING));
+
+	err = mobilesync_send(client, msg);
+
+	if (err != MOBILESYNC_E_SUCCESS) {
+		goto out;
+	}
+
+	plist_free(msg);
+	msg = NULL;
+
+	err = mobilesync_receive(client, &msg);
+
+	if (err != MOBILESYNC_E_SUCCESS) {
+		goto out;
+	}
+
+	response_type_node = plist_array_get_item(msg, 0);
+	if (!response_type_node) {
+		err = MOBILESYNC_E_PLIST_ERROR;
+		goto out;
+	}
+
+	plist_get_string_val(response_type_node, &response_type);
+	if (!response_type) {
+		err = MOBILESYNC_E_PLIST_ERROR;
+		goto out;
+	}
+
+	if (!strcmp(response_type, "SDMessageCancelSession")) {
+		char *reason = NULL;
+		err = MOBILESYNC_E_CANCELLED;
+		plist_get_string_val(plist_array_get_item(msg, 2), &reason);
+		debug_info("Device cancelled: %s", reason);
+		free(reason);
+		goto out;
+	}
+
+	if (strcmp(response_type, "SDMessageDeviceWillClearAllRecords")) {
+		err = MOBILESYNC_E_PLIST_ERROR;
+	}
+
+	out:
+	if (response_type) {
+		free(response_type);
+		response_type = NULL;
+	}
+	if (msg) {
+		plist_free(msg);
+		msg = NULL;
+	}
+
+	return err;
+}
+
+/**
  * Acknowledges to the device that the changes have been merged on the computer
  *
  * @param client The mobilesync client
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
  */
 mobilesync_error_t mobilesync_acknowledge_changes_from_device(mobilesync_client_t client)
 {
@@ -560,12 +644,15 @@ static plist_t create_process_changes_message(const char *data_class, plist_t en
  *
  * @param client The mobilesync client
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if
- *    the received plist is not of valid form, MOBILESYNC_E_WRONG_DIRECTION if the
- *    current sync direction does not permit this call, MOBILESYNC_E_CANCELLED if
- *    the device explicitly cancelled the session or MOBILESYNC_E_NOT_READY if the
- *    device is not ready to start receiving any changes
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
+ * @retval MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid form
+ * @retval MOBILESYNC_E_WRONG_DIRECTION if the current sync direction does
+ * not permit this call
+ * @retval MOBILESYNC_E_CANCELLED if the device explicitly cancelled the
+ * session
+ * @retval MOBILESYNC_E_NOT_READY if the device is not ready to start
+ * receiving any changes
  */
 mobilesync_error_t mobilesync_ready_to_send_changes_from_computer(mobilesync_client_t client)
 {
@@ -622,6 +709,10 @@ mobilesync_error_t mobilesync_ready_to_send_changes_from_computer(mobilesync_cli
 	err = MOBILESYNC_E_SUCCESS;
 
 	out:
+	if (response_type) {
+		free(response_type);
+		response_type = NULL;
+	}
 	if (msg) {
 		plist_free(msg);
 		msg = NULL;
@@ -631,17 +722,18 @@ mobilesync_error_t mobilesync_ready_to_send_changes_from_computer(mobilesync_cli
 }
 
 /**
- * Sends changed entitites of the currently set data class to the device
+ * Sends changed entities of the currently set data class to the device
  *
  * @param client The mobilesync client
  * @param entities The changed entity records as a PLIST_DICT
- * @param is_last_record A flag indiciating if this submission is the last one
+ * @param is_last_record A flag indicating if this submission is the last one
  * @param actions Additional actions for the device created with mobilesync_actions_new()
  *    or NULL if no actions should be passed
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid, MOBILESYNC_E_WRONG_DIRECTION if the
- *    current sync direction does not permit this call
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid,
+ * @retval MOBILESYNC_E_WRONG_DIRECTION if the current sync direction does
+ * not permit this call
  */
 mobilesync_error_t mobilesync_send_changes(mobilesync_client_t client, plist_t entities, uint8_t is_last_record, plist_t actions)
 {
@@ -677,11 +769,14 @@ mobilesync_error_t mobilesync_send_changes(mobilesync_client_t client, plist_t e
  * @param client The mobilesync client
  * @param mapping A pointer to an array plist containing a dict of identifier remappings
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid, MOBILESYNC_E_PLIST_ERROR if
- *    the received plist is not of valid form, MOBILESYNC_E_WRONG_DIRECTION if the
- *    current sync direction does not permit this call or MOBILESYNC_E_CANCELLED if
- *    the device explicitly cancelled the session
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
+ * @retval MOBILESYNC_E_PLIST_ERROR if the received plist is not of valid
+ * form
+ * @retval MOBILESYNC_E_WRONG_DIRECTION if the current sync direction does
+ * not permit this call
+ * @retval MOBILESYNC_E_CANCELLED if the device explicitly cancelled the
+ * session
  */
 mobilesync_error_t mobilesync_remap_identifiers(mobilesync_client_t client, plist_t *mapping)
 {
@@ -753,13 +848,13 @@ mobilesync_error_t mobilesync_remap_identifiers(mobilesync_client_t client, plis
 }
 
 /**
- * Cancells a running synchronization session with a device at any time.
+ * Cancels a running synchronization session with a device at any time.
  *
  * @param client The mobilesync client
  * @param reason The reason to supply to the device for cancelling
  *
- * @return MOBILESYNC_E_SUCCESS on success, MOBILESYNC_E_INVALID_ARG if
- *    one of the parameters is invalid
+ * @retval MOBILESYNC_E_SUCCESS on success
+ * @retval MOBILESYNC_E_INVALID_ARG if one of the parameters is invalid
  */
 mobilesync_error_t mobilesync_cancel(mobilesync_client_t client, const char* reason)
 {
@@ -794,7 +889,7 @@ mobilesync_error_t mobilesync_cancel(mobilesync_client_t client, const char* rea
  *   if none is known yet which for instance is true on first synchronization.
  * @param computer_anchor An arbitrary string to use as anchor for the computer.
  * 
- * @return A new mobilesync_anchors_t struct. Must be freed using mobilesync_anchors_free().
+ * @return A new #mobilesync_anchors_t struct. Must be freed using mobilesync_anchors_free().
  */
 mobilesync_anchors_t mobilesync_anchors_new(const char *device_anchor, const char *computer_anchor)
 {
@@ -816,7 +911,7 @@ mobilesync_anchors_t mobilesync_anchors_new(const char *device_anchor, const cha
 /**
  * Free memory used by anchors.
  *
- * @param anchors The anchors free.
+ * @param anchors The anchors to free.
  */
 void mobilesync_anchors_free(mobilesync_anchors_t anchors)
 {
@@ -851,7 +946,7 @@ plist_t mobilesync_actions_new()
  * @note The known keys so far are "SyncDeviceLinkEntityNamesKey" which expects
  *       an array of entity names, followed by a count paramter as well as
  *       "SyncDeviceLinkAllRecordsOfPulledEntityTypeSentKey" which expects an
- *       integer to use as a boolean value indiciating that the device should
+ *       integer to use as a boolean value indicating that the device should
  *       link submitted changes and report remapped identifiers.
  */
 void mobilesync_actions_add(plist_t actions, ...)
