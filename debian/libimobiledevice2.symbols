@@ -100,14 +100,14 @@ libimobiledevice.so.2 libimobiledevice2 #MINVER#
  mobile_image_mounter_lookup_image@Base 1.0.0
  mobile_image_mounter_mount_image@Base 1.0.0
  mobile_image_mounter_new@Base 1.0.0
- mobilebackup2_client_free@Base 1.1.1-1
- mobilebackup2_client_new@Base 1.1.1-1
- mobilebackup2_receive_message@Base 1.1.1-1
- mobilebackup2_receive_raw@Base 1.1.1-1
- mobilebackup2_send_raw@Base 1.1.1-1
- mobilebackup2_send_request@Base 1.1.1-1
- mobilebackup2_send_status_response@Base 1.1.1-1
- mobilebackup2_version_exchange@Base 1.1.1-1
+ mobilebackup2_client_free@Base 1.1.1
+ mobilebackup2_client_new@Base 1.1.1
+ mobilebackup2_receive_message@Base 1.1.1
+ mobilebackup2_receive_raw@Base 1.1.1
+ mobilebackup2_send_raw@Base 1.1.1
+ mobilebackup2_send_request@Base 1.1.1
+ mobilebackup2_send_status_response@Base 1.1.1
+ mobilebackup2_version_exchange@Base 1.1.1
  mobilebackup_client_free@Base 0.9.7
  mobilebackup_client_new@Base 0.9.7
  mobilebackup_receive@Base 0.9.7
@@ -126,7 +126,7 @@ libimobiledevice.so.2 libimobiledevice2 #MINVER#
  mobilesync_anchors_free@Base 1.1.0
  mobilesync_anchors_new@Base 1.1.0
  mobilesync_cancel@Base 1.1.0
- mobilesync_clear_all_records_on_device@Base 1.1.1-1
+ mobilesync_clear_all_records_on_device@Base 1.1.1
  mobilesync_client_free@Base 0.9.7
  mobilesync_client_new@Base 0.9.7
  mobilesync_finish@Base 1.1.0
