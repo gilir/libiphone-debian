@@ -6,6 +6,7 @@ libimobiledevice (1.1.1-1) UNRELEASED; urgency=low
    - 90_fix_4.3_iOS.patch: Merged upstream.
   * debian/libimobiledevice-utils.manpages:
    - Add man page for idevicebackup2.
+   - Add man page for idevicedate.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Sat, 30 Apr 2011 12:02:53 +0200
 
