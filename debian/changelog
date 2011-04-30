@@ -1,5 +1,6 @@
 libimobiledevice (1.1.1-1) UNRELEASED; urgency=low
 
+  * New upstream release.
   * debian/changelog: Fix typo in previous entry.
   * debian/patches:
    - 90_fix_4.3_iOS.patch: Merged upstream.
