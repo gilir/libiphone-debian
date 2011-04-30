@@ -2,6 +2,7 @@
  * lockdown.c
  * com.apple.mobile.lockdownd service implementation.
  *
+ * Copyright (c) 2010 Bryan Forbes All Rights Reserved.
  * Copyright (c) 2008 Zach C. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -21,6 +22,10 @@
 
 #include <string.h>
 #include <stdlib.h>
+#define _GNU_SOURCE 1
+#define __USE_GNU 1
+#include <stdio.h>
+#include <ctype.h>
 #include <glib.h>
 #include <libtasn1.h>
 #include <gnutls/x509.h>
@@ -613,8 +618,6 @@ lockdownd_error_t lockdownd_client_new(idevice_t device, lockdownd_client_t *cli
 	if (!client)
 		return LOCKDOWN_E_INVALID_ARG;
 
-	lockdownd_error_t ret = LOCKDOWN_E_SUCCESS;
-
 	property_list_service_client_t plistclient = NULL;
 	if (property_list_service_client_new(device, 0xf27e, &plistclient) != PROPERTY_LIST_SERVICE_E_SUCCESS) {
 		debug_info("could not connect to lockdownd (device %s)", device->uuid);
@@ -626,17 +629,11 @@ lockdownd_error_t lockdownd_client_new(idevice_t device, lockdownd_client_t *cli
 	client_loc->ssl_enabled = 0;
 	client_loc->session_id = NULL;
 	client_loc->uuid = NULL;
-	client_loc->label = NULL;
-	if (label != NULL)
-		client_loc->label = strdup(label);
+	client_loc->label = label ? strdup(label) : NULL;
 
-	if (LOCKDOWN_E_SUCCESS == ret) {
-		*client = client_loc;
-	} else {
-		lockdownd_client_free(client_loc);
-	}
+	*client = client_loc;
 
-	return ret;
+	return LOCKDOWN_E_SUCCESS;
 }
 
 /**
@@ -853,7 +850,7 @@ static lockdownd_error_t lockdownd_do_pair(lockdownd_client_t client, lockdownd_
 			debug_info("device refused to send public key.");
 			return ret;
 		}
-		debug_info("device public key follows:\n%s", public_key.data);
+		debug_info("device public key follows:\n%.*s", public_key.size, public_key.data);
 		/* get libimobiledevice pair_record */
 		ret = generate_pair_record_plist(public_key, NULL, &dict_record);
 		if (ret != LOCKDOWN_E_SUCCESS) {
@@ -1528,3 +1525,100 @@ lockdownd_error_t lockdownd_deactivate(lockdownd_client_t client)
 	return ret;
 }
 
+static void str_remove_spaces(char *source)
+{
+	char *dest = source;
+	while (*source != 0) {
+		if (!isspace(*source)) {
+			*dest++ = *source; /* copy */
+		}
+		source++;
+	}
+	*dest = 0;
+}
+
+/**
+ * Calculates and returns the data classes the device supports from lockdownd.
+ *
+ * @param client An initialized lockdownd client.
+ * @param classes A pointer to store an array of class names. The caller is responsible
+ *  for freeing the memory which can be done using mobilesync_data_classes_free().
+ * @param count The number of items in the classes array.
+ *
+ * @return LOCKDOWN_E_SUCCESS on success,
+ *  LOCKDOWN_E_INVALID_ARG when client is NULL,
+ *  LOCKDOWN_E_NO_RUNNING_SESSION if no session is open, 
+ *  LOCKDOWN_E_PLIST_ERROR if the received plist is broken
+ */
+lockdownd_error_t lockdownd_get_sync_data_classes(lockdownd_client_t client, char ***classes, int *count)
+{
+	if (!client)
+		return LOCKDOWN_E_INVALID_ARG;
+
+	if (!client->session_id)
+		return LOCKDOWN_E_NO_RUNNING_SESSION;
+
+	plist_t dict = NULL;
+	lockdownd_error_t err = LOCKDOWN_E_UNKNOWN_ERROR;
+
+	plist_t value = NULL;
+
+	char **newlist = NULL;
+	char *val = NULL;
+
+	*classes = NULL;
+	*count = 0;
+
+	err = lockdownd_get_value(client, "com.apple.mobile.iTunes", "SyncDataClasses", &dict);
+	if (err != LOCKDOWN_E_SUCCESS) {
+		if (dict) {
+			plist_free(dict);
+		}
+		return err;
+	}
+
+	if (plist_get_node_type(dict) != PLIST_ARRAY) {
+		plist_free(dict);
+		return LOCKDOWN_E_PLIST_ERROR;
+	}
+
+	while((value = plist_array_get_item(dict, *count)) != NULL) {
+			plist_get_string_val(value, &val);
+			newlist = realloc(*classes, sizeof(char*) * (*count+1));
+			str_remove_spaces(val);
+			asprintf(&newlist[*count], "com.apple.%s", val);
+			free(val);
+			val = NULL;
+			*classes = newlist;
+			*count = *count+1;
+	}
+
+	newlist = realloc(*classes, sizeof(char*) * (*count+1));
+	newlist[*count] = NULL;
+	*classes = newlist;
+
+	if (dict) {
+		plist_free(dict);
+	}
+	return LOCKDOWN_E_SUCCESS;
+}
+
+
+/**
+ * Frees memory of an allocated array of data classes as returned by lockdownd_get_sync_data_classes()
+ *
+ * @param classes An array of class names to free.
+ *
+ * @return LOCKDOWN_E_SUCCESS on success
+ */
+lockdownd_error_t lockdownd_data_classes_free(char **classes)
+{
+	if (classes) {
+		int i = 0;
+		while (classes[i++]) {
+			free(classes[i]);
+		}
+		free(classes);
+	}
+	return LOCKDOWN_E_SUCCESS;
+}

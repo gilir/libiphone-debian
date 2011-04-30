@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">libimobiledevice&#160;<span id="projectnumber">1.0.6</span></div>
+   <div id="projectname">libimobiledevice&#160;<span id="projectnumber">1.1.1</span></div>
   </td>
  </tr>
  </tbody>
@@ -44,7 +44,7 @@
 </div>
 <div class="contents">
 
-<p>Implementation to communicate with the lockdown device daemon.  
+<p>Manage device preferences, start services, pairing and activation.  
 <a href="#_details">More...</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
@@ -103,6 +103,10 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the unique id of the device from lockdownd.  <a href="#aea25a5a1145abac5f3a41889465fc0c7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a2c5d6e126bd17d2a5c07a5829cd0da50">lockdownd_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a981044554c3acb9e9ddc0b1c068a959d">lockdownd_get_device_name</a> (<a class="el" href="structlockdownd__client__private.html">lockdownd_client_t</a> client, char **device_name)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the name of the device from lockdownd set by the user.  <a href="#a981044554c3acb9e9ddc0b1c068a959d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a2c5d6e126bd17d2a5c07a5829cd0da50">lockdownd_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a5f8385e034bc07a22a1cb593ab8f8816">lockdownd_get_sync_data_classes</a> (<a class="el" href="structlockdownd__client__private.html">lockdownd_client_t</a> client, char ***classes, int *count)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates and returns the data classes the device supports from lockdownd.  <a href="#a5f8385e034bc07a22a1cb593ab8f8816"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a2c5d6e126bd17d2a5c07a5829cd0da50">lockdownd_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a7e00f87582f5dacbf99266768af14a65">lockdownd_data_classes_free</a> (char **classes)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees memory of an allocated array of data classes as returned by <a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a5f8385e034bc07a22a1cb593ab8f8816" title="Calculates and returns the data classes the device supports from lockdownd.">lockdownd_get_sync_data_classes()</a>  <a href="#a7e00f87582f5dacbf99266768af14a65"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="member-group"></a>
 Error Codes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba4fb7298b270067139e19b66cc35650"></a><!-- doxytag: member="include/libimobiledevice/lockdown.h::LOCKDOWN_E_SUCCESS" ref="aba4fb7298b270067139e19b66cc35650" args="" -->
@@ -147,7 +151,7 @@ Error Codes</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>LOCKDOWN_E_UNKNOWN_ERROR</b>&#160;&#160;&#160;-256</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Implementation to communicate with the lockdown device daemon. </p>
+<div class="textblock"><p>Manage device preferences, start services, pairing and activation. </p>
 </div><hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="a8254fd517d2303ad1208eb00d622e0f3"></a><!-- doxytag: member="lockdown.h::lockdownd_client_t" ref="a8254fd517d2303ad1208eb00d622e0f3" args="" -->
 <div class="memitem">
@@ -372,6 +376,32 @@ Error Codes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7e00f87582f5dacbf99266768af14a65"></a><!-- doxytag: member="lockdown.h::lockdownd_data_classes_free" ref="a7e00f87582f5dacbf99266768af14a65" args="(char **classes)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a2c5d6e126bd17d2a5c07a5829cd0da50">lockdownd_error_t</a> lockdownd_data_classes_free </td>
+          <td>(</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>classes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Frees memory of an allocated array of data classes as returned by <a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a5f8385e034bc07a22a1cb593ab8f8816" title="Calculates and returns the data classes the device supports from lockdownd.">lockdownd_get_sync_data_classes()</a> </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">classes</td><td>An array of class names to free.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>LOCKDOWN_E_SUCCESS on success </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="acd0ea3ab003e4e5d557ecf6e2e2b15e3"></a><!-- doxytag: member="lockdown.h::lockdownd_deactivate" ref="acd0ea3ab003e4e5d557ecf6e2e2b15e3" args="(lockdownd_client_t client)" -->
 <div class="memitem">
 <div class="memproto">
@@ -495,6 +525,50 @@ Error Codes</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>LOCKDOWN_E_SUCCESS on success </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5f8385e034bc07a22a1cb593ab8f8816"></a><!-- doxytag: member="lockdown.h::lockdownd_get_sync_data_classes" ref="a5f8385e034bc07a22a1cb593ab8f8816" args="(lockdownd_client_t client, char ***classes, int *count)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2lockdown_8h.html#a2c5d6e126bd17d2a5c07a5829cd0da50">lockdownd_error_t</a> lockdownd_get_sync_data_classes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structlockdownd__client__private.html">lockdownd_client_t</a>&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char ***&#160;</td>
+          <td class="paramname"><em>classes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calculates and returns the data classes the device supports from lockdownd. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>An initialized lockdownd client. </td></tr>
+    <tr><td class="paramname">classes</td><td>A pointer to store an array of class names. The caller is responsible for freeing the memory which can be done using mobilesync_data_classes_free(). </td></tr>
+    <tr><td class="paramname">count</td><td>The number of items in the classes array.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>LOCKDOWN_E_SUCCESS on success, LOCKDOWN_E_INVALID_ARG when client is NULL, LOCKDOWN_E_NO_RUNNING_SESSION if no session is open, LOCKDOWN_E_PLIST_ERROR if the received plist is broken </dd></dl>
 
 </div>
 </div>

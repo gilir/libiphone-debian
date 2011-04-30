@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">libimobiledevice&#160;<span id="projectnumber">1.0.6</span></div>
+   <div id="projectname">libimobiledevice&#160;<span id="projectnumber">1.1.1</span></div>
   </td>
  </tr>
  </tbody>
@@ -43,7 +43,7 @@
 </div>
 <div class="contents">
 
-<p>Implementation to talk to the SpringBoard services on a device.  
+<p>Manage SpringBoard icons and retrieve icon images.  
 <a href="#_details">More...</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="typedef-members"></a>
@@ -58,12 +58,14 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects to the springboardservices service on the specified device.  <a href="#a9f679612ca911b58fc25d0fa4bdc6d02"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a50cd3a326f5cf8bff40b128191642fd0">sbservices_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a7780692fbb6730541acf8ce2d054641f">sbservices_client_free</a> (<a class="el" href="structsbservices__client__private.html">sbservices_client_t</a> client)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects an sbservices client from the device and frees up the sbservices client data.  <a href="#a7780692fbb6730541acf8ce2d054641f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a50cd3a326f5cf8bff40b128191642fd0">sbservices_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a56055821b67cd2e33fe34f08d83402ee">sbservices_get_icon_state</a> (<a class="el" href="structsbservices__client__private.html">sbservices_client_t</a> client, plist_t *state)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the icon state of the connected device.  <a href="#a56055821b67cd2e33fe34f08d83402ee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a50cd3a326f5cf8bff40b128191642fd0">sbservices_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#af46584eb04ec7e47b92a8fc972a770c1">sbservices_get_icon_state</a> (<a class="el" href="structsbservices__client__private.html">sbservices_client_t</a> client, plist_t *state, const char *format_version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the icon state of the connected device.  <a href="#af46584eb04ec7e47b92a8fc972a770c1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a50cd3a326f5cf8bff40b128191642fd0">sbservices_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a09e3a408b178dde88c3c7392fa26af38">sbservices_set_icon_state</a> (<a class="el" href="structsbservices__client__private.html">sbservices_client_t</a> client, plist_t newstate)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the icon state of the connected device.  <a href="#a09e3a408b178dde88c3c7392fa26af38"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a50cd3a326f5cf8bff40b128191642fd0">sbservices_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a54afc804c24a74cec55aa1ac50ec1260">sbservices_get_icon_pngdata</a> (<a class="el" href="structsbservices__client__private.html">sbservices_client_t</a> client, const char *bundleId, char **pngdata, uint64_t *pngsize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the icon of the specified app as PNG data.  <a href="#a54afc804c24a74cec55aa1ac50ec1260"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a50cd3a326f5cf8bff40b128191642fd0">sbservices_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#ad9e7f78459d7c4fc8030bb880155e77e">sbservices_get_home_screen_wallpaper_pngdata</a> (<a class="el" href="structsbservices__client__private.html">sbservices_client_t</a> client, char **pngdata, uint64_t *pngsize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the home screen wallpaper as PNG data.  <a href="#ad9e7f78459d7c4fc8030bb880155e77e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="member-group"></a>
 Error Codes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a058c18312e63d4da743dbb852d58bb"></a><!-- doxytag: member="include/libimobiledevice/sbservices.h::SBSERVICES_E_SUCCESS" ref="a2a058c18312e63d4da743dbb852d58bb" args="" -->
@@ -78,7 +80,7 @@ Error Codes</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>SBSERVICES_E_UNKNOWN_ERROR</b>&#160;&#160;&#160;-256</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Implementation to talk to the SpringBoard services on a device. </p>
+<div class="textblock"><p>Manage SpringBoard icons and retrieve icon images. </p>
 </div><hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="a231d40509606f271317474df92d05ca7"></a><!-- doxytag: member="sbservices.h::sbservices_client_t" ref="a231d40509606f271317474df92d05ca7" args="" -->
 <div class="memitem">
@@ -181,6 +183,50 @@ Error Codes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ad9e7f78459d7c4fc8030bb880155e77e"></a><!-- doxytag: member="sbservices.h::sbservices_get_home_screen_wallpaper_pngdata" ref="ad9e7f78459d7c4fc8030bb880155e77e" args="(sbservices_client_t client, char **pngdata, uint64_t *pngsize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2sbservices_8h.html#a50cd3a326f5cf8bff40b128191642fd0">sbservices_error_t</a> sbservices_get_home_screen_wallpaper_pngdata </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsbservices__client__private.html">sbservices_client_t</a>&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>pngdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>pngsize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the home screen wallpaper as PNG data. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>The connected sbservices client to use. </td></tr>
+    <tr><td class="paramname">pngdata</td><td>Pointer that will point to a newly allocated buffer containing the PNG data upon successful return. It is up to the caller to free the memory. </td></tr>
+    <tr><td class="paramname">pngsize</td><td>Pointer to a uint64_t that will be set to the size of the buffer pngdata points to upon successful return.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>SBSERVICES_E_SUCCESS on success, SBSERVICES_E_INVALID_ARG when client or pngdata are invalid, or an SBSERVICES_E_* error code otherwise. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a54afc804c24a74cec55aa1ac50ec1260"></a><!-- doxytag: member="sbservices.h::sbservices_get_icon_pngdata" ref="a54afc804c24a74cec55aa1ac50ec1260" args="(sbservices_client_t client, const char *bundleId, char **pngdata, uint64_t *pngsize)" -->
 <div class="memitem">
 <div class="memproto">
@@ -232,7 +278,7 @@ Error Codes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a56055821b67cd2e33fe34f08d83402ee"></a><!-- doxytag: member="sbservices.h::sbservices_get_icon_state" ref="a56055821b67cd2e33fe34f08d83402ee" args="(sbservices_client_t client, plist_t *state)" -->
+<a class="anchor" id="af46584eb04ec7e47b92a8fc972a770c1"></a><!-- doxytag: member="sbservices.h::sbservices_get_icon_state" ref="af46584eb04ec7e47b92a8fc972a770c1" args="(sbservices_client_t client, plist_t *state, const char *format_version)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -246,7 +292,13 @@ Error Codes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">plist_t *&#160;</td>
-          <td class="paramname"><em>state</em>&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>format_version</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -261,7 +313,8 @@ Error Codes</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">client</td><td>The connected sbservices client to use. </td></tr>
-    <tr><td class="paramname">state</td><td>Pointer that will point to a newly allocated plist containing the current icon state. It is up to the caller to free the memory.</td></tr>
+    <tr><td class="paramname">state</td><td>Pointer that will point to a newly allocated plist containing the current icon state. It is up to the caller to free the memory. </td></tr>
+    <tr><td class="paramname">format_version</td><td>A string to be passed as formatVersion along with the request, or NULL if no formatVersion should be passed. This is only supported since iOS 4.0 so for older firmware versions this must be set to NULL.</td></tr>
   </table>
   </dd>
 </dl>

@@ -36,8 +36,8 @@ build_triplet = @build@
 host_triplet = @host@
 @ENABLE_DEVTOOLS_TRUE@noinst_PROGRAMS = ideviceclient$(EXEEXT) \
 @ENABLE_DEVTOOLS_TRUE@	lckd-client$(EXEEXT) afccheck$(EXEEXT) \
-@ENABLE_DEVTOOLS_TRUE@	msyncclient$(EXEEXT) \
-@ENABLE_DEVTOOLS_TRUE@	filerelaytest$(EXEEXT)
+@ENABLE_DEVTOOLS_TRUE@	filerelaytest$(EXEEXT) \
+@ENABLE_DEVTOOLS_TRUE@	housearresttest$(EXEEXT)
 subdir = dev
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -77,12 +77,24 @@ filerelaytest_OBJECTS = $(am_filerelaytest_OBJECTS)
 filerelaytest_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(filerelaytest_CFLAGS) \
 	$(CFLAGS) $(filerelaytest_LDFLAGS) $(LDFLAGS) -o $@
+am__housearresttest_SOURCES_DIST = housearresttest.c
+@ENABLE_DEVTOOLS_TRUE@am_housearresttest_OBJECTS = housearresttest-housearresttest.$(OBJEXT)
+housearresttest_OBJECTS = $(am_housearresttest_OBJECTS)
+@ENABLE_DEVTOOLS_TRUE@housearresttest_DEPENDENCIES =  \
+@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
+housearresttest_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(housearresttest_CFLAGS) $(CFLAGS) $(housearresttest_LDFLAGS) \
+	$(LDFLAGS) -o $@
 am__ideviceclient_SOURCES_DIST = ideviceclient.c
 @ENABLE_DEVTOOLS_TRUE@am_ideviceclient_OBJECTS =  \
-@ENABLE_DEVTOOLS_TRUE@	ideviceclient.$(OBJEXT)
+@ENABLE_DEVTOOLS_TRUE@	ideviceclient-ideviceclient.$(OBJEXT)
 ideviceclient_OBJECTS = $(am_ideviceclient_OBJECTS)
 @ENABLE_DEVTOOLS_TRUE@ideviceclient_DEPENDENCIES =  \
 @ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
+ideviceclient_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(ideviceclient_CFLAGS) \
+	$(CFLAGS) $(ideviceclient_LDFLAGS) $(LDFLAGS) -o $@
 am__lckd_client_SOURCES_DIST = lckdclient.c
 @ENABLE_DEVTOOLS_TRUE@am_lckd_client_OBJECTS =  \
 @ENABLE_DEVTOOLS_TRUE@	lckd_client-lckdclient.$(OBJEXT)
@@ -92,15 +104,6 @@ lckd_client_OBJECTS = $(am_lckd_client_OBJECTS)
 lckd_client_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(lckd_client_CFLAGS) \
 	$(CFLAGS) $(lckd_client_LDFLAGS) $(LDFLAGS) -o $@
-am__msyncclient_SOURCES_DIST = msyncclient.c
-@ENABLE_DEVTOOLS_TRUE@am_msyncclient_OBJECTS =  \
-@ENABLE_DEVTOOLS_TRUE@	msyncclient-msyncclient.$(OBJEXT)
-msyncclient_OBJECTS = $(am_msyncclient_OBJECTS)
-@ENABLE_DEVTOOLS_TRUE@msyncclient_DEPENDENCIES =  \
-@ENABLE_DEVTOOLS_TRUE@	../src/libimobiledevice.la
-msyncclient_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(msyncclient_CFLAGS) \
-	$(CFLAGS) $(msyncclient_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -128,13 +131,13 @@ AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(afccheck_SOURCES) $(filerelaytest_SOURCES) \
-	$(ideviceclient_SOURCES) $(lckd_client_SOURCES) \
-	$(msyncclient_SOURCES)
+	$(housearresttest_SOURCES) $(ideviceclient_SOURCES) \
+	$(lckd_client_SOURCES)
 DIST_SOURCES = $(am__afccheck_SOURCES_DIST) \
 	$(am__filerelaytest_SOURCES_DIST) \
+	$(am__housearresttest_SOURCES_DIST) \
 	$(am__ideviceclient_SOURCES_DIST) \
-	$(am__lckd_client_SOURCES_DIST) \
-	$(am__msyncclient_SOURCES_DIST)
+	$(am__lckd_client_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -299,6 +302,8 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = $(GLOBAL_CFLAGS) $(libglib2_CFLAGS) $(libgnutls_CFLAGS) $(libtasn1_CFLAGS) $(libgthread2_CFLAGS) $(LFS_CFLAGS)
 AM_LDFLAGS = $(libglib2_LIBS) $(libgnutls_LIBS) $(libtasn1_LIBS) $(libgthread2_LIBS)
 @ENABLE_DEVTOOLS_TRUE@ideviceclient_SOURCES = ideviceclient.c
+@ENABLE_DEVTOOLS_TRUE@ideviceclient_CFLAGS = $(AM_CFLAGS)
+@ENABLE_DEVTOOLS_TRUE@ideviceclient_LDFLAGS = $(AM_LDFLAGS)
 @ENABLE_DEVTOOLS_TRUE@ideviceclient_LDADD = ../src/libimobiledevice.la
 @ENABLE_DEVTOOLS_TRUE@lckd_client_SOURCES = lckdclient.c
 @ENABLE_DEVTOOLS_TRUE@lckd_client_CFLAGS = $(AM_CFLAGS)
@@ -308,15 +313,15 @@ AM_LDFLAGS = $(libglib2_LIBS) $(libgnutls_LIBS) $(libtasn1_LIBS) $(libgthread2_L
 @ENABLE_DEVTOOLS_TRUE@afccheck_CFLAGS = $(AM_CFLAGS)
 @ENABLE_DEVTOOLS_TRUE@afccheck_LDFLAGS = $(AM_LDFLAGS)
 @ENABLE_DEVTOOLS_TRUE@afccheck_LDADD = ../src/libimobiledevice.la
-@ENABLE_DEVTOOLS_TRUE@msyncclient_SOURCES = msyncclient.c
-@ENABLE_DEVTOOLS_TRUE@msyncclient_CFLAGS = $(AM_CFLAGS)
-@ENABLE_DEVTOOLS_TRUE@msyncclient_LDFLAGS = $(AM_LDFLAGS)
-@ENABLE_DEVTOOLS_TRUE@msyncclient_LDADD = ../src/libimobiledevice.la
 @ENABLE_DEVTOOLS_TRUE@filerelaytest_SOURCES = filerelaytest.c
 @ENABLE_DEVTOOLS_TRUE@filerelaytest_CFLAGS = $(AM_CFLAGS)
 @ENABLE_DEVTOOLS_TRUE@filerelaytest_LDFLAGS = $(AM_LDFLAGS)
 @ENABLE_DEVTOOLS_TRUE@filerelaytest_LDADD = ../src/libimobiledevice.la
-EXTRA_DIST = ideviceclient.c lckdclient.c afccheck.c msyncclient.c
+@ENABLE_DEVTOOLS_TRUE@housearresttest_SOURCES = housearresttest.c
+@ENABLE_DEVTOOLS_TRUE@housearresttest_CFLAGS = $(AM_CFLAGS)
+@ENABLE_DEVTOOLS_TRUE@housearresttest_LDFLAGS = $(AM_LDFLAGS)
+@ENABLE_DEVTOOLS_TRUE@housearresttest_LDADD = ../src/libimobiledevice.la
+EXTRA_DIST = ideviceclient.c lckdclient.c afccheck.c filerelaytest.c housearresttest.c
 all: all-am
 
 .SUFFIXES:
@@ -366,15 +371,15 @@ afccheck$(EXEEXT): $(afccheck_OBJECTS) $(afccheck_DEPENDENCIES)
 filerelaytest$(EXEEXT): $(filerelaytest_OBJECTS) $(filerelaytest_DEPENDENCIES) 
 	@rm -f filerelaytest$(EXEEXT)
 	$(AM_V_CCLD)$(filerelaytest_LINK) $(filerelaytest_OBJECTS) $(filerelaytest_LDADD) $(LIBS)
+housearresttest$(EXEEXT): $(housearresttest_OBJECTS) $(housearresttest_DEPENDENCIES) 
+	@rm -f housearresttest$(EXEEXT)
+	$(AM_V_CCLD)$(housearresttest_LINK) $(housearresttest_OBJECTS) $(housearresttest_LDADD) $(LIBS)
 ideviceclient$(EXEEXT): $(ideviceclient_OBJECTS) $(ideviceclient_DEPENDENCIES) 
 	@rm -f ideviceclient$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(ideviceclient_OBJECTS) $(ideviceclient_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(ideviceclient_LINK) $(ideviceclient_OBJECTS) $(ideviceclient_LDADD) $(LIBS)
 lckd-client$(EXEEXT): $(lckd_client_OBJECTS) $(lckd_client_DEPENDENCIES) 
 	@rm -f lckd-client$(EXEEXT)
 	$(AM_V_CCLD)$(lckd_client_LINK) $(lckd_client_OBJECTS) $(lckd_client_LDADD) $(LIBS)
-msyncclient$(EXEEXT): $(msyncclient_OBJECTS) $(msyncclient_DEPENDENCIES) 
-	@rm -f msyncclient$(EXEEXT)
-	$(AM_V_CCLD)$(msyncclient_LINK) $(msyncclient_OBJECTS) $(msyncclient_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -384,9 +389,9 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/afccheck-afccheck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filerelaytest-filerelaytest.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceclient.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/housearresttest-housearresttest.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ideviceclient-ideviceclient.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lckd_client-lckdclient.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/msyncclient-msyncclient.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -444,6 +449,38 @@ filerelaytest-filerelaytest.obj: filerelaytest.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(filerelaytest_CFLAGS) $(CFLAGS) -c -o filerelaytest-filerelaytest.obj `if test -f 'filerelaytest.c'; then $(CYGPATH_W) 'filerelaytest.c'; else $(CYGPATH_W) '$(srcdir)/filerelaytest.c'; fi`
 
+housearresttest-housearresttest.o: housearresttest.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(housearresttest_CFLAGS) $(CFLAGS) -MT housearresttest-housearresttest.o -MD -MP -MF $(DEPDIR)/housearresttest-housearresttest.Tpo -c -o housearresttest-housearresttest.o `test -f 'housearresttest.c' || echo '$(srcdir)/'`housearresttest.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/housearresttest-housearresttest.Tpo $(DEPDIR)/housearresttest-housearresttest.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='housearresttest.c' object='housearresttest-housearresttest.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(housearresttest_CFLAGS) $(CFLAGS) -c -o housearresttest-housearresttest.o `test -f 'housearresttest.c' || echo '$(srcdir)/'`housearresttest.c
+
+housearresttest-housearresttest.obj: housearresttest.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(housearresttest_CFLAGS) $(CFLAGS) -MT housearresttest-housearresttest.obj -MD -MP -MF $(DEPDIR)/housearresttest-housearresttest.Tpo -c -o housearresttest-housearresttest.obj `if test -f 'housearresttest.c'; then $(CYGPATH_W) 'housearresttest.c'; else $(CYGPATH_W) '$(srcdir)/housearresttest.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/housearresttest-housearresttest.Tpo $(DEPDIR)/housearresttest-housearresttest.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='housearresttest.c' object='housearresttest-housearresttest.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(housearresttest_CFLAGS) $(CFLAGS) -c -o housearresttest-housearresttest.obj `if test -f 'housearresttest.c'; then $(CYGPATH_W) 'housearresttest.c'; else $(CYGPATH_W) '$(srcdir)/housearresttest.c'; fi`
+
+ideviceclient-ideviceclient.o: ideviceclient.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceclient_CFLAGS) $(CFLAGS) -MT ideviceclient-ideviceclient.o -MD -MP -MF $(DEPDIR)/ideviceclient-ideviceclient.Tpo -c -o ideviceclient-ideviceclient.o `test -f 'ideviceclient.c' || echo '$(srcdir)/'`ideviceclient.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ideviceclient-ideviceclient.Tpo $(DEPDIR)/ideviceclient-ideviceclient.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ideviceclient.c' object='ideviceclient-ideviceclient.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceclient_CFLAGS) $(CFLAGS) -c -o ideviceclient-ideviceclient.o `test -f 'ideviceclient.c' || echo '$(srcdir)/'`ideviceclient.c
+
+ideviceclient-ideviceclient.obj: ideviceclient.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceclient_CFLAGS) $(CFLAGS) -MT ideviceclient-ideviceclient.obj -MD -MP -MF $(DEPDIR)/ideviceclient-ideviceclient.Tpo -c -o ideviceclient-ideviceclient.obj `if test -f 'ideviceclient.c'; then $(CYGPATH_W) 'ideviceclient.c'; else $(CYGPATH_W) '$(srcdir)/ideviceclient.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ideviceclient-ideviceclient.Tpo $(DEPDIR)/ideviceclient-ideviceclient.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ideviceclient.c' object='ideviceclient-ideviceclient.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ideviceclient_CFLAGS) $(CFLAGS) -c -o ideviceclient-ideviceclient.obj `if test -f 'ideviceclient.c'; then $(CYGPATH_W) 'ideviceclient.c'; else $(CYGPATH_W) '$(srcdir)/ideviceclient.c'; fi`
+
 lckd_client-lckdclient.o: lckdclient.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lckd_client_CFLAGS) $(CFLAGS) -MT lckd_client-lckdclient.o -MD -MP -MF $(DEPDIR)/lckd_client-lckdclient.Tpo -c -o lckd_client-lckdclient.o `test -f 'lckdclient.c' || echo '$(srcdir)/'`lckdclient.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lckd_client-lckdclient.Tpo $(DEPDIR)/lckd_client-lckdclient.Po
@@ -459,22 +496,6 @@ lckd_client-lckdclient.obj: lckdclient.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='lckdclient.c' object='lckd_client-lckdclient.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lckd_client_CFLAGS) $(CFLAGS) -c -o lckd_client-lckdclient.obj `if test -f 'lckdclient.c'; then $(CYGPATH_W) 'lckdclient.c'; else $(CYGPATH_W) '$(srcdir)/lckdclient.c'; fi`
-
-msyncclient-msyncclient.o: msyncclient.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(msyncclient_CFLAGS) $(CFLAGS) -MT msyncclient-msyncclient.o -MD -MP -MF $(DEPDIR)/msyncclient-msyncclient.Tpo -c -o msyncclient-msyncclient.o `test -f 'msyncclient.c' || echo '$(srcdir)/'`msyncclient.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/msyncclient-msyncclient.Tpo $(DEPDIR)/msyncclient-msyncclient.Po
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='msyncclient.c' object='msyncclient-msyncclient.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(msyncclient_CFLAGS) $(CFLAGS) -c -o msyncclient-msyncclient.o `test -f 'msyncclient.c' || echo '$(srcdir)/'`msyncclient.c
-
-msyncclient-msyncclient.obj: msyncclient.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(msyncclient_CFLAGS) $(CFLAGS) -MT msyncclient-msyncclient.obj -MD -MP -MF $(DEPDIR)/msyncclient-msyncclient.Tpo -c -o msyncclient-msyncclient.obj `if test -f 'msyncclient.c'; then $(CYGPATH_W) 'msyncclient.c'; else $(CYGPATH_W) '$(srcdir)/msyncclient.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/msyncclient-msyncclient.Tpo $(DEPDIR)/msyncclient-msyncclient.Po
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='msyncclient.c' object='msyncclient-msyncclient.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(msyncclient_CFLAGS) $(CFLAGS) -c -o msyncclient-msyncclient.obj `if test -f 'msyncclient.c'; then $(CYGPATH_W) 'msyncclient.c'; else $(CYGPATH_W) '$(srcdir)/msyncclient.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

@@ -1,3 +1,49 @@
+Version 1.1.1
+~~~~~~~~~~~~~
+
+* Development release
+* Changes:
+  - Add new idevicebackup2 tool for full backup and restore support on iOS 4+
+  - Add a workaround for a bug in iOS 4.3 affecting lockdown_get_value() which
+    most prominently affected libgpod, gvfs, ideviceinfo and some other tools
+  - Read ProxyDeath message to preventing obsolete messages in device syslog
+  - Rework SWIG detection and includes
+  - Add new idevicedate tool to get or set the clock on iDevices
+  - API: Add mobilesync_clear_all_records_on_device()
+  - API: Change device_link_service_disconnect() to accept a message
+  - Add manpages for ideviceenterrecovery, idevicepair, idevicebackup2 and
+    idevicedate
+  - Add missing libgen.h include to silence compiler warnings
+  - Fix a segfault that might occour if locally stored certs could not be read
+  - Fix various memory leaks
+  - Update documentation
+* Python Bindings will get refactored completely
+* API is UNSTABLE
+
+Version 1.1.0
+~~~~~~~~~~~~~
+
+* Development release
+* Changes:
+  - Implement restoring backups using idevicebackup
+  - Allow connecting without pairing using "ideviceinfo -s"
+  - Add ideviceenterrecovery tool
+  - Add mobilesync service implementation
+  - Add restored service implementation for restore mode
+  - Add home_arrest service implementation for document sharing
+  - Add API afc_client_new_from_connection()
+  - Support to fetch wallpaper in sbservices
+  - Support for formatVersion 2 of iOS 4+ in sbservices
+  - Add new lockdownd domains to ideviceinfo
+  - Give the device time to prepare backup data to prevent abort
+  - Improve idevicebackup output
+  - notification_proxy fixes and new notification type
+  - Silence some 64bit compiler warnings
+  - Fix various memory leaks
+  - Update documentation
+* Python Bindings will get refactored completely
+* API is UNSTABLE
+
 Version 1.0.6
 ~~~~~~~~~~~~~~~
 

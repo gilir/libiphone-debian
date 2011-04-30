@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">libimobiledevice&#160;<span id="projectnumber">1.0.6</span></div>
+   <div id="projectname">libimobiledevice&#160;<span id="projectnumber">1.1.1</span></div>
   </td>
  </tr>
  </tbody>
@@ -37,13 +37,14 @@
 <div class="header">
   <div class="summary">
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <h1>libimobiledevice/mobilebackup.h File Reference</h1>  </div>
 </div>
 <div class="contents">
 
-<p>MobileBackup Implementation.  
+<p>Backup and restore of all device data.  
 <a href="#_details">More...</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="typedef-members"></a>
@@ -53,6 +54,16 @@ Typedefs</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
 <a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_private</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#a80c8c3310e73ac1ac6cdb565635a9af8">mobilebackup_client_t</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The client handle.  <a href="#a80c8c3310e73ac1ac6cdb565635a9af8"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>mobilebackup_flags_t</b> { <br/>
+&#160;&#160;<b>MB_RESTORE_NOTIFY_SPRINGBOARD</b> =  1 &lt;&lt; 0, 
+<br/>
+&#160;&#160;<b>MB_RESTORE_PRESERVE_SETTINGS</b> =  1 &lt;&lt; 1, 
+<br/>
+&#160;&#160;<b>MB_RESTORE_PRESERVE_CAMERA_ROLL</b> =  1 &lt;&lt; 2
+<br/>
+ }</td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#ae55b7f0bf07aa841db272ba2ea4801e0">mobilebackup_client_new</a> (<a class="el" href="structidevice__private.html">idevice_t</a> device, uint16_t port, <a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a> *client)</td></tr>
@@ -67,6 +78,14 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a backup from the connected device.  <a href="#a22a4ffba65451178d42251643edf7cb8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#a684dd7ebb0111f8a8ca7ab4119199be9">mobilebackup_send_backup_file_received</a> (<a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a> client)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a confirmation to the device that a backup file has been received.  <a href="#a684dd7ebb0111f8a8ca7ab4119199be9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#ac09e0685762314ea1c1f8ffcfc623975">mobilebackup_request_restore</a> (<a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a> client, plist_t backup_manifest, mobilebackup_flags_t flags, const char *proto_version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request that a backup should be restored to the connected device.  <a href="#ac09e0685762314ea1c1f8ffcfc623975"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#a97467648d4c5d77bc7f1fbe23722a61e">mobilebackup_receive_restore_file_received</a> (<a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a> client, plist_t *result)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a confirmation from the device that it successfully received a restore file.  <a href="#a97467648d4c5d77bc7f1fbe23722a61e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#a7cef0478b30d26fbd0a5f146815e202e">mobilebackup_receive_restore_application_received</a> (<a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a> client, plist_t *result)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a confirmation from the device that it successfully received application data file.  <a href="#a7cef0478b30d26fbd0a5f146815e202e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#adb1ef11295238147532e84878b924a5e">mobilebackup_send_restore_complete</a> (<a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a> client)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the device that the restore process is complete and waits for the device to close the connection.  <a href="#adb1ef11295238147532e84878b924a5e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#a68249f2d882e0264bdd45ea2abf1e6d1">mobilebackup_send_error</a> (<a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a> client, const char *reason)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a backup error message to the device.  <a href="#a68249f2d882e0264bdd45ea2abf1e6d1"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="member-group"></a>
@@ -87,7 +106,7 @@ Error Codes</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MOBILEBACKUP_E_UNKNOWN_ERROR</b>&#160;&#160;&#160;-256</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>MobileBackup Implementation. </p>
+<div class="textblock"><p>Backup and restore of all device data. </p>
 </div><hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="a80c8c3310e73ac1ac6cdb565635a9af8"></a><!-- doxytag: member="mobilebackup.h::mobilebackup_client_t" ref="a80c8c3310e73ac1ac6cdb565635a9af8" args="" -->
 <div class="memitem">
@@ -227,6 +246,80 @@ Error Codes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7cef0478b30d26fbd0a5f146815e202e"></a><!-- doxytag: member="mobilebackup.h::mobilebackup_receive_restore_application_received" ref="a7cef0478b30d26fbd0a5f146815e202e" args="(mobilebackup_client_t client, plist_t *result)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a> mobilebackup_receive_restore_application_received </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a>&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Receive a confirmation from the device that it successfully received application data file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>The connected MobileBackup client to use. </td></tr>
+    <tr><td class="paramname">result</td><td>Pointer to a plist_t that will be set to the received plist for further processing. The caller has to free it using plist_free(). Note that it will be set to NULL if the operation itself fails due to a communication or plist error. If this parameter is NULL, it will be ignored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILEBACKUP_E_SUCCESS on success, MOBILEBACKUP_E_INVALID_ARG if client is invalid, MOBILEBACKUP_E_REPLY_NOT_OK if the expected 'BackupMessageRestoreApplicationReceived' message could not be received, MOBILEBACKUP_E_PLIST_ERROR if the received message is not a valid backup message plist, or MOBILEBACKUP_E_MUX_ERROR if a communication error occurs. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a97467648d4c5d77bc7f1fbe23722a61e"></a><!-- doxytag: member="mobilebackup.h::mobilebackup_receive_restore_file_received" ref="a97467648d4c5d77bc7f1fbe23722a61e" args="(mobilebackup_client_t client, plist_t *result)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a> mobilebackup_receive_restore_file_received </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a>&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Receive a confirmation from the device that it successfully received a restore file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>The connected MobileBackup client to use. </td></tr>
+    <tr><td class="paramname">result</td><td>Pointer to a plist_t that will be set to the received plist for further processing. The caller has to free it using plist_free(). Note that it will be set to NULL if the operation itself fails due to a communication or plist error. If this parameter is NULL, it will be ignored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILEBACKUP_E_SUCCESS on success, MOBILEBACKUP_E_INVALID_ARG if client is invalid, MOBILEBACKUP_E_REPLY_NOT_OK if the expected 'BackupMessageRestoreFileReceived' message could not be received, MOBILEBACKUP_E_PLIST_ERROR if the received message is not a valid backup message plist, or MOBILEBACKUP_E_MUX_ERROR if a communication error occurs. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a22a4ffba65451178d42251643edf7cb8"></a><!-- doxytag: member="mobilebackup.h::mobilebackup_request_backup" ref="a22a4ffba65451178d42251643edf7cb8" args="(mobilebackup_client_t client, plist_t backup_manifest, const char *base_path, const char *proto_version)" -->
 <div class="memitem">
 <div class="memproto">
@@ -275,6 +368,57 @@ Error Codes</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>MOBILEBACKUP_E_SUCCESS on success, MOBILEBACKUP_E_INVALID_ARG if one of the parameters is invalid, MOBILEBACKUP_E_PLIST_ERROR if backup_manifest is not of type PLIST_DICT, MOBILEBACKUP_E_MUX_ERROR if a communication error occurs, MOBILEBACKUP_E_REPLY_NOT_OK </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac09e0685762314ea1c1f8ffcfc623975"></a><!-- doxytag: member="mobilebackup.h::mobilebackup_request_restore" ref="ac09e0685762314ea1c1f8ffcfc623975" args="(mobilebackup_client_t client, plist_t backup_manifest, mobilebackup_flags_t flags, const char *proto_version)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a> mobilebackup_request_restore </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a>&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">plist_t&#160;</td>
+          <td class="paramname"><em>backup_manifest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mobilebackup_flags_t&#160;</td>
+          <td class="paramname"><em>flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>proto_version</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Request that a backup should be restored to the connected device. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>The connected MobileBackup client to use. </td></tr>
+    <tr><td class="paramname">backup_manifest</td><td>The backup manifest, a plist_t of type PLIST_DICT containing the backup state to be restored. </td></tr>
+    <tr><td class="paramname">flags</td><td>Flags to send with the request. Currently this is a combination of the following mobilebackup_flags_t: MB_RESTORE_NOTIFY_SPRINGBOARD - let SpringBoard show a 'Restore' screen MB_RESTORE_PRESERVE_SETTINGS - do not overwrite any settings MB_RESTORE_PRESERVE_CAMERA_ROLL - preserve the photos of the camera roll </td></tr>
+    <tr><td class="paramname">proto_version</td><td>A string denoting the version of the backup protocol to use. Latest known version is "1.6". Ideally this value should be extracted from the given manifest plist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILEBACKUP_E_SUCCESS on success, MOBILEBACKUP_E_INVALID_ARG if one of the parameters is invalid, MOBILEBACKUP_E_PLIST_ERROR if backup_manifest is not of type PLIST_DICT, MOBILEBACKUP_E_MUX_ERROR if a communication error occurs, or MOBILEBACKUP_E_REPLY_NOT_OK if the device did not accept the request. </dd></dl>
 
 </div>
 </div>
@@ -376,6 +520,33 @@ Error Codes</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>MOBILEBACKUP_E_SUCCESS on success, MOBILEBACKUP_E_INVALID_ARG if one of the parameters is invalid, or MOBILEBACKUP_E_MUX_ERROR if a communication error occurs. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="adb1ef11295238147532e84878b924a5e"></a><!-- doxytag: member="mobilebackup.h::mobilebackup_send_restore_complete" ref="adb1ef11295238147532e84878b924a5e" args="(mobilebackup_client_t client)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="include_2libimobiledevice_2mobilebackup_8h.html#aa02643157eaacc46ff4c5e40b83319a3">mobilebackup_error_t</a> mobilebackup_send_restore_complete </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmobilebackup__client__private.html">mobilebackup_client_t</a>&#160;</td>
+          <td class="paramname"><em>client</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Tells the device that the restore process is complete and waits for the device to close the connection. </p>
+<p>After that, the device should reboot.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>The connected MobileBackup client to use.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>MOBILEBACKUP_E_SUCCESS on success, MOBILEBACKUP_E_INVALID_ARG if client is invalid, MOBILEBACKUP_E_PLIST_ERROR if the received disconnect message plist is invalid, or MOBILEBACKUP_E_MUX_ERROR if a communication error occurs. </dd></dl>
 
 </div>
 </div>
