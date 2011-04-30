@@ -12,6 +12,7 @@ libimobiledevice (1.1.1-1) UNRELEASED; urgency=low
    - Remove Conflitcs of libimobiledevice2 to make it installable with
      libimobiledevice1 (Closes: #620065).
    - Add Conflicts/Replaces also on libimobiledevice0-dbg (LP: #693895)
+   - Remove python-support from Build-Depends.
   * debian/copyright:
    - Update copyright years.
   * debian/libimobiledevice2.symbols:
