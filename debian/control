@@ -16,7 +16,8 @@ Build-Depends: debhelper (>= 7.0.50~),
 	libusbmuxd-dev (>= 1.0.0),
 	libtasn1-3-dev (>= 1.1),
 	libreadline-dev,
-	python-plist
+	python-plist,
+    dh-autoreconf
 X-Python-Version: >= 2.3
 Homepage: http://libimobiledevice.org/
 Vcs-Git: git://git.debian.org/git/pkg-gtkpod/packages/libimobiledevice.git
