@@ -26,6 +26,7 @@ override_dh_auto_configure:
 override_dh_install:
 	#Remove .la files.
 	rm -rf $(CURDIR)/debian/tmp/usr/lib/*.la
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/python*/*-packages/imobiledevice/*.la
 	#Remove installed man pages, installed by *.manpages
 	rm -f $(CURDIR)/debian/tmp/usr/share/man/man1/*.1
 	dh_install --fail-missing
