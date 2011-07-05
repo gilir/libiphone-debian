@@ -7,6 +7,7 @@ libimobiledevice (1.1.1-2) UNRELEASED; urgency=low
    - 04_libplist_DSO_linking.patch: Add libplist to LDFLAGS.
   * debian/control:
    - Build-depends on dh-autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
+   - Add DM-Upload-Allowed: yes
   * debian/rules:
    - Run dh --with autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
 
