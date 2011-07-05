@@ -1,4 +1,4 @@
-libimobiledevice (1.1.1-2) UNRELEASED; urgency=low
+libimobiledevice (1.1.1-2) unstable; urgency=low
 
   * debian/patches/
    - 02-add-missing-linking.patch: Refresh
@@ -12,7 +12,7 @@ libimobiledevice (1.1.1-2) UNRELEASED; urgency=low
    - Run dh --with autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
    - Remove .la files for python bindings also.
 
- -- Julien Lavergne <gilir@ubuntu.com>  Tue, 05 Jul 2011 22:18:13 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 05 Jul 2011 23:13:59 +0200
 
 libimobiledevice (1.1.1-1) experimental; urgency=low
 
