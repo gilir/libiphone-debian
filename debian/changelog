@@ -6,6 +6,8 @@ libimobiledevice (1.1.1-2) UNRELEASED; urgency=low
      Sebastian Ramacher for the patch (Closes: #631821).
   * debian/control:
    - Build-depends on dh-autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
+  * debian/rules:
+   - Run dh --with autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
 
  -- Julien Lavergne <gilir@ubuntu.com>  Tue, 05 Jul 2011 22:18:13 +0200
 
