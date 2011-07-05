@@ -4,6 +4,7 @@ libimobiledevice (1.1.1-2) UNRELEASED; urgency=low
    - 02-add-missing-linking.patch: Refresh
    - 03_ac_pkg_swig_m4_fixed.patch: Fix building python bindings. Thanks
      Sebastian Ramacher for the patch (Closes: #631821).
+   - 04_libplist_DSO_linking.patch: Add libplist to LDFLAGS.
   * debian/control:
    - Build-depends on dh-autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
   * debian/rules:
