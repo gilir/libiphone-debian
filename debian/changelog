@@ -1,5 +1,6 @@
 libimobiledevice (1.1.1-2) unstable; urgency=low
 
+  * Upload to unstable, most of the API should be stable now.
   * debian/patches/
    - 02-add-missing-linking.patch: Refresh
    - 03_ac_pkg_swig_m4_fixed.patch: Fix building python bindings. Thanks
@@ -12,7 +13,7 @@ libimobiledevice (1.1.1-2) unstable; urgency=low
    - Run dh --with autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
    - Remove .la files for python bindings also.
 
- -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 05 Jul 2011 23:13:59 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sat, 09 Jul 2011 11:54:00 +0200
 
 libimobiledevice (1.1.1-1) experimental; urgency=low
 
