@@ -14,7 +14,7 @@ libimobiledevice (1.1.1-2) unstable; urgency=low
    - Remove .la files for python bindings also.
    - Remove .a files from python bindings.
 
- -- Julien Lavergne <julien.lavergne@gmail.com>  Sat, 09 Jul 2011 11:54:00 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 16 Sep 2011 00:01:44 +0200
 
 libimobiledevice (1.1.1-1) experimental; urgency=low
 
