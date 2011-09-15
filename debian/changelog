@@ -12,6 +12,7 @@ libimobiledevice (1.1.1-2) unstable; urgency=low
   * debian/rules:
    - Run dh --with autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
    - Remove .la files for python bindings also.
+   - Remove .a files from python bindings.
 
  -- Julien Lavergne <julien.lavergne@gmail.com>  Sat, 09 Jul 2011 11:54:00 +0200
 
