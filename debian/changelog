@@ -1,3 +1,11 @@
+libimobiledevice (1.1.1-3) UNRELEASED; urgency=low
+
+  * debian/patches:
+   - 05_remove_gcry_need.patch: Remove check and link to gcrypt
+     (Closes: #638417)
+
+ -- Julien Lavergne <gilir@ubuntu.com>  Tue, 25 Oct 2011 00:37:00 +0200
+
 libimobiledevice (1.1.1-2) unstable; urgency=low
 
   * Upload to unstable, most of the API should be stable now.

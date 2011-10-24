@@ -2,3 +2,4 @@
 02-add-missing-linking.patch
 03_ac_pkg_swig_m4_fixed.patch
 04_libplist_DSO_linking.patch
+05_remove_gcry_need.patch
