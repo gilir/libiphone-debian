@@ -1,4 +1,4 @@
-libimobiledevice (1.1.1-3) UNRELEASED; urgency=low
+libimobiledevice (1.1.1-3) unstable; urgency=low
 
   * debian/patches:
    - 05_remove_gcry_need.patch: Remove check and link to gcrypt
@@ -6,7 +6,7 @@ libimobiledevice (1.1.1-3) UNRELEASED; urgency=low
    - 00git_ios5_support.patch: Fix "Unhandled lockdown error" for iOS 5.
      (LP: #795475)
 
- -- Julien Lavergne <gilir@ubuntu.com>  Tue, 25 Oct 2011 00:37:00 +0200
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 25 Oct 2011 01:02:45 +0200
 
 libimobiledevice (1.1.1-2) unstable; urgency=low
 
